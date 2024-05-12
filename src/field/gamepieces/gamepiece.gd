@@ -8,7 +8,7 @@
 ##
 ## [br][br][b]Note:[/b] The [code]gameboard[/code] is considered to be the playable area on which a
 ## Gamepiece may be placed. The gameboard is made up of cells, each of which may be occupied by one
-##  or more gamepieces.
+## or more gamepieces.
 
 class_name Gamepiece
 extends Node2D
@@ -148,7 +148,7 @@ func _physics_process(delta: float) -> void:
 	# movement.
 	# The excess travel distance allows us to know how much to extend the path by. A VERY fast
 	# gamepiece may jump a few cells at a time.
-	var excess_travel_distance: =  _follower.progress + move_distance \
+	var excess_travel_distance: = _follower.progress + move_distance \
 		- _path.curve.get_baked_length()
 	if excess_travel_distance >= 0:
 		arriving.emit(excess_travel_distance)

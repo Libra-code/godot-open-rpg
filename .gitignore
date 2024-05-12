@@ -21,3 +21,7 @@ mono_crash.*.json
 /audio
 /godot/debug/save
 .godot/
+
+# Possible ide setting
+/.vs
+/.vscode
