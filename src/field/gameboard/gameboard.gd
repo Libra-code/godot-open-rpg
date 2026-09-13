@@ -117,7 +117,9 @@ func register_gameboard_layer(board_map: GameboardLayer) -> void:
 
 		_connect_new_pathfinder_cells(added_cells)
 		if not added_cells.is_empty() or not removed_cells.is_empty():
-			pathfinder_changed.emit(added_cells.values(), removed_cells)
+			var added_coords: Array[Vector2i] = []
+			added_coords.assign(added_cells.values())
+			pathfinder_changed.emit(added_coords, removed_cells)
 	)
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://q8xq4np3t6is"]
+[gd_scene format=4 uid="uid://q8xq4np3t6is"]
 
 [ext_resource type="Script" uid="uid://m3oktjc6gmsb" path="res://src/field/field.gd" id="2_bkxev"]
 [ext_resource type="PackedScene" uid="uid://d2lj4blu56fte" path="res://src/field/gamepieces/controllers/player_controller.tscn" id="2_esa52"]
@@ -16,16 +16,21 @@
 [ext_resource type="Texture2D" uid="uid://b71dt8n01lhd0" path="res://assets/gui/path_destination_marker.tres" id="13_osl4o"]
 [ext_resource type="Script" uid="uid://drl6kefixf2hu" path="res://src/field/gamepieces/controllers/cursor/player_path_destination_marker.gd" id="14_0j4ru"]
 [ext_resource type="Resource" uid="uid://2604gnv0ps2b" path="res://overworld/maps/town/warrior.dtl" id="14_68y0v"]
-[ext_resource type="PackedScene" uid="uid://se1wnxu5svgj" path="res://data/field/characters/knight_gfx.tscn" id="14_av6f5"]
+[ext_resource type="PackedScene" uid="uid://se1wnxu5svgj" path="res://overworld/characters/knight_gfx.tscn" id="14_av6f5"]
 [ext_resource type="Script" uid="uid://jka4efg1wci6" path="res://src/field/cutscenes/templates/conversations/conversation_template.gd" id="14_b3y71"]
 [ext_resource type="Resource" uid="uid://cp5k342d2qao1" path="res://overworld/maps/town/runner.dtl" id="16_ybo02"]
 [ext_resource type="PackedScene" uid="uid://dqdk6eehxsrmn" path="res://overworld/characters/monk_gfx.tscn" id="17_qgtho"]
-[ext_resource type="PackedScene" uid="uid://kiwma43jc3n6" path="res://data/field/characters/lady_gfx.tscn" id="17_sieyv"]
+[ext_resource type="PackedScene" uid="uid://kiwma43jc3n6" path="res://overworld/characters/thief_gfx.tscn" id="17_sieyv"]
+[ext_resource type="PackedScene" uid="uid://bvtk5qllej4b8" path="res://overworld/characters/smith_gfx.tscn" id="18_2msel"]
 [ext_resource type="Script" uid="uid://cmtpjnqderv2u" path="res://src/field/cutscenes/popups/moving_interaction_popup.gd" id="18_8igsj"]
-[ext_resource type="PackedScene" uid="uid://bvtk5qllej4b8" path="res://data/field/characters/smith_gfx.tscn" id="18_2msel"]
 [ext_resource type="Script" uid="uid://27j187rqxg64" path="res://src/field/gameboard/debug/debug_map_boundaries.gd" id="18_cqtg7"]
-[ext_resource type="PackedScene" uid="uid://ccm8tsjysf8b5" path="res://data/field/characters/wizard_gfx.tscn" id="19_ius2d"]
+[ext_resource type="PackedScene" uid="uid://ccm8tsjysf8b5" path="res://overworld/characters/wizard_gfx.tscn" id="19_ius2d"]
+[ext_resource type="Script" uid="uid://bak74s0kcr0ao" path="res://addons/dialogic/Modules/Text/node_name_label.gd" id="19_lpxfg"]
 [ext_resource type="PackedScene" uid="uid://oot0x5n44b2r" path="res://src/field/cutscenes/Interaction.tscn" id="19_sa6jd"]
+[ext_resource type="Script" uid="uid://drhfq6rmdeuri" path="res://addons/dialogic/Modules/Text/node_dialog_text.gd" id="20_g8d34"]
+[ext_resource type="Script" uid="uid://c0g1jsnegpvtq" path="res://src/field/ui/dialogue_window.gd" id="20_lk3dv"]
+[ext_resource type="Script" uid="uid://d0ptqnbudhkyj" path="res://addons/dialogic/Modules/Character/node_portrait_container.gd" id="21_f53lt"]
+[ext_resource type="FontFile" uid="uid://cfhyd5hmym1s4" path="res://assets/gui/font/Kenney Pixel.ttf" id="21_r13nn"]
 [ext_resource type="Resource" uid="uid://c5gfpb2ghma5w" path="res://overworld/maps/town/smith.dtl" id="22_dko83"]
 [ext_resource type="Resource" uid="uid://b6cc3gmd8nlty" path="res://overworld/maps/town/thief.dtl" id="22_rd6oa"]
 [ext_resource type="Resource" uid="uid://cu4um6ppwmk03" path="res://overworld/maps/town/monk.dtl" id="24_grnqa"]
@@ -40,6 +45,7 @@
 [ext_resource type="PackedScene" uid="uid://p0e4b0txynkd" path="res://src/field/cutscenes/templates/doors/door.tscn" id="33_lbtsh"]
 [ext_resource type="PackedScene" uid="uid://wivtmf75ic3f" path="res://overworld/maps/town/battles/test_combat_arena.tscn" id="34_moieg"]
 [ext_resource type="PackedScene" uid="uid://cubp81mykng3h" path="res://src/field/cutscenes/popups/interaction_popup.tscn" id="34_qs25x"]
+[ext_resource type="Script" uid="uid://xdpci16n7w0j" path="res://src/field/ui/inventory/ui_inventory.gd" id="34_tk01t"]
 [ext_resource type="AudioStream" uid="uid://duwauer3vwtne" path="res://assets/music/Insect Factory.mp3" id="34_xbc6u"]
 [ext_resource type="Script" uid="uid://dlr1qymr1i4e" path="res://overworld/maps/town/door_unlock_interaction.gd" id="34_xtrml"]
 [ext_resource type="Resource" uid="uid://dhllga88kmxrs" path="res://overworld/maps/town/sign.dtl" id="35_gv62s"]
@@ -58,10 +64,21 @@
 [ext_resource type="AudioStream" uid="uid://ctnn0hqkx67k7" path="res://assets/music/Apple Cider.mp3" id="41_uxhyb"]
 [ext_resource type="AudioStream" uid="uid://c5w0ripyqfl68" path="res://assets/sfx/drop_002.ogg" id="42_bc1t5"]
 [ext_resource type="AudioStream" uid="uid://dhr63rdgg3dn2" path="res://assets/sfx/error_006.ogg" id="43_qeoai"]
+[ext_resource type="Script" uid="uid://dpv2dfiv5dhmr" path="res://addons/dialogic/Modules/Text/node_type_sound.gd" id="53_atrmf"]
+[ext_resource type="Script" uid="uid://bldt7xlfum7ov" path="res://addons/dialogic/Modules/Choice/node_choice_button.gd" id="53_w1dgf"]
+[ext_resource type="AudioStream" uid="uid://b6c1p14bc20p1" path="res://addons/dialogic/Example Assets/sound-effects/typing1.wav" id="54_fh5dy"]
+[ext_resource type="AudioStream" uid="uid://c3uw4nft0de13" path="res://addons/dialogic/Example Assets/sound-effects/typing2.wav" id="55_8lvao"]
 [ext_resource type="Script" uid="uid://bt8owd5e0ns68" path="res://src/field/gameboard/gameboard_layer.gd" id="55_a8sfs"]
 [ext_resource type="PackedScene" uid="uid://c3trg4x6hiuul" path="res://src/field/cutscenes/templates/treasure_chests/treasure_chest.tscn" id="55_mo8tx"]
+[ext_resource type="Script" uid="uid://dstlv1xykju5l" path="res://overworld/maps/opening_cutscene.gd" id="55_vsmkr"]
+[ext_resource type="AudioStream" uid="uid://dnboblpkf0fqi" path="res://addons/dialogic/Example Assets/sound-effects/typing3.wav" id="56_prbwr"]
+[ext_resource type="AudioStream" uid="uid://c2viukvbub6v6" path="res://addons/dialogic/Example Assets/sound-effects/typing4.wav" id="57_tomnb"]
+[ext_resource type="AudioStream" uid="uid://dwcre3fjf3cj8" path="res://addons/dialogic/Example Assets/sound-effects/typing5.wav" id="58_br2ni"]
 [ext_resource type="TileSet" uid="uid://dhda7bse8tu6l" path="res://src/field/gameboard/debug/tileset_debug_pathfinder_map.tres" id="59_nl04t"]
 [ext_resource type="Script" uid="uid://yukpiyvqb6m3" path="res://src/field/gameboard/debug/debug_pathfinder_map.gd" id="60_a8sfs"]
+[ext_resource type="PackedScene" uid="uid://ic0pyjko2i46" path="res://src/combat/ui/ui_combat.tscn" id="66_mo8tx"]
+[ext_resource type="Resource" uid="uid://bwjallq2c71rq" path="res://overworld/maps/opening_cutscene.dtl" id="68_jcriq"]
+[ext_resource type="Script" uid="uid://i6j3l72wljdc" path="res://src/combat/combat.gd" id="69_meyff"]
 
 [sub_resource type="Animation" id="Animation_y8463"]
 length = 0.001
@@ -742,5 +759,163 @@ metadata/_edit_lock_ = true
 
 [node name="OpeningCutscene" type="Node2D" parent="Field" unique_id=1470453857]
 scale = Vector2(0.2, 0.2)
-position_smoothing_enabled = true
-position_smoothing_speed = 8.0
+script = ExtResource("55_vsmkr")
+timeline = ExtResource("68_jcriq")
+metadata/_edit_lock_ = true
+
+[node name="Background" type="CanvasLayer" parent="Field/OpeningCutscene" unique_id=2135126075]
+
+[node name="ColorRect" type="ColorRect" parent="Field/OpeningCutscene/Background" unique_id=1291906948]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Combat" type="CanvasLayer" parent="." unique_id=261146751]
+script = ExtResource("69_meyff")
+
+[node name="CenterContainer" type="CenterContainer" parent="Combat" unique_id=713111916]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+metadata/_edit_lock_ = true
+
+[node name="UI" parent="Combat" unique_id=1654046515 instance=ExtResource("66_mo8tx")]
+
+[node name="TransitionDelay" type="Timer" parent="Combat/UI" unique_id=901779743]
+wait_time = 0.5
+one_shot = true
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1642469067]
+
+[node name="Inventory" type="HBoxContainer" parent="UI" unique_id=1222421118]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -104.0
+offset_right = -1536.0
+offset_bottom = -88.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(5, 5)
+alignment = 1
+script = ExtResource("34_tk01t")
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="DialogueLayout" type="Control" parent="UI" unique_id=825867878]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("20_lk3dv")
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="BoxMargins" type="MarginContainer" parent="UI/DialogueLayout" unique_id=960233646]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -96.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 150
+theme_override_constants/margin_right = 150
+
+[node name="BoxBack" type="ColorRect" parent="UI/DialogueLayout/BoxMargins" unique_id=286197450]
+layout_mode = 2
+color = Color(0.14902, 0.168627, 0.266667, 1)
+
+[node name="TextMargins" type="MarginContainer" parent="UI/DialogueLayout/BoxMargins" unique_id=693286225]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="DialogueText" type="RichTextLabel" parent="UI/DialogueLayout/BoxMargins/TextMargins" unique_id=2142955034 node_paths=PackedStringArray("textbox_root")]
+clip_contents = false
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("21_r13nn")
+theme_override_font_sizes/normal_font_size = 96
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+visible_characters_behavior = 1
+script = ExtResource("20_g8d34")
+textbox_root = NodePath(".")
+
+[node name="Speaker" type="HBoxContainer" parent="UI/DialogueLayout/BoxMargins/TextMargins/DialogueText" unique_id=2055938767]
+layout_mode = 1
+offset_top = -128.0
+offset_right = 380.0
+offset_bottom = -8.0
+theme_override_constants/separation = 32
+
+[node name="Portrait" type="Control" parent="UI/DialogueLayout/BoxMargins/TextMargins/DialogueText/Speaker" unique_id=274356173]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+script = ExtResource("21_f53lt")
+mode = 1
+container_ids = PackedStringArray("1")
+
+[node name="NameLabel" type="Label" parent="UI/DialogueLayout/BoxMargins/TextMargins/DialogueText/Speaker" unique_id=152488429]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.14902, 0.168627, 0.266667, 1)
+theme_override_constants/outline_size = 24
+theme_override_fonts/font = ExtResource("21_r13nn")
+theme_override_font_sizes/font_size = 96
+text = "Character Name"
+vertical_alignment = 1
+script = ExtResource("19_lpxfg")
+
+[node name="DialogicNode_TypeSounds" type="AudioStreamPlayer" parent="UI/DialogueLayout/BoxMargins/TextMargins/DialogueText" unique_id=1459180930]
+script = ExtResource("53_atrmf")
+sounds = Array[AudioStream]([ExtResource("54_fh5dy"), ExtResource("55_8lvao"), ExtResource("56_prbwr"), ExtResource("57_tomnb"), ExtResource("58_br2ni")])
+
+[node name="Choices" type="VBoxContainer" parent="UI/DialogueLayout/BoxMargins" unique_id=174633950]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+alignment = 2
+
+[node name="Choice1" type="Button" parent="UI/DialogueLayout/BoxMargins/Choices" unique_id=1099276451]
+layout_mode = 2
+text = "Choice1"
+script = ExtResource("53_w1dgf")
+choice_index = 1
+
+[node name="Choice2" type="Button" parent="UI/DialogueLayout/BoxMargins/Choices" unique_id=949814268]
+layout_mode = 2
+text = "Choice2"
+script = ExtResource("53_w1dgf")
+choice_index = 2
+
+[node name="Choice3" type="Button" parent="UI/DialogueLayout/BoxMargins/Choices" unique_id=1419129480]
+layout_mode = 2
+text = "Choice3"
+script = ExtResource("53_w1dgf")
+choice_index = 3
+
+[node name="Choice4" type="Button" parent="UI/DialogueLayout/BoxMargins/Choices" unique_id=304958622]
+layout_mode = 2
+text = "Choice4"
+script = ExtResource("53_w1dgf")
+choice_index = 4
+
+[connection signal="area_entered" from="Field/Map/Forest/Gamepieces/GameEndTrigger/Area2D2" to="Field/Map/Forest/Gamepieces/GameEndTrigger" method="_on_area_entered"]
