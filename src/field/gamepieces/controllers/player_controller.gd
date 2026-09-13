@@ -99,6 +99,11 @@ func move_along_path(value: Array[Vector2i]) -> void:
 	Player.player_path_set.emit(_gamepiece, value.back())
 
 
+func stop_moving() -> void:
+	move_path.clear()
+	_target_interaction = null
+
+
 func move_to_pressed_key(input_direction: Vector2) -> void:
 	if is_active:
 		var source_cell: = GamepieceRegistry.get_cell(_gamepiece)

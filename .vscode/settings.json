@@ -1,6 +1,6 @@
 {
     "godot_tools.editor_path": "d:\\Godot_v4.1.1-stable_win64.exe\\Godot_v4.1.1-stable_win64.exe",
-    "godotTools.editorPath.godot4": "d:\\Godot_v4.2-stable_win64.exe\\Godot_v4.2-stable_win64.exe",
+    "godotTools.editorPath.godot4": "d:\\Godot_engine\\Godot.exe",
     "files.exclude": {
         "**/*.rpyc": true,
         "**/*.rpa": true,
