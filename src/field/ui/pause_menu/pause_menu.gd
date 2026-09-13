@@ -12,10 +12,14 @@ extends CanvasLayer
 @onready var _fullscreen_check: CheckButton = %FullscreenCheck
 @onready var _resume_button: Button = %ResumeButton
 @onready var _quit_button: Button = %QuitButton
+@onready var _save_button: Button = %SaveButton
+@onready var _load_button: Button = %LoadButton
+@onready var _save_status_label: Label = %SaveStatusLabel
 
-# The character menu (Stato/Inventario) is a sibling scene. We check its state so that "back"
-# doesn't open this menu on top of it, and so it can't be opened while this one is up.
+# The character menu and game over screen are sibling scenes. We check their state so that "back"
+# doesn't open this menu on top of them, and so it can't be opened while one of them is up.
 @onready var _character_menu: CanvasLayer = get_parent().get_node_or_null("CharacterMenu")
+@onready var _game_over_screen: CanvasLayer = get_parent().get_node_or_null("GameOverScreen")
 
 
 func _ready() -> void:
@@ -54,6 +58,19 @@ func _ready() -> void:
 		func() -> void:
 			get_tree().quit()
 	)
+	_save_button.pressed.connect(
+		func() -> void:
+			SaveGame.save_game()
+			_save_status_label.text = "Partita salvata."
+	)
+	_load_button.pressed.connect(
+		func() -> void:
+			if SaveGame.has_save():
+				SaveGame.load_game()
+				_save_status_label.text = "Partita caricata."
+			else:
+				_save_status_label.text = "Nessun salvataggio trovato."
+	)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -61,7 +78,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		if visible:
 			get_viewport().set_input_as_handled()
 			close()
-		elif not (_character_menu and _character_menu.visible):
+		elif not ((_character_menu and _character_menu.visible)
+				or (_game_over_screen and _game_over_screen.visible)):
 			get_viewport().set_input_as_handled()
 			open()
 

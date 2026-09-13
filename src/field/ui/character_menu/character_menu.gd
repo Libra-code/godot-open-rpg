@@ -10,8 +10,10 @@ enum Page {STATUS, INVENTORY}
 @onready var _status_page: Control = %StatusPage
 @onready var _inventory_page: Control = %InventoryPage
 
-# The pause menu is a sibling scene. We check its state so this menu can't be opened on top of it.
+# The pause menu and game over screen are sibling scenes. We check their state so this menu can't
+# be opened on top of them.
 @onready var _pause_menu: CanvasLayer = get_parent().get_node_or_null("PauseMenu")
+@onready var _game_over_screen: CanvasLayer = get_parent().get_node_or_null("GameOverScreen")
 
 
 func _ready() -> void:
@@ -20,7 +22,7 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if _pause_menu and _pause_menu.visible:
+	if (_pause_menu and _pause_menu.visible) or (_game_over_screen and _game_over_screen.visible):
 		return
 
 	if event.is_action_pressed(&"open_status"):

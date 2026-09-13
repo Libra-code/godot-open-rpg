@@ -80,6 +80,7 @@
 [ext_resource type="Script" uid="uid://i6j3l72wljdc" path="res://src/combat/combat.gd" id="69_meyff"]
 [ext_resource type="PackedScene" path="res://src/field/ui/pause_menu/pause_menu.tscn" id="71_pmenu"]
 [ext_resource type="PackedScene" path="res://src/field/ui/character_menu/character_menu.tscn" id="72_cmenu"]
+[ext_resource type="PackedScene" path="res://src/field/ui/game_over/game_over_screen.tscn" id="73_gover"]
 
 [sub_resource type="Animation" id="Animation_y8463"]
 length = 0.001
@@ -796,6 +797,8 @@ one_shot = true
 [node name="PauseMenu" parent="." instance=ExtResource("71_pmenu")]
 
 [node name="CharacterMenu" parent="." instance=ExtResource("72_cmenu")]
+
+[node name="GameOverScreen" parent="." instance=ExtResource("73_gover")]
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1642469067]
 

@@ -32,6 +32,7 @@ Transition="*res://src/common/screen_transitions/ScreenTransition.tscn"
 SoulStrain="*res://src/soul_strain/soul_strain_engine.gd"
 Dialogic="*uid://ds2q0uclmolvu"
 Settings="*res://src/common/settings_manager.gd"
+SaveGame="*res://src/common/save_manager.gd"
 
 [debug]
 

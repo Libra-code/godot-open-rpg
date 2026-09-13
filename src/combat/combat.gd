@@ -32,6 +32,10 @@ var round_count: int = 0
 # Keep track of what music track was playing previously, and return to it once combat has finished.
 var _previous_music_track: AudioStream = null
 
+# Battler name -> new level, for any player Battler that leveled up this battle. Populated by
+# _award_victory_xp() and consumed by _get_victory_message_events().
+var _level_ups_this_battle: = {}
+
 # A reference to 
 @onready var _battler_roster: BattlerRoster
 @onready var _combat_container: = $CenterContainer as CenterContainer
@@ -187,11 +191,14 @@ func _get_next_actor() -> Battler:
 
 
 func _on_combat_finished(is_player_victory: bool) -> void:
+	if is_player_victory:
+		_award_victory_xp()
+
 	# Fade out the combat UI elements.
 	_ui.animation.play("fade_out")
 	await _ui.animation.animation_finished
 	await _display_combat_results_dialog(is_player_victory)
-	
+
 	_battler_roster = null
 	
 	# Wait a short period of time and then fade the screen to black.
@@ -211,6 +218,20 @@ func _on_combat_finished(is_player_victory: bool) -> void:
 	# particular, the screen is still covered, so the combat-starting object will want to 
 	# decide what to do now that the outcome of the combat is known.
 	CombatEvents.combat_finished.emit(is_player_victory)
+
+
+# Grants xp (summed from the defeated enemies' xp_reward) to every surviving player Battler.
+# Records any level-ups in _level_ups_this_battle so the results dialogue can mention them.
+func _award_victory_xp() -> void:
+	var total_xp: int = 0
+	for enemy in _battler_roster.get_enemy_battlers():
+		total_xp += enemy.stats.xp_reward
+
+	_level_ups_this_battle.clear()
+	for battler in _battler_roster.get_player_battlers():
+		var levels_gained: = battler.stats.add_xp(total_xp)
+		if levels_gained > 0:
+			_level_ups_this_battle[battler.name] = battler.stats.level
 
 
 ## Displays a series of dialogue bubbles using Dialogic with information about the combat's outcome.
@@ -235,6 +256,10 @@ func _get_victory_message_events(leader_name: String) -> Array[String]:
 		"%s's party won the battle!" % leader_name
 	]
 	events.append("You wanted to find some coins, but animals have no pockets to carry them.")
+
+	for battler_name in _level_ups_this_battle:
+		events.append("%s reached level %d!" % [battler_name, _level_ups_this_battle[battler_name]])
+
 	return events
 	
 

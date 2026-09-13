@@ -5,6 +5,9 @@ signal turn_resolved(summary: Dictionary)
 signal essence_assimilated(result: Dictionary)
 signal flaw_triggered(result: Dictionary)
 
+## Emitted whenever [member SoulStrainState.hit_points] reaches 0.
+signal game_over
+
 const GROUP_NAME: StringName = &"soul_strain_engine"
 const LOW_COMPATIBILITY_THRESHOLD: float = 0.45
 const REJECTION_DEBUFF_STEP: float = 25.0
@@ -150,6 +153,7 @@ func record_action(action: StringName, context: Dictionary = {}) -> Dictionary:
 func apply_damage(amount: int) -> void:
 	state.hit_points = clampi(state.hit_points - max(0, amount), 0, state.max_hit_points)
 	_emit_state()
+	_check_game_over()
 
 
 func heal(amount: int) -> void:
@@ -195,7 +199,13 @@ func _trigger_flaw(display_name: String, penalties: Dictionary) -> Dictionary:
 	}
 	flaw_triggered.emit(result)
 	_emit_state()
+	_check_game_over()
 	return result
+
+
+func _check_game_over() -> void:
+	if state.hit_points <= 0:
+		game_over.emit()
 
 
 func _add_rejection(amount: float) -> void:

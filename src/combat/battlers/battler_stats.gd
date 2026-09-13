@@ -12,6 +12,24 @@ signal health_depleted
 signal health_changed()
 ## Emitted whenver [member energy] changes.
 signal energy_changed()
+## Emitted whenever [member xp] gain causes one or more level-ups.
+signal leveled_up(new_level: int)
+
+## How much each level-up increases the corresponding base stat by.
+const LEVEL_UP_GROWTH := {
+	"base_max_health": 5,
+	"base_max_energy": 1,
+	"base_attack": 2,
+	"base_defense": 1,
+	"base_speed": 1,
+}
+
+@export_category("Progression")
+@export var level := 1
+## Experience points accumulated towards the next level. See [method xp_to_next_level].
+@export var xp := 0
+## How much xp defeating this battler grants to the victorious party (only relevant for enemies).
+@export var xp_reward := 10
 
 @export_category("Elements")
 ## The battler's elemental affinity. Determines which attacks are more or less effective against
@@ -80,6 +98,44 @@ func _init() -> void:
 
 func initialize() -> void:
 	health = max_health
+
+
+## How much xp is needed to go from the current [member level] to the next one.
+func xp_to_next_level() -> int:
+	return level * 50
+
+
+## Adds xp, applying as many level-ups as the total warrants. Returns the number of levels gained
+## (0 if the battler didn't level up).
+func add_xp(amount: int) -> int:
+	if amount <= 0:
+		return 0
+
+	xp += amount
+
+	var levels_gained := 0
+	while xp >= xp_to_next_level():
+		xp -= xp_to_next_level()
+		level += 1
+		levels_gained += 1
+		_apply_level_up_growth()
+
+	if levels_gained > 0:
+		leveled_up.emit(level)
+
+	return levels_gained
+
+
+# Applying growth to max_health/max_energy also has to bump the current health/energy, since
+# (unlike the other stats) they have no reactive link back to their base_* counterpart.
+func _apply_level_up_growth() -> void:
+	for base_prop_name in LEVEL_UP_GROWTH:
+		var growth: int = LEVEL_UP_GROWTH[base_prop_name]
+		set(base_prop_name, get(base_prop_name) + growth)
+
+	max_health += LEVEL_UP_GROWTH["base_max_health"]
+	health += LEVEL_UP_GROWTH["base_max_health"]
+	max_energy += LEVEL_UP_GROWTH["base_max_energy"]
 
 
 ## Adds a modifier that affects the stat with the given `stat_name` and returns its unique id.
