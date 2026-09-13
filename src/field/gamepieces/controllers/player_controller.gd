@@ -119,9 +119,17 @@ func move_to_pressed_key(input_direction: Vector2) -> void:
 			move_path = new_move_path.duplicate()
 
 
-func stop_moving() -> void:
-	move_path.clear()
-	_target_interaction = null
+func _on_focus_arrived() -> void:
+	_waypoints.clear()
+	SoulStrain.resolve_turn(&"move")
+	
+	if _target:
+		var distance_to_target: = _target.position - _focus.position
+		_focus.direction = distance_to_target
+		
+		# TODO: Interactions go here.
+		
+		_target = null
 
 
 # The player has clicked on an empty gameboard cell. We'll try to move _gamepiece to the cell.
