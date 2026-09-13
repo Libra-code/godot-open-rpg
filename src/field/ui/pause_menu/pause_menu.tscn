@@ -21,7 +21,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
-custom_minimum_size = Vector2(320, 0)
+custom_minimum_size = Vector2(380, 0)
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer"]
@@ -39,6 +39,54 @@ theme_override_constants/separation = 16
 layout_mode = 2
 horizontal_alignment = 1
 text = "Impostazioni"
+
+[node name="MasterVolumeRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MasterVolumeLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MasterVolumeRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Volume Generale"
+
+[node name="MasterVolumeSlider" type="HSlider" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MasterVolumeRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="MusicVolumeRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MusicVolumeLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MusicVolumeRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Musica"
+
+[node name="MusicVolumeSlider" type="HSlider" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MusicVolumeRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="SFXVolumeRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SFXVolumeLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/SFXVolumeRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Effetti"
+
+[node name="SFXVolumeSlider" type="HSlider" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/SFXVolumeRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
 
 [node name="VSyncRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2

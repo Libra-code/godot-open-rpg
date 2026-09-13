@@ -1,9 +1,13 @@
 ## The system/options menu, toggled with the "back" input action ([kbd]Esc[/kbd]).
 ##
 ## This is deliberately separate from [CharacterMenu] (Stato/Inventario): it holds settings that
-## live outside the game's fiction (display options, quitting), not character information.
+## live outside the game's fiction (display and audio options, quitting), not character
+## information.
 extends CanvasLayer
 
+@onready var _master_volume_slider: HSlider = %MasterVolumeSlider
+@onready var _music_volume_slider: HSlider = %MusicVolumeSlider
+@onready var _sfx_volume_slider: HSlider = %SFXVolumeSlider
 @onready var _vsync_check: CheckButton = %VSyncCheck
 @onready var _fullscreen_check: CheckButton = %FullscreenCheck
 @onready var _resume_button: Button = %ResumeButton
@@ -18,9 +22,24 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	visible = false
 
+	_master_volume_slider.value = Settings.master_volume
+	_music_volume_slider.value = Settings.music_volume
+	_sfx_volume_slider.value = Settings.sfx_volume
 	_vsync_check.button_pressed = Settings.vsync_enabled
 	_fullscreen_check.button_pressed = Settings.fullscreen_enabled
 
+	_master_volume_slider.value_changed.connect(
+		func(value: float) -> void:
+			Settings.master_volume = value
+	)
+	_music_volume_slider.value_changed.connect(
+		func(value: float) -> void:
+			Settings.music_volume = value
+	)
+	_sfx_volume_slider.value_changed.connect(
+		func(value: float) -> void:
+			Settings.sfx_volume = value
+	)
 	_vsync_check.toggled.connect(
 		func(value: bool) -> void:
 			Settings.vsync_enabled = value
