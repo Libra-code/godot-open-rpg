@@ -2,46 +2,27 @@
 
 [ext_resource type="Script" path="res://src/soul_strain/soul_strain_hud.gd" id="1_u11td"]
 
-[node name="SoulStrainHUD" type="CanvasLayer"]
-script = ExtResource("1_u11td")
-
-[node name="PanelContainer" type="PanelContainer" parent="."]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -260.0
-offset_top = 16.0
-offset_right = -16.0
-offset_bottom = 132.0
-grow_horizontal = 0
-
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 12
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 12
-theme_override_constants/margin_bottom = 10
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+[node name="SoulStrainHUD" type="VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 4
+script = ExtResource("1_u11td")
 
-[node name="ManaLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="ManaLabel" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
 text = "M_disp: 0"
 
-[node name="HitPointsLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="HitPointsLabel" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Punti Vita: 0/0"
 
-[node name="CoreGradeLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="CoreGradeLabel" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Nucleo: Dormiente"
 
-[node name="RejectionLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="RejectionLabel" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Rigetto: 0.0%"

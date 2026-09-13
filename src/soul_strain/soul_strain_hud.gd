@@ -1,4 +1,4 @@
-extends CanvasLayer
+extends Control
 
 @onready var mana_label: Label = %ManaLabel
 @onready var hp_label: Label = %HitPointsLabel

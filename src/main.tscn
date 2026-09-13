@@ -45,7 +45,6 @@
 [ext_resource type="PackedScene" uid="uid://p0e4b0txynkd" path="res://src/field/cutscenes/templates/doors/door.tscn" id="33_lbtsh"]
 [ext_resource type="PackedScene" uid="uid://wivtmf75ic3f" path="res://overworld/maps/town/battles/test_combat_arena.tscn" id="34_moieg"]
 [ext_resource type="PackedScene" uid="uid://cubp81mykng3h" path="res://src/field/cutscenes/popups/interaction_popup.tscn" id="34_qs25x"]
-[ext_resource type="Script" uid="uid://xdpci16n7w0j" path="res://src/field/ui/inventory/ui_inventory.gd" id="34_tk01t"]
 [ext_resource type="AudioStream" uid="uid://duwauer3vwtne" path="res://assets/music/Insect Factory.mp3" id="34_xbc6u"]
 [ext_resource type="Script" uid="uid://dlr1qymr1i4e" path="res://overworld/maps/town/door_unlock_interaction.gd" id="34_xtrml"]
 [ext_resource type="Resource" uid="uid://dhllga88kmxrs" path="res://overworld/maps/town/sign.dtl" id="35_gv62s"]
@@ -79,6 +78,7 @@
 [ext_resource type="PackedScene" uid="uid://ic0pyjko2i46" path="res://src/combat/ui/ui_combat.tscn" id="66_mo8tx"]
 [ext_resource type="Resource" uid="uid://bwjallq2c71rq" path="res://overworld/maps/opening_cutscene.dtl" id="68_jcriq"]
 [ext_resource type="Script" uid="uid://i6j3l72wljdc" path="res://src/combat/combat.gd" id="69_meyff"]
+[ext_resource type="PackedScene" path="res://src/field/ui/pause_menu/pause_menu.tscn" id="71_pmenu"]
 
 [sub_resource type="Animation" id="Animation_y8463"]
 length = 0.001
@@ -792,23 +792,9 @@ metadata/_edit_lock_ = true
 wait_time = 0.5
 one_shot = true
 
-[node name="UI" type="CanvasLayer" parent="." unique_id=1642469067]
+[node name="PauseMenu" parent="." instance=ExtResource("71_pmenu")]
 
-[node name="Inventory" type="HBoxContainer" parent="UI" unique_id=1222421118]
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -104.0
-offset_right = -1536.0
-offset_bottom = -88.0
-grow_horizontal = 2
-grow_vertical = 0
-scale = Vector2(5, 5)
-alignment = 1
-script = ExtResource("34_tk01t")
-metadata/_edit_group_ = true
-metadata/_edit_lock_ = true
+[node name="UI" type="CanvasLayer" parent="." unique_id=1642469067]
 
 [node name="DialogueLayout" type="Control" parent="UI" unique_id=825867878]
 visible = false
