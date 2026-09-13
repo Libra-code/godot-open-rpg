@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://src/field/ui/pause_menu/pause_menu.gd" id="1_pmenu"]
-[ext_resource type="StyleBoxTexture" path="res://assets/gui/rpg_ui/stylebox_panel_wood.tres" id="2_panel"]
+[ext_resource type="StyleBoxFlat" path="res://assets/gui/rpg_ui/stylebox_panel_solid.tres" id="2_panel"]
 [ext_resource type="StyleBoxTexture" path="res://assets/gui/rpg_ui/stylebox_button_normal.tres" id="3_btnn"]
 [ext_resource type="StyleBoxTexture" path="res://assets/gui/rpg_ui/stylebox_button_pressed.tres" id="4_btnp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_scroll"]
 
 [node name="PauseMenu" type="CanvasLayer"]
 script = ExtResource("1_pmenu")
@@ -24,134 +26,174 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
-custom_minimum_size = Vector2(380, 0)
+unique_name_in_owner = true
+custom_minimum_size = Vector2(360, 0)
 layout_mode = 2
 theme_override_styles/panel = ExtResource("2_panel")
 
-[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="CenterContainer/PanelContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 480)
 layout_mode = 2
+horizontal_scroll_mode = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_scroll")
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/margin_left = 24
 theme_override_constants/margin_top = 24
 theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 24
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="TitleLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="TitleLabel" type="Label" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.949, 0.929, 0.878, 1)
+theme_override_font_sizes/font_size = 20
 horizontal_alignment = 1
 text = "Impostazioni"
 
-[node name="MasterVolumeRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="MasterVolumeRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="MasterVolumeLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MasterVolumeRow"]
+[node name="MasterVolumeLabel" type="Label" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/MasterVolumeRow"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.949, 0.929, 0.878, 1)
 text = "Volume Generale"
 
-[node name="MasterVolumeSlider" type="HSlider" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MasterVolumeRow"]
+[node name="MasterVolumeSlider" type="HSlider" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/MasterVolumeRow"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
+size_flags_horizontal = 3
 max_value = 1.0
 step = 0.01
 value = 1.0
 
-[node name="MusicVolumeRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="MusicVolumeRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="MusicVolumeLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MusicVolumeRow"]
+[node name="MusicVolumeLabel" type="Label" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/MusicVolumeRow"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.949, 0.929, 0.878, 1)
 text = "Musica"
 
-[node name="MusicVolumeSlider" type="HSlider" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MusicVolumeRow"]
+[node name="MusicVolumeSlider" type="HSlider" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/MusicVolumeRow"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
+size_flags_horizontal = 3
 max_value = 1.0
 step = 0.01
 value = 1.0
 
-[node name="SFXVolumeRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="SFXVolumeRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="SFXVolumeLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/SFXVolumeRow"]
+[node name="SFXVolumeLabel" type="Label" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/SFXVolumeRow"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.949, 0.929, 0.878, 1)
 text = "Effetti"
 
-[node name="SFXVolumeSlider" type="HSlider" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/SFXVolumeRow"]
+[node name="SFXVolumeSlider" type="HSlider" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/SFXVolumeRow"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
+size_flags_horizontal = 3
 max_value = 1.0
 step = 0.01
 value = 1.0
 
-[node name="VSyncRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="VSyncRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="VSyncLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/VSyncRow"]
+[node name="VSyncLabel" type="Label" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/VSyncRow"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.949, 0.929, 0.878, 1)
 text = "VSync"
 
-[node name="VSyncCheck" type="CheckButton" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/VSyncRow"]
+[node name="VSyncCheck" type="CheckButton" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/VSyncRow"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(0.949, 0.929, 0.878, 1)
 
-[node name="FullscreenRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="FullscreenRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="FullscreenLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/FullscreenRow"]
+[node name="FullscreenLabel" type="Label" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/FullscreenRow"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.949, 0.929, 0.878, 1)
 text = "Schermo Intero"
 
-[node name="FullscreenCheck" type="CheckButton" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/FullscreenRow"]
+[node name="FullscreenCheck" type="CheckButton" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/FullscreenRow"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(0.949, 0.929, 0.878, 1)
 
-[node name="SaveButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="SaveButton" type="Button" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(0.0941176, 0.0784314, 0.145098, 1)
+theme_override_colors/font_hover_color = Color(0.0941176, 0.0784314, 0.145098, 1)
+theme_override_colors/font_pressed_color = Color(0.0941176, 0.0784314, 0.145098, 1)
+theme_override_colors/font_focus_color = Color(0.0941176, 0.0784314, 0.145098, 1)
 theme_override_styles/normal = ExtResource("3_btnn")
 theme_override_styles/hover = ExtResource("3_btnn")
 theme_override_styles/pressed = ExtResource("4_btnp")
 theme_override_styles/focus = ExtResource("4_btnp")
 text = "Salva"
 
-[node name="LoadButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="LoadButton" type="Button" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(0.0941176, 0.0784314, 0.145098, 1)
+theme_override_colors/font_hover_color = Color(0.0941176, 0.0784314, 0.145098, 1)
+theme_override_colors/font_pressed_color = Color(0.0941176, 0.0784314, 0.145098, 1)
+theme_override_colors/font_focus_color = Color(0.0941176, 0.0784314, 0.145098, 1)
 theme_override_styles/normal = ExtResource("3_btnn")
 theme_override_styles/hover = ExtResource("3_btnn")
 theme_override_styles/pressed = ExtResource("4_btnp")
 theme_override_styles/focus = ExtResource("4_btnp")
 text = "Carica"
 
-[node name="SaveStatusLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="SaveStatusLabel" type="Label" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(0.949, 0.929, 0.878, 1)
 horizontal_alignment = 1
 text = ""
+autowrap_mode = 2
 
-[node name="ResumeButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="ResumeButton" type="Button" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(0.0941176, 0.0784314, 0.145098, 1)
+theme_override_colors/font_hover_color = Color(0.0941176, 0.0784314, 0.145098, 1)
+theme_override_colors/font_pressed_color = Color(0.0941176, 0.0784314, 0.145098, 1)
+theme_override_colors/font_focus_color = Color(0.0941176, 0.0784314, 0.145098, 1)
 theme_override_styles/normal = ExtResource("3_btnn")
 theme_override_styles/hover = ExtResource("3_btnn")
 theme_override_styles/pressed = ExtResource("4_btnp")
 theme_override_styles/focus = ExtResource("4_btnp")
 text = "Riprendi"
 
-[node name="QuitButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="QuitButton" type="Button" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(0.0941176, 0.0784314, 0.145098, 1)
+theme_override_colors/font_hover_color = Color(0.0941176, 0.0784314, 0.145098, 1)
+theme_override_colors/font_pressed_color = Color(0.0941176, 0.0784314, 0.145098, 1)
+theme_override_colors/font_focus_color = Color(0.0941176, 0.0784314, 0.145098, 1)
 theme_override_styles/normal = ExtResource("3_btnn")
 theme_override_styles/hover = ExtResource("3_btnn")
 theme_override_styles/pressed = ExtResource("4_btnp")

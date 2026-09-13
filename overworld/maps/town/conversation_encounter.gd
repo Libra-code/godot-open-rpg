@@ -30,8 +30,22 @@ func _execute() -> void:
 	# example, the player lost a difficult but non-essential battle.
 	if did_player_win:
 		Dialogic.start_timeline(victory_timeline)
-	
+
 	else:
 		Dialogic.start_timeline(loss_timeline)
-	
+
 	await Dialogic.timeline_ended
+
+	if did_player_win:
+		_remove_defeated_enemy()
+
+
+# Removes the whole enemy gamepiece (this Interaction's parent) from the field once defeated:
+# frees its collision shapes, visuals, and any other children along with it in one go.
+# GamepieceRegistry unregisters itself automatically in response (see Gamepiece.tree_exiting).
+func _remove_defeated_enemy() -> void:
+	var enemy_gamepiece: = get_parent() as Gamepiece
+	if enemy_gamepiece:
+		enemy_gamepiece.queue_free()
+	else:
+		queue_free()

@@ -15,6 +15,8 @@ extends CanvasLayer
 @onready var _save_button: Button = %SaveButton
 @onready var _load_button: Button = %LoadButton
 @onready var _save_status_label: Label = %SaveStatusLabel
+@onready var _panel_container: PanelContainer = %PanelContainer
+@onready var _scroll_container: ScrollContainer = %ScrollContainer
 
 # The character menu and game over screen are sibling scenes. We check their state so that "back"
 # doesn't open this menu on top of them, and so it can't be opened while one of them is up.
@@ -25,6 +27,9 @@ extends CanvasLayer
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	visible = false
+
+	_update_responsive_size()
+	get_viewport().size_changed.connect(_update_responsive_size)
 
 	_master_volume_slider.value = Settings.master_volume
 	_music_volume_slider.value = Settings.music_volume
@@ -82,6 +87,16 @@ func _unhandled_input(event: InputEvent) -> void:
 				or (_game_over_screen and _game_over_screen.visible)):
 			get_viewport().set_input_as_handled()
 			open()
+
+
+# Keeps the panel a sensible, readable size at any viewport size/aspect ratio: a percentage of
+# the viewport, clamped between a minimum (readability floor on tiny/narrow windows) and a
+# maximum (avoids an absurdly stretched dialog on ultrawide/large windows). The panel's own
+# ScrollContainer takes over if content ever exceeds the clamped height.
+func _update_responsive_size() -> void:
+	var viewport_size: = get_viewport().get_visible_rect().size
+	_panel_container.custom_minimum_size.x = clampf(viewport_size.x * 0.22, 320.0, 480.0)
+	_scroll_container.custom_minimum_size.y = clampf(viewport_size.y * 0.6, 260.0, 640.0)
 
 
 func open() -> void:
