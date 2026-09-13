@@ -5,10 +5,15 @@ signal turn_resolved(summary: Dictionary)
 signal essence_assimilated(result: Dictionary)
 signal flaw_triggered(result: Dictionary)
 
+const GROUP_NAME: StringName = &"soul_strain_engine"
 const LOW_COMPATIBILITY_THRESHOLD: float = 0.45
 const REJECTION_DEBUFF_STEP: float = 25.0
 
 var state: SoulStrainState = SoulStrainState.new()
+
+
+func _enter_tree() -> void:
+	add_to_group(GROUP_NAME)
 
 
 func _ready() -> void:

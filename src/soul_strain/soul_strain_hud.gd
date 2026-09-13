@@ -5,11 +5,17 @@ extends CanvasLayer
 @onready var core_label: Label = %CoreGradeLabel
 @onready var rejection_label: Label = %RejectionLabel
 
+var _soul_strain: Node = null
+
 
 func _ready() -> void:
-	SoulStrain.state_changed.connect(_on_state_changed)
-	SoulStrain.turn_resolved.connect(_on_turn_resolved)
-	_on_state_changed(SoulStrain.state)
+	_soul_strain = get_tree().get_first_node_in_group(&"soul_strain_engine")
+	if not _soul_strain:
+		return
+
+	_soul_strain.state_changed.connect(_on_state_changed)
+	_soul_strain.turn_resolved.connect(_on_turn_resolved)
+	_on_state_changed(_soul_strain.state)
 
 
 func _on_state_changed(state: SoulStrainState) -> void:

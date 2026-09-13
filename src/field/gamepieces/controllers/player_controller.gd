@@ -121,7 +121,9 @@ func move_to_pressed_key(input_direction: Vector2) -> void:
 
 func _on_focus_arrived() -> void:
 	_waypoints.clear()
-	SoulStrain.resolve_turn(&"move")
+	var soul_strain: Node = get_tree().get_first_node_in_group(&"soul_strain_engine")
+	if soul_strain:
+		soul_strain.resolve_turn(&"move")
 	
 	if _target:
 		var distance_to_target: = _target.position - _focus.position
