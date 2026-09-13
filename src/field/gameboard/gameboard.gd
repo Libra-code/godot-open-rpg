@@ -124,8 +124,8 @@ func register_gameboard_layer(board_map: GameboardLayer) -> void:
 # Add cells to the pathfinder, checking that there are no blocking tiles on any GameboardLayers.
 # Returns a dictionary representing the cells that are actually added to the pathfinder (may differ
 # from cleared_cells). Key = cell id (int, see cell_to_index), value = coordinate (Vector2i)
-func _add_cells_to_pathfinder(cleared_cells: Array[Vector2i]) -> Dictionary[int, Vector2i]:
-	var added_cells: Dictionary[int, Vector2i] = {}
+func _add_cells_to_pathfinder(cleared_cells: Array[Vector2i]) -> Dictionary:
+	var added_cells: Dictionary = {}
 
 	# Verify whether or not cleared/blocked cells will change the state of the pathfinder.
 	# If there is no change in state, we will not pass along the cell to other systems and
@@ -162,7 +162,7 @@ func _remove_cells_from_pathfinder(blocked_cells: Array[Vector2i]) -> Array[Vect
 
 # Go through a list of cells added to the pathfinder (returned from _add_cells_to_pathfinder) and
 # connect them to each other and existing pathfinder cells.
-func _connect_new_pathfinder_cells(added_cells: Dictionary[int, Vector2i]) -> void:
+func _connect_new_pathfinder_cells(added_cells: Dictionary) -> void:
 	for uid in added_cells.keys():
 		if pathfinder.has_point(uid):
 			for neighbor in Gameboard.get_adjacent_cells(added_cells[uid]):

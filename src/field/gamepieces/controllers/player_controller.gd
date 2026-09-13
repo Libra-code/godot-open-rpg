@@ -119,21 +119,6 @@ func move_to_pressed_key(input_direction: Vector2) -> void:
 			move_path = new_move_path.duplicate()
 
 
-func _on_focus_arrived() -> void:
-	_waypoints.clear()
-	var soul_strain: Node = get_tree().get_first_node_in_group(&"soul_strain_engine")
-	if soul_strain:
-		soul_strain.resolve_turn(&"move")
-	
-	if _target:
-		var distance_to_target: = _target.position - _focus.position
-		_focus.direction = distance_to_target
-		
-		# TODO: Interactions go here.
-		
-		_target = null
-
-
 # The player has clicked on an empty gameboard cell. We'll try to move _gamepiece to the cell.
 func _on_cell_selected(cell: Vector2i) -> void:
 	# Wait until arrived when moving.
@@ -206,6 +191,9 @@ func _on_gamepiece_arriving(excess_distance: float) -> void:
 
 func _on_gamepiece_arrived() -> void:
 	super._on_gamepiece_arrived()
+	var soul_strain: Node = get_tree().get_first_node_in_group(&"soul_strain_engine")
+	if soul_strain:
+		soul_strain.resolve_turn(&"move")
 	
 	_player_collision.position = Vector2.ZERO
 	_interaction_shape.disabled = false

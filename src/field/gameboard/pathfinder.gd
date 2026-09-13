@@ -64,7 +64,7 @@ func get_path_to_cell(source_coord: Vector2i, target_coord: Vector2i,
 	# The pathfinder has several flags to ignore cell occupancy. We'll need to track which occupants
 	# are temporarily ignored and then re-disable their pathfinder points once a path is found.
 	# Key is point id, value is whether or not the point is disabled.
-	var ignored_points: Dictionary[int, bool] = {}
+	var ignored_points: Dictionary = {}
 	if (occupancy_flags & FLAG_ALLOW_ALL_OCCUPANTS) != 0:
 		for id in get_point_ids():
 			if is_point_disabled(id):

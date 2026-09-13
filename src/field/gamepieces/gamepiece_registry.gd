@@ -11,8 +11,8 @@ extends Node
 signal gamepiece_moved(gp: Gamepiece, new_cell: Vector2i, old_cell: Vector2i)
 signal gamepiece_freed(gp: Gamepiece, cell: Vector2i)
 
-# Store all registered gamepeices by the cell they occupy.
-var _gamepieces: Dictionary[Vector2i, Gamepiece] = {}
+# Store all registered gamepieces by the cell they occupy.
+var _gamepieces: Dictionary = {}
 
 
 func register(gamepiece: Gamepiece, cell: Vector2i) -> bool:
