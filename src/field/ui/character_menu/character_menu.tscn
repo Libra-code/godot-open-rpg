@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://src/field/ui/character_menu/character_menu.gd" id="1_cmenu"]
 [ext_resource type="PackedScene" uid="uid://dovvbljsj2xv0" path="res://src/soul_strain/soul_strain_hud.tscn" id="2_sstrn"]
 [ext_resource type="Script" uid="uid://xdpci16n7w0j" path="res://src/field/ui/inventory/ui_inventory.gd" id="3_invsc"]
+[ext_resource type="StyleBoxTexture" path="res://assets/gui/rpg_ui/stylebox_panel_wood.tres" id="4_panel"]
 
 [node name="CharacterMenu" type="CanvasLayer"]
 script = ExtResource("1_cmenu")
@@ -25,6 +26,7 @@ grow_vertical = 2
 [node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
 custom_minimum_size = Vector2(340, 0)
 layout_mode = 2
+theme_override_styles/panel = ExtResource("4_panel")
 
 [node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer"]
 layout_mode = 2
