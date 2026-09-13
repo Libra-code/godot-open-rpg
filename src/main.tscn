@@ -79,6 +79,7 @@
 [ext_resource type="Resource" uid="uid://bwjallq2c71rq" path="res://overworld/maps/opening_cutscene.dtl" id="68_jcriq"]
 [ext_resource type="Script" uid="uid://i6j3l72wljdc" path="res://src/combat/combat.gd" id="69_meyff"]
 [ext_resource type="PackedScene" path="res://src/field/ui/pause_menu/pause_menu.tscn" id="71_pmenu"]
+[ext_resource type="PackedScene" path="res://src/field/ui/character_menu/character_menu.tscn" id="72_cmenu"]
 
 [sub_resource type="Animation" id="Animation_y8463"]
 length = 0.001
@@ -793,6 +794,8 @@ wait_time = 0.5
 one_shot = true
 
 [node name="PauseMenu" parent="." instance=ExtResource("71_pmenu")]
+
+[node name="CharacterMenu" parent="." instance=ExtResource("72_cmenu")]
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1642469067]
 

@@ -1,0 +1,63 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://src/field/ui/character_menu/character_menu.gd" id="1_cmenu"]
+[ext_resource type="PackedScene" uid="uid://dovvbljsj2xv0" path="res://src/soul_strain/soul_strain_hud.tscn" id="2_sstrn"]
+[ext_resource type="Script" uid="uid://xdpci16n7w0j" path="res://src/field/ui/inventory/ui_inventory.gd" id="3_invsc"]
+
+[node name="CharacterMenu" type="CanvasLayer"]
+script = ExtResource("1_cmenu")
+
+[node name="DimBackground" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(340, 0)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="StatusPage" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="StatusTitleLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/StatusPage"]
+layout_mode = 2
+horizontal_alignment = 1
+text = "Stato"
+
+[node name="SoulStrainHUD" parent="CenterContainer/PanelContainer/MarginContainer/StatusPage" instance=ExtResource("2_sstrn")]
+layout_mode = 2
+
+[node name="InventoryPage" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="InventoryTitleLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/InventoryPage"]
+layout_mode = 2
+horizontal_alignment = 1
+text = "Inventario"
+
+[node name="Inventory" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/InventoryPage"]
+layout_mode = 2
+alignment = 1
+script = ExtResource("3_invsc")

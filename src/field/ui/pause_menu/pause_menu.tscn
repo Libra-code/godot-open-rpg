@@ -1,8 +1,6 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=2 format=3]
 
 [ext_resource type="Script" path="res://src/field/ui/pause_menu/pause_menu.gd" id="1_pmenu"]
-[ext_resource type="PackedScene" uid="uid://dovvbljsj2xv0" path="res://src/soul_strain/soul_strain_hud.tscn" id="2_sstrn"]
-[ext_resource type="Script" uid="uid://xdpci16n7w0j" path="res://src/field/ui/inventory/ui_inventory.gd" id="3_invsc"]
 
 [node name="PauseMenu" type="CanvasLayer"]
 script = ExtResource("1_pmenu")
@@ -23,7 +21,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
-custom_minimum_size = Vector2(340, 0)
+custom_minimum_size = Vector2(320, 0)
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer"]
@@ -33,96 +31,45 @@ theme_override_constants/margin_top = 24
 theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 24
 
-[node name="HubPage" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer"]
-unique_name_in_owner = true
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="TitleLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/HubPage"]
+[node name="TitleLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 horizontal_alignment = 1
-text = "Pausa"
+text = "Impostazioni"
 
-[node name="VSyncRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/HubPage"]
+[node name="VSyncRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="VSyncLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/HubPage/VSyncRow"]
+[node name="VSyncLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/VSyncRow"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "VSync"
 
-[node name="VSyncCheck" type="CheckButton" parent="CenterContainer/PanelContainer/MarginContainer/HubPage/VSyncRow"]
+[node name="VSyncCheck" type="CheckButton" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/VSyncRow"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="FullscreenRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/HubPage"]
+[node name="FullscreenRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="FullscreenLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/HubPage/FullscreenRow"]
+[node name="FullscreenLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/FullscreenRow"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Schermo Intero"
 
-[node name="FullscreenCheck" type="CheckButton" parent="CenterContainer/PanelContainer/MarginContainer/HubPage/FullscreenRow"]
+[node name="FullscreenCheck" type="CheckButton" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/FullscreenRow"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="StatusButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/HubPage"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Stato"
-
-[node name="InventoryButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/HubPage"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Inventario"
-
-[node name="ResumeButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/HubPage"]
+[node name="ResumeButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Riprendi"
 
-[node name="QuitButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/HubPage"]
+[node name="QuitButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Esci dal gioco"
-
-[node name="StatusPage" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-theme_override_constants/separation = 16
-
-[node name="StatusTitleLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/StatusPage"]
-layout_mode = 2
-horizontal_alignment = 1
-text = "Stato"
-
-[node name="SoulStrainHUD" parent="CenterContainer/PanelContainer/MarginContainer/StatusPage" instance=ExtResource("2_sstrn")]
-layout_mode = 2
-
-[node name="StatusBackButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/StatusPage"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Indietro"
-
-[node name="InventoryPage" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-theme_override_constants/separation = 16
-
-[node name="InventoryTitleLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/InventoryPage"]
-layout_mode = 2
-horizontal_alignment = 1
-text = "Inventario"
-
-[node name="Inventory" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/InventoryPage"]
-layout_mode = 2
-alignment = 1
-script = ExtResource("3_invsc")
-
-[node name="InventoryBackButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/InventoryPage"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Indietro"
