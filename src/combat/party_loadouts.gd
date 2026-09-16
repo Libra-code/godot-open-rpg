@@ -36,6 +36,16 @@ func get_item_by_id(item_id: String) -> EquipmentItem:
 	return _ITEM_REGISTRY.get(item_id)
 
 
+## Every character with a loadout on record. A character only appears here once something has
+## actually touched their loadout (equipping gear, unlocking a skill, finishing a battle) — anyone
+## absent from this list is still at the default level 1 / no gear.
+func get_all_character_names() -> Array[String]:
+	var names: Array[String] = []
+	for character_name in _loadouts:
+		names.append(character_name)
+	return names
+
+
 func get_loadout(character_name: String) -> CharacterLoadout:
 	if not _loadouts.has(character_name):
 		var loadout: = CharacterLoadout.new()
@@ -96,7 +106,12 @@ func to_save_dict() -> Dictionary:
 		for skill_id in loadout.unlocked_skill_ids:
 			unlocked.append(String(skill_id))
 
-		data[character_name] = {"equipped_items": equipped, "unlocked_skill_ids": unlocked}
+		data[character_name] = {
+			"equipped_items": equipped,
+			"unlocked_skill_ids": unlocked,
+			"level": loadout.level,
+			"xp": loadout.xp,
+		}
 
 	return data
 
@@ -120,3 +135,6 @@ func load_from_dict(data: Dictionary, item_lookup: Callable) -> void:
 		for skill_id in saved.get("unlocked_skill_ids", []):
 			unlocked.append(StringName(skill_id))
 		loadout.unlocked_skill_ids = unlocked
+
+		loadout.level = saved.get("level", 1)
+		loadout.xp = saved.get("xp", 0)

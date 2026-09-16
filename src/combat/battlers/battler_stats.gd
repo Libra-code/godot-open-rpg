@@ -126,6 +126,19 @@ func add_xp(amount: int) -> int:
 	return levels_gained
 
 
+## Fast-forwards a freshly duplicated (level 1 / 0 xp) BattlerStats to a previously-reached
+## [param target_level], applying the same per-level growth [method add_xp] would have, then
+## restores [param carried_xp] as progress toward the next level. This is how a persisted level
+## survives the fact that every battle gets a brand new BattlerStats duplicate (see
+## [method CharacterLoadout.apply_to_stats]) — it does not itself grant xp or emit [signal leveled_up].
+func restore_progress(target_level: int, carried_xp: int) -> void:
+	while level < target_level:
+		level += 1
+		_apply_level_up_growth()
+
+	xp = carried_xp
+
+
 # Applying growth to max_health/max_energy also has to bump the current health/energy, since
 # (unlike the other stats) they have no reactive link back to their base_* counterpart.
 func _apply_level_up_growth() -> void:

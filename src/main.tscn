@@ -81,6 +81,7 @@
 [ext_resource type="PackedScene" path="res://src/field/ui/pause_menu/pause_menu.tscn" id="71_pmenu"]
 [ext_resource type="PackedScene" path="res://src/field/ui/character_menu/character_menu.tscn" id="72_cmenu"]
 [ext_resource type="PackedScene" path="res://src/field/ui/game_over/game_over_screen.tscn" id="73_gover"]
+[ext_resource type="Resource" path="res://overworld/maps/town/town_biome.tres" id="74_biome"]
 
 [sub_resource type="Animation" id="Animation_y8463"]
 length = 0.001
@@ -465,6 +466,7 @@ metadata/_edit_lock_ = true
 position = Vector2(200, 264)
 script = ExtResource("33_0gswb")
 combat_arena = ExtResource("34_moieg")
+biome = ExtResource("74_biome")
 metadata/_edit_group_ = true
 
 [node name="InteractionPopup" parent="Field/Map/Town/Gamepieces/RoamingEncounter" unique_id=1596533944 instance=ExtResource("34_qs25x")]
@@ -484,6 +486,7 @@ pre_combat_timeline = ExtResource("36_fu3a1")
 victory_timeline = ExtResource("37_8j2gh")
 loss_timeline = ExtResource("38_f1335")
 combat_arena = ExtResource("35_x5y1m")
+biome = ExtResource("74_biome")
 
 [node name="InteractionPopup" parent="Field/Map/Town/Gamepieces/ConversationEncounter/Interaction" unique_id=311175232 instance=ExtResource("34_qs25x")]
 emote = 0

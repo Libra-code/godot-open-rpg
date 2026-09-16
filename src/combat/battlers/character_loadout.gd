@@ -11,6 +11,17 @@ class_name CharacterLoadout extends Resource
 ## slot (StringName) -> EquipmentItem
 @export var equipped_items: Dictionary = {}
 @export var unlocked_skill_ids: Array[StringName] = []
+## Carried over from the last battle's [BattlerStats], since a fresh duplicate always starts back
+## at level 1 / 0 xp otherwise. See [method apply_to_stats] and [method capture_progress].
+@export var level: int = 1
+@export var xp: int = 0
+
+
+## Called at the end of a battle to remember whatever level/xp that battle's [BattlerStats]
+## duplicate ended up with, so the next battle can restore it.
+func capture_progress(stats: BattlerStats) -> void:
+	level = stats.level
+	xp = stats.xp
 
 
 func equip(item: EquipmentItem) -> void:
@@ -30,9 +41,11 @@ func unlock_skill(skill_tree: SkillTree, skill_id: StringName) -> bool:
 	return true
 
 
-## Applies every equipped item's and unlocked skill's effects to [param stats]. Called once per
-## battle, right after [Battler] duplicates its stats resource.
+## Applies persisted level/xp and every equipped item's/unlocked skill's effects to [param stats].
+## Called once per battle, right after [Battler] duplicates its stats resource.
 func apply_to_stats(stats: BattlerStats, skill_tree: SkillTree = null) -> void:
+	stats.restore_progress(level, xp)
+
 	for slot in equipped_items:
 		var item: EquipmentItem = equipped_items[slot]
 		if item:

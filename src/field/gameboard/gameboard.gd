@@ -99,6 +99,27 @@ func get_adjacent_cells(cell: Vector2i) -> Array[Vector2i]:
 	return neighbours
 
 
+## Directly enables/disables an existing pathfinder cell, without requiring a dummy [Gamepiece] to
+## occupy it (compare with how [code]door.gd[/code] and the wand pedestal puzzle currently block a
+## cell today, by adding/freeing a [Gamepiece] purely to trigger [GamepieceRegistry]'s occupancy
+## signals). Prefer this for obstacles that aren't themselves a game-world "thing standing there" —
+## a puzzle-gated wall, a chunk boundary, a destructible barrier.
+##
+## Returns [code]false[/code] if [param cell] isn't currently part of the pathfinder at all (e.g.
+## it was never walkable to begin with), in which case there is nothing to block/unblock.
+func set_cell_blocked(cell: Vector2i, blocked: bool) -> bool:
+	var uid: = cell_to_index(cell)
+	if not pathfinder.has_point(uid):
+		return false
+
+	pathfinder.set_point_disabled(uid, blocked)
+
+	var added: Array[Vector2i] = [] if blocked else [cell]
+	var removed: Array[Vector2i] = [cell] if blocked else []
+	pathfinder_changed.emit(added, removed)
+	return true
+
+
 ## The Gameboard's state (where [Gamepiece]'s may or may not move) is composed from a number of
 ## [GameboardLayer]s. These layers determine which cells are blocked or clear.
 ## The layers register themselves to the Gameboard in _ready.
@@ -110,8 +131,6 @@ func register_gameboard_layer(board_map: GameboardLayer) -> void:
 	board_map.cells_changed.connect(
 		func _on_gameboard_layer_cells_changed(cleared_cells: Array[Vector2i],
 				blocked_cells: Array[Vector2i]):
-		if board_map.name == "DoorGameboardLayer":
-			print("Door layer ", cleared_cells, " ", blocked_cells)
 		var added_cells: = _add_cells_to_pathfinder(cleared_cells)
 		var removed_cells: = _remove_cells_from_pathfinder(blocked_cells)
 

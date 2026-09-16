@@ -24,7 +24,7 @@ signal interaction_selected(interaction: Interaction)
 ## Emitted whenever a combat is triggered. This will lead to a transition from the field 'state' to
 ## a combat 'state'.
 @warning_ignore("unused_signal")
-signal combat_triggered(arena: PackedScene)
+signal combat_triggered(arena: PackedScene, biome: BiomeDefinition)
 
 ## Emitted when a [Cutscene] begins, signalling that the player should yield control of their
 ## character to the cutscene code.

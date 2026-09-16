@@ -48,10 +48,12 @@ func _ready() -> void:
 	FieldEvents.combat_triggered.connect(setup)
 
 
-## Begin a combat. Takes a PackedScene as its only parameter, expecting it to be a CombatState 
-## object once instantiated.
+## Begin a combat. Takes a PackedScene as its only parameter, expecting it to be a CombatState
+## object once instantiated. [param biome], if given, rescales every enemy Battler's stats to the
+## party's current level (see [SpawnDirector]) — the arena's own stats resources are left
+## untouched, since a fresh scaled duplicate is swapped in instead.
 ## This is normally a response to [signal FieldEvents.combat_triggered].
-func setup(arena: PackedScene) -> void:
+func setup(arena: PackedScene, biome: BiomeDefinition = null) -> void:
 	await Transition.cover(0.2)
 	show()
 
@@ -64,7 +66,13 @@ func setup(arena: PackedScene) -> void:
 	var combat_arena: CombatArena = new_arena
 	_combat_container.add_child(combat_arena)
 	_battler_roster = combat_arena.get_battler_roster()
-	
+
+	if biome:
+		var party_level: = SpawnDirector.get_party_level()
+		for enemy in _battler_roster.get_enemy_battlers():
+			enemy.stats = SpawnDirector.scale_enemy_stats(enemy.stats, biome, party_level)
+			enemy.stats.initialize()
+
 	# Wait a frame for the arena and its children (VFX, Battlers, etc.) to be ready.
 	await get_tree().process_frame
 	
@@ -232,6 +240,10 @@ func _award_victory_xp() -> void:
 		var levels_gained: = battler.stats.add_xp(total_xp)
 		if levels_gained > 0:
 			_level_ups_this_battle[battler.name] = battler.stats.level
+
+		# The Battler (and its BattlerStats duplicate) is freed once combat wraps up; persist the
+		# level/xp it ended up with or the next battle would start back at level 1.
+		PartyLoadouts.get_loadout(battler.name).capture_progress(battler.stats)
 
 
 ## Displays a series of dialogue bubbles using Dialogic with information about the combat's outcome.

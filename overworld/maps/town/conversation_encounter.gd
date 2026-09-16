@@ -7,16 +7,19 @@ extends Interaction
 @export var loss_timeline: DialogicTimeline
 
 @export var combat_arena: PackedScene
+## Optional: scales this encounter's enemies to the party's current level. Leave empty for a
+## fixed-difficulty encounter, exactly as this behaved before biome scaling existed.
+@export var biome: BiomeDefinition
 
 
 func _execute() -> void:
 	Dialogic.start_timeline(pre_combat_timeline)
-	
+
 	# Wait for the timeline to finish before beginning combat.
 	await Dialogic.timeline_ended
-	
+
 	# Let other systems know that a combat has been triggered and then wait for its outcome.
-	FieldEvents.combat_triggered.emit(combat_arena)
+	FieldEvents.combat_triggered.emit(combat_arena, biome)
 	
 	var did_player_win: bool = await CombatEvents.combat_finished
 	
