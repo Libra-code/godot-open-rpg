@@ -1,7 +1,14 @@
 ## The game's boot screen (see `run/main_scene` in project.godot). Lets the player start a fresh
 ## game or resume a previous one, instead of `main.tscn`'s fixed starting state being the only way
 ## into the game.
-extends Control
+##
+## CanvasLayer, not Control, deliberately: a plain Control root renders through whatever Camera2D
+## is currently active in the viewport. Since `Camera` is an autoload that survives scene changes,
+## returning here from gameplay (see PauseMenu/GameOverScreen "Torna al Menu Principale") left the
+## FieldCamera's leftover transform shifting this entire menu off-screen. CanvasLayer always
+## renders in screen space, ignoring any active camera — the same reason every other full-screen
+## menu in this project (PauseMenu, CharacterMenu, GameOverScreen) is a CanvasLayer too.
+extends CanvasLayer
 
 const MAIN_SCENE: = "res://src/main.tscn"
 

@@ -5,22 +5,10 @@
 [ext_resource type="StyleBox" path="res://assets/gui/rpg_ui/stylebox_button_normal.tres" id="3_btnn"]
 [ext_resource type="StyleBox" path="res://assets/gui/rpg_ui/stylebox_button_pressed.tres" id="4_btnp"]
 
-[node name="MainMenu" type="Control" unique_id=2009887847]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -1100.0
-offset_top = -550.0
-offset_right = -1000.0
-offset_bottom = -400.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="MainMenu" type="CanvasLayer" unique_id=2009887847]
 script = ExtResource("1_mmenu")
 
 [node name="Background" type="ColorRect" parent="." unique_id=1345678500]
-propagate_maximum_size = true
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -29,14 +17,9 @@ grow_vertical = 2
 color = Color(0.0941176, 0.0784314, 0.145098, 1)
 
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=1123563700]
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 21.0
-offset_top = 21.0
-offset_right = 21.0
-offset_bottom = 21.0
 grow_horizontal = 2
 grow_vertical = 2
 

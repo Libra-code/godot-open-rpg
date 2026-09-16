@@ -4,6 +4,19 @@
 dall'utente sulla macchina reale. Se il problema persiste, servono comunque i dati diagnostici
 elencati in "Prossimo passo".
 
+**Nota di disambiguazione:** un secondo problema, superficialmente simile ("il Menu Principale
+mostra uno schermo vuoto/grigio"), è stato segnalato e risolto separatamente — non è lo stesso
+bug descritto qui. Quello nuovo si manifestava solo tornando al Menu Principale *da una partita
+in corso* (pulsante "Torna al Menu Principale" in Pausa/Game Over): la telecamera di campo
+(`Camera`, autoload `Camera2D`) resta attiva dopo il cambio scena e la sua trasformazione
+spostava fuori schermo l'intero pannello del menu, perché `MainMenu` aveva come radice un
+`Control` semplice invece di un `CanvasLayer` (che ignora sempre la telecamera attiva, come
+fanno già PauseMenu/CharacterMenu/GameOverScreen). Risolto convertendo la radice di
+`main_menu.tscn` in `CanvasLayer` — verificato riproducendo il bug con uno script diagnostico
+(`PanelContainer` finiva a `x = -330`, fuori dal viewport) e confermando che dopo il fix torna
+perfettamente centrato nonostante la telecamera resti attiva. Questo problema qui descritto
+(finestra OS più grande dello schermo al primo avvio) resta invece aperto.
+
 ## Sintomo (descritto dall'utente, verbatim)
 
 > la finestra risulta piu grande dello schermo quidni il menu compoare in bassoi a detra
