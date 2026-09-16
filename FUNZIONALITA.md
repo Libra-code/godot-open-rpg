@@ -146,18 +146,46 @@ progetto, non come changelog cronologico (per quello vedi `CHANGELOG.md`).
 - Bus Master/Musica/Effetti con volumi regolabili dal Menu Impostazioni, persistenti tra sessioni.
 
 ### Mappa generata proceduralmente, collegata al gioco vero
-- **Nuova area "Dungeon"**, raggiungibile davvero da Town (ingresso "L'Ingresso della Grotta" vicino
-  alla zona est, uscita corrispondente dentro la grotta): al primo accesso, `DungeonMap` genera un
-  livello con `BSPDungeonGenerator` (lo stesso motore del prototipo isolato, riusato senza modifiche)
-  e lo dipinge su un `GameboardLayer` vero, quindi `Gameboard`/`Pathfinder` lo trattano esattamente
-  come Town o la Foresta — nessuna infrastruttura nuova, solo contenuto disegnato a runtime invece
-  che a mano. Il punto di ingresso è forzato ad essere sempre raggiungibile (un piccolo corridoio
-  collega il punto fisso di arrivo alla stanza generata più vicina), a prescindere da cosa produce
-  il seed. **Verificato con un test diretto**: 201/201 celle generate risultano raggiungibili
-  dall'ingresso via il vero pathfinder di gioco, e le celle di Town restano inalterate (nessuna
-  regressione). File: `overworld/maps/dungeon/dungeon.tscn`, `dungeon_map.gd`.
-- Limite noto: un solo layout per partita (seed fisso, `region_seed = 1`), nessun nemico/loot dentro
-  — è un'integrazione dell'infrastruttura di generazione nel gioco vero, non un dungeon "finito".
+- **Tre livelli di Dungeon incatenati**, raggiungibili davvero da Town (ingresso "L'Ingresso della
+  Grotta" vicino alla zona est): al primo accesso, `DungeonMap` genera ogni livello con
+  `BSPDungeonGenerator` (lo stesso motore del prototipo isolato, riusato senza modifiche) e lo
+  dipinge su un `GameboardLayer` vero, quindi `Gameboard`/`Pathfinder` lo trattano esattamente come
+  Town o la Foresta — nessuna infrastruttura nuova, solo contenuto disegnato a runtime invece che a
+  mano. `DungeonMap` è un unico script riusato tre volte con `@export` diversi (bounds, seed,
+  tavolozza), sullo stesso pattern di `AreaTransition`/`Landmark`.
+  - **Arte reale del dungeon**: i tre livelli dipingono `overworld/maps/tilesets/dungeon_tilemap.png`
+    (fonte già registrata come source id 1 su `kenney_terrain.tres`, con tile pavimento/muro e dati
+    di blocco già pronti — ma mai dipinta da nessuna parte prima d'ora) invece del singolo tile
+    d'erba di Town usato dal prototipo originale: pavimento variato per cella e muri veri intorno a
+    stanze/corridoi, con tavolozze diverse per livello (terra chiara, terra scura, pietra) per
+    distinguerli a colpo d'occhio.
+  - Punti di ingresso/uscita sono forzati a restare sempre raggiungibili (un piccolo corridoio li
+    collega alla stanza generata più vicina), a prescindere da cosa produce il seed.
+  - **Bug corretto durante questo lavoro**: il codice che sceglie "la stanza generata più vicina" a
+    cui collegare un punto forzato aggiungeva prima la nuova mini-stanza all'elenco delle stanze e
+    *poi* cercava la più vicina — trovando sempre se stessa (distanza 0) e scavando un corridoio di
+    lunghezza zero. Il punto restava isolato a meno che il seed non piazzasse per fortuna una stanza
+    già adiacente: è per questo che il Livello 1 originale "funzionava" per puro caso mentre il
+    Livello 2 (nuovo) risultava un'isola irraggiungibile di 9 celle. Corretto cercando la stanza più
+    vicina *prima* di aggiungere quella forzata.
+  - **Bug corretto, più serio**: `Gameboard`/`Pathfinder` usano un singolo `GameboardProperties`
+    condiviso (`overworld/maps/gbprops.tres`) con `extents = Rect2i(0, 0, 70, 35)` — qualsiasi cella
+    fuori da questo rettangolo non viene mai aggiunta al pathfinder (`Gameboard.cell_to_index`
+    ritorna un indice non valido), quindi il giocatore non può muoversi lì per davvero anche se le
+    tile sono dipinte e visibili. I dungeon vivono a `x:150..290`, ben fuori da quel rettangolo: la
+    grotta originale (già presente prima di questo lavoro) non era in realtà mai stata raggiungibile
+    in gioco, solo visivamente "presente". `extents` è stato allargato a `Rect2i(0, 0, 300, 35)` —
+    non aggiunge celle fantasma altrove (il pathfinder registra solo le celle che una mappa dipinge
+    davvero), ma sblocca sia i tre livelli nuovi sia quello preesistente.
+  - **Verificato con un test diretto** (BFS indipendente sul layout generato + pathfinder di gioco
+    vero via `Gameboard.pathfinder.get_path_to_cell`): tutte le celle generate di ciascun livello
+    risultano raggiungibili dal proprio ingresso, un percorso valido esiste sempre tra ingresso e
+    uscita di ogni livello, e le celle di Town/House/Foresta restano identiche a prima (nessuna
+    regressione). File: `overworld/maps/dungeon/dungeon.tscn` (Livello 1), `dungeon_level_2.tscn`,
+    `dungeon_level_3.tscn`, `dungeon_map.gd`, `overworld/maps/gbprops.tres`.
+- Limite noto: un solo layout per livello per build (seed fisso per livello), nessun nemico/loot
+  dentro — è un'integrazione dell'infrastruttura di generazione nel gioco vero, non un dungeon
+  "finito".
 
 ### Prototipo isolato (NON collegato al gioco vero)
 In `src/worldgen_prototype/`, eseguibile come scena a sé stante:
@@ -184,7 +212,7 @@ da validare prima di un'eventuale integrazione.
 | 5 | **Streaming a chunk e grafo mondo non integrati** | Restano isolati in `src/worldgen_prototype/`: un cambio di architettura più grande del generatore BSP (ora collegato al gioco vero). |
 | 6 | **Bilanciamento generale** | Biomi, ricompense, curve di difficoltà, effetti di stato: tutto quanto costruito è minimale/dimostrativo, pensato per essere corretto, non bilanciato per il gioco finito. |
 | 7 | **Loot non raccoglibile per consumabili/materiali** | I drop di tipo diverso da "equipment" (dalla nuova tabella di loot) sono solo annunciati a fine battaglia, non raccolti da nessuna parte: `Inventory` capisce solo il suo enum fisso di 6 oggetti. |
-| 8 | **Dungeon a contenuto minimo** | La nuova area generata proceduralmente non ha nemici, loot, né varietà tra le partite (seed fisso): è l'infrastruttura collegata, non un livello di gioco completo. |
+| 8 | **Dungeon a contenuto minimo** | I tre livelli generati proceduralmente non hanno nemici né loot, e ogni livello ha un seed fisso (stesso layout ad ogni partita): è l'infrastruttura collegata con tre varianti visive/strutturali, non un dungeon di gioco completo. |
 
 ---
 

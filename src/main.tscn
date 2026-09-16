@@ -53,7 +53,6 @@
 [ext_resource type="PackedScene" uid="uid://cgwailb13nkcd" path="res://overworld/characters/ghost_gfx.tscn" id="36_7n3c5"]
 [ext_resource type="Resource" uid="uid://gcpgk7rnyguj" path="res://overworld/maps/town/encounter_before_combat.dtl" id="36_fu3a1"]
 [ext_resource type="PackedScene" uid="uid://bd624fi8r2avm" path="res://src/field/cutscenes/templates/area_transitions/area_transition.tscn" id="37_6xxks"]
-[ext_resource type="PackedScene" path="res://overworld/maps/dungeon/dungeon.tscn" id="dungeon_1"]
 [ext_resource type="Resource" uid="uid://dmmexun61mw4j" path="res://overworld/maps/town/encounter_on_victory.dtl" id="37_8j2gh"]
 [ext_resource type="Resource" uid="uid://r1aeyknxv1hr" path="res://overworld/maps/forest/ghost.dtl" id="37_uncgg"]
 [ext_resource type="Resource" uid="uid://c4ns5mfdjc11e" path="res://overworld/maps/town/encounter_on_loss.dtl" id="38_f1335"]
@@ -85,6 +84,9 @@
 [ext_resource type="Resource" path="res://overworld/maps/town/town_biome.tres" id="74_biome"]
 [ext_resource type="Script" uid="uid://cdle174n60jv4" path="res://src/world/landmark.gd" id="75_landmark"]
 [ext_resource type="PackedScene" path="res://src/field/ui/help_modal/help_modal.tscn" id="76_help"]
+[ext_resource type="PackedScene" path="res://overworld/maps/dungeon/dungeon.tscn" id="dungeon_1"]
+[ext_resource type="PackedScene" path="res://overworld/maps/dungeon/dungeon_level_2.tscn" id="dungeon_2"]
+[ext_resource type="PackedScene" path="res://overworld/maps/dungeon/dungeon_level_3.tscn" id="dungeon_3"]
 
 [sub_resource type="Animation" id="Animation_y8463"]
 length = 0.001
@@ -762,6 +764,10 @@ new_music = ExtResource("41_uxhyb")
 metadata/_edit_lock_ = true
 
 [node name="Dungeon" parent="Field/Map" unique_id=2004008001 instance=ExtResource("dungeon_1")]
+
+[node name="DungeonLevel2" parent="Field/Map" unique_id=2004008010 instance=ExtResource("dungeon_2")]
+
+[node name="DungeonLevel3" parent="Field/Map" unique_id=2004008020 instance=ExtResource("dungeon_3")]
 
 [node name="Overlay" type="Node2D" parent="Field/Map" unique_id=946126041]
 
