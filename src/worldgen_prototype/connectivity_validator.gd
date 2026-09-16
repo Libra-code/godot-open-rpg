@@ -26,7 +26,7 @@ static func _flood_fill(layout: RegionLayout, start: Vector2i) -> Dictionary:
 	var frontier: Array[Vector2i] = [start]
 	visited[start] = true
 
-	const NEIGHBOR_OFFSETS: = [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]
+	const NEIGHBOR_OFFSETS: Array[Vector2i] = [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]
 
 	while not frontier.is_empty():
 		var current: Vector2i = frontier.pop_back()

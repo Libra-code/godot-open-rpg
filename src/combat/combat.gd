@@ -228,6 +228,12 @@ func _get_next_actor() -> Battler:
 func _on_combat_finished(is_player_victory: bool) -> void:
 	if is_player_victory:
 		_award_victory_xp()
+	else:
+		# A lost battle is the one moment the field layer can't already cover: failing to protect
+		# the party is the closest thing to "breaking your oath" that currently exists in-game (see
+		# the "oathbound" flaw in soul_strain_engine.gd, and the Wizard/pedestal story beat that can
+		# assign it). Harmless no-op if the player's Core hasn't been awakened with that flaw yet.
+		SoulStrain.resolve_turn(&"oath_broken")
 
 	# Fade out the combat UI elements.
 	_ui.animation.play("fade_out")

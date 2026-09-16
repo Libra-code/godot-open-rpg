@@ -75,6 +75,8 @@ func _execute() -> void:
 		solved_animation.play("solve")
 		await solved_animation.animation_finished
 
+		_awaken_soul_core()
+
 
 # Check to see if ALL pedestals have the correct wand placed on them.
 func _is_puzzle_solved() -> bool:
@@ -82,6 +84,29 @@ func _is_puzzle_solved() -> bool:
 		if not value:
 			return false
 	return true
+
+
+# The pedestal ritual is what the Wizard sends the player to complete once he notices their
+# dormant Soul Strain Core (see wizard.dtl). The first time it's solved, it resolves that: the
+# player's Core stops being an anonymous default and becomes something the rest of the game can
+# actually reference (name, aspect, flaw). Guarded so re-solving after removing/replacing wands
+# (impossible today since solved pedestals deactivate, but harmless to guard anyway) can't re-fire.
+func _awaken_soul_core() -> void:
+	if Dialogic.VAR.get_variable("SoulCoreAwakened") == 1:
+		return
+
+	Dialogic.VAR.set_variable("SoulCoreAwakened", 1)
+
+	var soul_strain: Node = get_tree().get_first_node_in_group(&"soul_strain_engine")
+	if not soul_strain:
+		return
+
+	var state: SoulStrainState = soul_strain.state
+	state.character_name = "Gobot"
+	state.aspect = "Ferro"
+	state.flaw_id = &"oathbound"
+	state.flaw_display_name = "Vincolo del Dovere"
+	soul_strain.set_core_grade(SoulStrainState.CORE_AWAKENED)
 
 
 # This responds to a signal event within a Dialogic timeline. Note that this is only bound to the

@@ -82,9 +82,11 @@ variables={
 "HasWizardToken": 0,
 "Hint": 0,
 "RedWandCount": 0,
+"SoulCoreAwakened": 0,
 "StrangeTreeExamined": 0,
 "TokenCount": 0,
-"TokenQuestStatus": 0
+"TokenQuestStatus": 0,
+"WizardRevealed": 0
 }
 
 [display]

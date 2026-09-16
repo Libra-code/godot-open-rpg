@@ -16,6 +16,7 @@ var _last_progress_text: Dictionary = {} # StringName -> String, last known "met
 # system on top of the same Dialogic variables fan_interaction.gd already reads and writes.
 const _DEFAULT_QUESTS: = [
 	preload("res://overworld/maps/town/fan_of_four_quest.tres"),
+	preload("res://overworld/maps/town/soul_awakening_quest.tres"),
 ]
 
 

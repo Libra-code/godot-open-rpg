@@ -30,7 +30,17 @@ progetto, non come changelog cronologico (per quello vedi `CHANGELOG.md`).
 - **Motore missioni** (`QuestLog`) che avvolge le variabili Dialogic già usate dai dialoghi
   (es. `TokenQuestStatus`) in un `QuestDefinition` tipato, con obiettivi e stato di completamento.
 - **UI Registro Missioni** nel Menu Personaggio (tasto **Q**): elenca missioni attive (con
-  progresso) e completate. La missione "Banda dei Quattro" è collegata a questo sistema.
+  progresso) e completate.
+- **Storia principale — "Il Nucleo Dormiente"** (prototipo): il Mago, dopo aver dato il suo pegno
+  per la "Banda dei Quattro" (ora relegata a siparietto comico, invariata), nota qualcosa di
+  strano nell'anima del giocatore e apre una vera missione (`soul_awakening_quest.tres`):
+  esaminare l'Albero Strano con occhi nuovi, poi risolvere il rituale del piedistallo delle
+  bacchette in casa. Risolvere il rituale per la prima volta **risveglia davvero** il Soul Strain
+  Core del giocatore (`Dormiente → Risvegliato`, più slot abilità), gli assegna nome/aspetto/difetto
+  per la prima volta ("Gobot", difetto "Vincolo del Dovere" = `oathbound`), e collega quel difetto a
+  una conseguenza reale: perdere un combattimento ora danneggia il Soul Strain (12 HP, +12% rigetto
+  anima) — prima nessuna delle quattro "flaw" del motore era mai davvero innescata da alcuna azione
+  di gioco.
 
 ### Combattimento
 - Combattimento a turni con `Battler`, azioni, IA nemica, roster giocatore/nemici.

@@ -1,7 +1,8 @@
 if {StrangeTreeExamined} > 0:
+	The bark hums, faintly, now that you're actually listening for it — the same low strain you feel behind your own eyes.
 	Wait, what if I went *around* the tree!?
 	[signal arg="ClearPath"]
 else:
-	It's too bad this tree is in the way...
+	It's too bad this tree is in the way...[pause=0.3] though something about standing this close to it makes the rattling in your chest go quiet, just for a moment.
 	set {StrangeTreeExamined} = 1
 [end_timeline]

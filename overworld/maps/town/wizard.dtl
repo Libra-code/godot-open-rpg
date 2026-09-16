@@ -6,4 +6,16 @@ if {HasWizardToken} == 0:
 	[signal arg="coin_received"]
 	set {HasWizardToken} = 1
 	set {TokenCount} += 1
+elif {WizardRevealed} == 0:
+	wizard: ...Wait.
+	wizard: [pause=0.3]Hold still, little one.
+	wizard: [color=cyan]There's something rattling behind your eyes that isn't gears.[/color]
+	wizard: A soul, half-asleep, wrapped around a duty it never chose. How curious, for something built.
+	wizard: I am no healer, but I know a dormant Core when I feel one straining against its own shell.
+	wizard: [i]That[/i] tree at the edge of town — the one nobody can be bothered to walk around — has roots that answer to the same kind of strain. Go look at it properly this time.
+	wizard: And when you're done staring at bark, there's an old pedestal in the house past the square. Wands, colors, a little ritual. It was built to test exactly what's rattling in you.
+	wizard: Go on, then. Wake it up before it wakes up angry.
+	set {WizardRevealed} = 1
+else:
+	wizard: The tree, then the pedestal. Don't dawdle — a strained soul doesn't get gentler with time.
 [end_timeline]
