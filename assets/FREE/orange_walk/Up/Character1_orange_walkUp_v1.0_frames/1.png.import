@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://8v6hqd47n57i"
-path="res://.godot/imported/1.png-3a307a992529811723b97d66ea83d10c.ctex"
+path="res://.godot/imported/1.png-b72f2c7bfbe47bbc0ffcaee9cb4041f8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://FREE/orange_walk/Up/Character1_orange_walkUp_v1.0_frames/1.png"
-dest_files=["res://.godot/imported/1.png-3a307a992529811723b97d66ea83d10c.ctex"]
+source_file="res://assets/FREE/orange_walk/Up/Character1_orange_walkUp_v1.0_frames/1.png"
+dest_files=["res://.godot/imported/1.png-b72f2c7bfbe47bbc0ffcaee9cb4041f8.ctex"]
 
 [params]
 

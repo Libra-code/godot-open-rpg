@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dxekw5cim8l1f"
-path="res://.godot/imported/fb310.png-886ee152a01eade421894f3156c36e43.ctex"
+path="res://.godot/imported/fb310.png-4cb9cba16af5222a9d0dd6aa67b984d6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Free - Raven Fantasy Icons/Separated Files/32x32/fb310.png"
-dest_files=["res://.godot/imported/fb310.png-886ee152a01eade421894f3156c36e43.ctex"]
+source_file="res://assets/Free - Raven Fantasy Icons/Separated Files/32x32/fb310.png"
+dest_files=["res://.godot/imported/fb310.png-4cb9cba16af5222a9d0dd6aa67b984d6.ctex"]
 
 [params]
 
