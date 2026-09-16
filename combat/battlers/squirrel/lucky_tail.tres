@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="EquipmentItem" format=3 uid="uid://fiwrbyt888ic"]
+
+[ext_resource type="Script" uid="uid://oql8qwca0gk5" path="res://src/combat/battlers/equipment_item.gd" id="1_equip"]
+[ext_resource type="Script" uid="uid://btr2rrwexbonj" path="res://src/combat/battlers/stat_modifier_effect.gd" id="2_mod"]
+
+[sub_resource type="Resource" id="Resource_spd"]
+script = ExtResource("2_mod")
+stat_name = "speed"
+amount = 8.0
+
+[resource]
+script = ExtResource("1_equip")
+id = &"lucky_tail"
+display_name = "Codino Fortunato"
+slot = &"trinket"
+modifiers = Array[ExtResource("2_mod")]([SubResource("Resource_spd")])

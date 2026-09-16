@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="QuestDefinition" format=3]
+[gd_resource type="Resource" script_class="QuestDefinition" format=3 uid="uid://d16m5kdsumnwe"]
 
-[ext_resource type="Script" path="res://src/quests/quest_definition.gd" id="1_quest"]
-[ext_resource type="Script" path="res://src/quests/quest_objective.gd" id="2_obj"]
+[ext_resource type="Script" uid="uid://bc3lf2fxs1rr4" path="res://src/quests/quest_definition.gd" id="1_quest"]
+[ext_resource type="Script" uid="uid://dneosmrbxu6np" path="res://src/quests/quest_objective.gd" id="2_obj"]
 
 [sub_resource type="Resource" id="Resource_completion"]
 script = ExtResource("2_obj")

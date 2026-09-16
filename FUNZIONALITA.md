@@ -51,7 +51,9 @@ progetto, non come changelog cronologico (per quello vedi `CHANGELOG.md`).
   corretto in sessione: prima ogni Battler ripartiva da livello 1 ad ogni scontro).
 - **Equipaggiamento e alberi abilità** (`PartyLoadouts`): oggetti e abilità sbloccabili applicano
   modificatori riutilizzando l'API esistente di `BattlerStats`. Contenuto dimostrativo: Baloo parte
-  con gli "Artigli d'Acciaio" (+3 attacco) e un albero a 2 nodi con prerequisito.
+  con gli "Artigli d'Acciaio" (+3 attacco) e un albero a 2 nodi con prerequisito; Nutsy parte con il
+  "Codino Fortunato" (+8 velocità) e un proprio albero a 2 nodi ("Passo Leggero" +10 elusione →
+  "Riflessi Fulminei" +20% velocità), a tema con il suo ruolo di supporto agile.
 - **UI Equipaggiamento/Abilità** nel Menu Personaggio (tasto **E**): equipaggia/disequipaggia
   oggetti, sblocca abilità (i prerequisiti sono verificati davvero; il "costo" mostrato è solo
   informativo, vedi sezione mancanze).
@@ -129,10 +131,9 @@ mappa attuale (interamente disegnata a mano), da validare prima di un'eventuale 
 | 2 | **Costo reale delle abilità** | `SkillTreeNode.cost` esiste ma non viene mai speso: sbloccare un'abilità è gratis, verifica solo i prerequisiti. |
 | 3 | **Restrizioni equipaggiamento** | Qualsiasi personaggio gestito può equipaggiare qualsiasi oggetto: non esiste un concetto di "arma solo per l'orso". |
 | 4 | **Consumo dei segnali Landmark** | Nessuna bussola/indicatore/suono reagisce a `landmark_entered_sight`/`exited_sight`. |
-| 5 | **Contenuto oltre Baloo** | Nutsy (secondo personaggio giocante) ha ora "Furia" ma non un vero equipaggiamento/albero abilità come Baloo. |
-| 6 | **Generazione procedurale non integrata** | Il prototipo in `src/worldgen_prototype/` funziona ma resta isolato dal gioco vero. |
-| 7 | **Bilanciamento generale** | Biomi, ricompense, curve di difficoltà, effetti di stato: tutto quanto costruito è minimale/dimostrativo, pensato per essere corretto, non bilanciato per il gioco finito. |
-| 8 | **Nessun "torna al menu principale"** | Da Pause/Game Over si può solo "Esci dal gioco" (chiude il processo); non c'è un modo di tornare al Menu Principale restando nel gioco. |
+| 5 | **Generazione procedurale non integrata** | Il prototipo in `src/worldgen_prototype/` funziona ma resta isolato dal gioco vero. |
+| 6 | **Bilanciamento generale** | Biomi, ricompense, curve di difficoltà, effetti di stato: tutto quanto costruito è minimale/dimostrativo, pensato per essere corretto, non bilanciato per il gioco finito. |
+| 7 | **Nessun "torna al menu principale"** | Da Pause/Game Over si può solo "Esci dal gioco" (chiude il processo); non c'è un modo di tornare al Menu Principale restando nel gioco. |
 
 ---
 

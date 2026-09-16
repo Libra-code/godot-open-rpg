@@ -14,12 +14,14 @@ var _skill_trees: Dictionary = {} # character_name (String) -> SkillTree
 # flow instead of hardcoding them here.
 const _DEFAULT_SKILL_TREES: = {
 	"Baloo": preload("res://combat/battlers/bear/baloo_skill_tree.tres"),
+	"Nutsy": preload("res://combat/battlers/squirrel/nutsy_skill_tree.tres"),
 }
 
 # Every EquipmentItem in the game, keyed by its id. Lets SaveGame resolve an equipped item back
 # from the string id it persists (see load_from_dict), instead of saving whole item resources.
 const _ITEM_REGISTRY: = {
 	"claw_gauntlets": preload("res://combat/battlers/bear/claw_gauntlets.tres"),
+	"lucky_tail": preload("res://combat/battlers/squirrel/lucky_tail.tres"),
 }
 
 
@@ -30,6 +32,7 @@ func _ready() -> void:
 	# Starting gear, so the system is active from the very first battle rather than sitting unused
 	# until a shop/loot UI exists to grant equipment.
 	equip("Baloo", _ITEM_REGISTRY["claw_gauntlets"])
+	equip("Nutsy", _ITEM_REGISTRY["lucky_tail"])
 
 
 func get_item_by_id(item_id: String) -> EquipmentItem:
