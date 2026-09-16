@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ApplyStatusBattlerAction" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://src/combat/actions/battler_action_apply_status.gd" id="1_pbite"]
+[ext_resource type="Resource" path="res://combat/status_effects/poison.tres" id="2_poison"]
+
+[resource]
+script = ExtResource("1_pbite")
+base_damage = 0
+hit_chance = 100.0
+status_effect = ExtResource("2_poison")
+name = "Morso Velenoso"
+description = "Un morso che non fa danno diretto ma avvelena il bersaglio."
+target_scope = 1
+targets_friendlies = false
+targets_enemies = true
+energy_cost = 0
+readiness_saved = 30.0

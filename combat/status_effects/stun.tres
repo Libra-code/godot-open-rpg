@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="StatusEffect" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/combat/battlers/status_effect.gd" id="1_stun"]
+
+[resource]
+script = ExtResource("1_stun")
+id = &"stun"
+display_name = "Stordimento"
+description = "Il bersaglio non puo' agire per la durata dell'effetto."
+duration_rounds = 1
+prevents_action = true
+damage_per_round = 0

@@ -49,6 +49,14 @@ progetto, non come changelog cronologico (per quello vedi `CHANGELOG.md`).
   più alto del party, tramite un bioma "Dintorni della Città" (moltiplicatore 1.0→1.5).
 - Alla sconfitta, i nemici del mondo di gioco vengono rimossi davvero dalla scena (era un bug
   reale per il "ConversationEncounter": il nemico restava combattibile all'infinito).
+- **Effetti di stato** (`StatusEffect`): veleno (danno a inizio turno), stordimento (salta il
+  turno, gestito automaticamente dalla coda dei turni senza richiedere una scelta al
+  giocatore/IA) e buff a tempo (es. "Furia", +attacco per N turni) — tutti con durata in round e
+  rimozione automatica dei modificatori alla scadenza, riusando l'API esistente
+  `BattlerStats.add_modifier/add_multiplier`. Applicare lo stesso effetto mentre è già attivo ne
+  rinnova la durata invece di sommarlo. Contenuto dimostrativo: i Bugcat nemici hanno "Morso
+  Velenoso", Baloo ha "Colpo Stordente", Nutsy ha "Furia". Feedback visivo dedicato (etichette
+  fluttuanti) per applicazione/scadenza/danno nel tempo.
 
 ### Soul Strain (stato personaggio sul campo)
 - HP, mana, statistiche primarie, difetti, rigetto anima, essenze — motore già esistente prima di
@@ -102,14 +110,13 @@ mappa attuale (interamente disegnata a mano), da validare prima di un'eventuale 
 | # | Cosa manca | Note |
 |---|---|---|
 | 1 | **Negozio/Economia** | La moneta esiste nell'inventario, nessun NPC/UI per comprare o vendere. |
-| 2 | **Effetti di stato in combattimento** | Nessun veleno/stordimento/buff a tempo tra i Battler. L'Hazard system tocca solo il campo, non la battaglia. |
-| 3 | **Menu principale / Nuova Partita** | Il gioco parte sempre nello stesso stato fisso di `main.tscn`; nessuna schermata iniziale, nessun "continua". |
-| 4 | **Costo reale delle abilità** | `SkillTreeNode.cost` esiste ma non viene mai speso: sbloccare un'abilità è gratis, verifica solo i prerequisiti. |
-| 5 | **Restrizioni equipaggiamento** | Qualsiasi personaggio gestito può equipaggiare qualsiasi oggetto: non esiste un concetto di "arma solo per l'orso". |
-| 6 | **Consumo dei segnali Landmark** | Nessuna bussola/indicatore/suono reagisce a `landmark_entered_sight`/`exited_sight`. |
-| 7 | **Contenuto oltre Baloo** | Nutsy (secondo personaggio giocante) non ha equipaggiamento né albero abilità propri. |
-| 8 | **Generazione procedurale non integrata** | Il prototipo in `src/worldgen_prototype/` funziona ma resta isolato dal gioco vero. |
-| 9 | **Bilanciamento generale** | Biomi, ricompense, curve di difficoltà: tutto quanto costruito è minimale/dimostrativo, pensato per essere corretto, non bilanciato per il gioco finito. |
+| 2 | **Menu principale / Nuova Partita** | Il gioco parte sempre nello stesso stato fisso di `main.tscn`; nessuna schermata iniziale, nessun "continua". |
+| 3 | **Costo reale delle abilità** | `SkillTreeNode.cost` esiste ma non viene mai speso: sbloccare un'abilità è gratis, verifica solo i prerequisiti. |
+| 4 | **Restrizioni equipaggiamento** | Qualsiasi personaggio gestito può equipaggiare qualsiasi oggetto: non esiste un concetto di "arma solo per l'orso". |
+| 5 | **Consumo dei segnali Landmark** | Nessuna bussola/indicatore/suono reagisce a `landmark_entered_sight`/`exited_sight`. |
+| 6 | **Contenuto oltre Baloo** | Nutsy (secondo personaggio giocante) ha ora "Furia" ma non un vero equipaggiamento/albero abilità come Baloo. |
+| 7 | **Generazione procedurale non integrata** | Il prototipo in `src/worldgen_prototype/` funziona ma resta isolato dal gioco vero. |
+| 8 | **Bilanciamento generale** | Biomi, ricompense, curve di difficoltà, effetti di stato: tutto quanto costruito è minimale/dimostrativo, pensato per essere corretto, non bilanciato per il gioco finito. |
 
 ---
 

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="StatusEffect" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/combat/battlers/status_effect.gd" id="1_rage"]
+
+[resource]
+script = ExtResource("1_rage")
+id = &"rage"
+display_name = "Furia"
+description = "Aumenta l'attacco per qualche turno."
+duration_rounds = 3
+prevents_action = false
+damage_per_round = 0
+stat_modifiers = {
+"attack": 8
+}

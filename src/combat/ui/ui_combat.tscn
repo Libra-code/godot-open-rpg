@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bipyuaeqoxmt2" path="res://src/combat/ui/action_menu/ui_action_menu.tscn" id="2_nv24v"]
 [ext_resource type="PackedScene" uid="uid://bu56ii26ps128" path="res://src/combat/ui/cursors/ui_battler_target_cursor.tscn" id="3_0i21q"]
 [ext_resource type="PackedScene" uid="uid://dxyw5j7wr56hl" path="res://src/combat/ui/effect_labels/ui_missed_label.tscn" id="3_36thh"]
+[ext_resource type="PackedScene" path="res://src/combat/ui/effect_labels/ui_status_label.tscn" id="4_stlbl"]
 [ext_resource type="Script" uid="uid://smjuikb83bkc" path="res://src/combat/ui/ui_combat.gd" id="5_lubpu"]
 [ext_resource type="Script" uid="uid://2bkem6rl5jl6" path="res://src/combat/ui/battler_entry/ui_player_battler_list.gd" id="6_nv24v"]
 [ext_resource type="PackedScene" uid="uid://b35omff3fdb2g" path="res://src/combat/ui/battler_entry/ui_battler_entry.tscn" id="9_yx5l6"]
@@ -129,6 +130,7 @@ target_cursor_scene = ExtResource("3_0i21q")
 script = ExtResource("1_0i21q")
 damage_label_scene = ExtResource("2_0cqaj")
 missed_label_scene = ExtResource("3_36thh")
+status_label_scene = ExtResource("4_stlbl")
 metadata/_edit_lock_ = true
 
 [node name="PlayerMenus" type="Control" parent="."]

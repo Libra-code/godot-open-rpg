@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ApplyStatusBattlerAction" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://src/combat/actions/battler_action_apply_status.gd" id="1_rageact"]
+[ext_resource type="Resource" path="res://combat/status_effects/rage.tres" id="2_rage"]
+
+[resource]
+script = ExtResource("1_rageact")
+base_damage = 0
+status_effect = ExtResource("2_rage")
+name = "Furia"
+description = "Aumenta il proprio attacco per qualche turno."
+target_scope = 0
+targets_friendlies = false
+targets_enemies = false
+energy_cost = 0

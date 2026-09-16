@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="StatusEffect" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/combat/battlers/status_effect.gd" id="1_poison"]
+
+[resource]
+script = ExtResource("1_poison")
+id = &"poison"
+display_name = "Veleno"
+description = "Infligge danno diretto all'inizio di ogni turno del bersaglio."
+duration_rounds = 3
+prevents_action = false
+damage_per_round = 8

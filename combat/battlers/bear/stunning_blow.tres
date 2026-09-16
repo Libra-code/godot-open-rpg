@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ApplyStatusBattlerAction" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://src/combat/actions/battler_action_apply_status.gd" id="1_sblow"]
+[ext_resource type="Resource" path="res://combat/status_effects/stun.tres" id="2_stun"]
+
+[resource]
+script = ExtResource("1_sblow")
+base_damage = 40
+hit_chance = 70.0
+status_effect = ExtResource("2_stun")
+name = "Colpo Stordente"
+description = "Un colpo che, se va a segno, stordisce il bersaglio per un turno."
+target_scope = 1
+targets_friendlies = false
+targets_enemies = true
+energy_cost = 0

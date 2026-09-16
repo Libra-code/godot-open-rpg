@@ -101,12 +101,34 @@ func setup(arena: PackedScene, biome: BiomeDefinition = null) -> void:
 # Moves combat to the next round. At the beginning of the round, all Battlers will choose an action.
 func next_round() -> void:
 	round_count += 1
-	
+
+	# Status effects (poison, stun, timed buffs/debuffs) tick down once per round, for every living
+	# Battler, before anyone selects an action - a Battler's own status effects should always
+	# resolve at the start of their round, whether or not they're the one acting.
+	for battler in _battler_roster.find_live_battlers(_battler_roster.get_battlers()):
+		battler.tick_status_effects()
+
+	# Damage-over-time effects may have just ended the battle on their own; check before starting
+	# another round of action selection.
+	if _battler_roster.are_battlers_defeated(_battler_roster.get_player_battlers()):
+		_on_combat_finished.call_deferred(false)
+		return
+	elif _battler_roster.are_battlers_defeated(_battler_roster.get_enemy_battlers()):
+		_on_combat_finished.call_deferred(true)
+		return
+
+	# Stunned Battlers skip the action selection below entirely: they're auto-assigned a no-op
+	# action so the turn queue can process their turn (and thus their next status effect tick)
+	# without asking the player or their AI to choose something they won't get to perform.
+	for battler in _battler_roster.find_live_battlers(_battler_roster.get_battlers()):
+		if battler.is_stunned():
+			battler.cached_action = battler.get_stunned_action()
+
 	# First of all, let enemy (necessarily AI) battlers pick their actions.
 	for battler in _battler_roster.find_live_battlers(_battler_roster.get_enemy_battlers()):
-		if battler.ai != null:
+		if battler.ai != null and battler.cached_action == null:
 			battler.ai.select_action(battler)
-	
+
 	# Secondly, allow player Battlers to pick their action.
 	# This will be iterative as the player selects and cancels their choices. The turn queue will
 	# move to the action phase once all player Battlers have an action selected.
@@ -143,12 +165,17 @@ func _select_next_player_action() -> void:
 		(func _on_selected_battler_action_cached(battler: Battler) -> void:
 			# Check to see if the player cancelled action selection (pressed "back" from the
 			# UIActionMenu). If so, the player wishes to reissue orders for the previous Battler.
-			# If there IS a previous Battler, remove its cached action.
+			# If there IS a previous Battler, remove its cached action. Stunned Battlers are
+			# skipped when looking backwards: they were never offered a real choice for this
+			# round (see Combat.next_round), so "going back" to one would just reassign the same
+			# auto-resolved no-op action right back to it.
 			if battler.cached_action == null:
 				var battlers: = _battler_roster.get_player_battlers()
-				var index: = battlers.find(battler)
-				if index > 0:
-					var previous_battler: Battler = battlers[index-1]
+				var previous_index: = battlers.find(battler) - 1
+				while previous_index >= 0 and battlers[previous_index].is_stunned():
+					previous_index -= 1
+				if previous_index >= 0:
+					var previous_battler: Battler = battlers[previous_index]
 					previous_battler.cached_action = null
 			
 			await battler.anim.move_to_rest(0.15)

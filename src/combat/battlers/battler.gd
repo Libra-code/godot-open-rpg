@@ -24,6 +24,13 @@ signal hit_missed
 ## Emitted when modifying `is_selected`. The user interface will react to this for
 ## player-controlled battlers.
 signal selection_toggled(value: bool)
+## Emitted when a [StatusEffect] (poison, stun, a timed buff/debuff, etc.) is applied or refreshed.
+signal status_effect_applied(effect: StatusEffect)
+## Emitted when a [StatusEffect]'s duration runs out and its stat changes are removed.
+signal status_effect_expired(effect: StatusEffect)
+## Emitted each round a [StatusEffect] deals its damage-over-time (see
+## [member StatusEffect.damage_per_round]).
+signal status_effect_ticked(effect: StatusEffect, amount: int)
 
 ## The name of the node group that will contain all combat Battlers.
 const GROUP: = "_COMBAT_BATTLER_GROUP"
@@ -139,6 +146,10 @@ var cached_action: BattlerAction = null:
 		cached_action = value
 		action_cached.emit()
 
+# Active status effects, keyed by StatusEffect.id. Each entry is a Dictionary:
+# {effect: StatusEffect, remaining_rounds: int, modifier_ids: Dictionary, multiplier_ids: Dictionary}
+var _active_status_effects: = {}
+
 
 static func sort(a: Battler, b: Battler) -> bool:
 	return a.stats.speed > b.stats.speed
@@ -196,6 +207,82 @@ func take_hit(hit: BattlerHit) -> void:
 		stats.health -= hit.damage
 	else:
 		hit_missed.emit()
+
+
+## Applies [param effect] to this Battler for [member StatusEffect.duration_rounds] of its own
+## rounds. Re-applying an effect with the same [member StatusEffect.id] while already active
+## refreshes its duration instead of stacking a second, independent copy.
+func apply_status_effect(effect: StatusEffect) -> void:
+	if _active_status_effects.has(effect.id):
+		_remove_status_effect(effect.id)
+
+	var modifier_ids: = {}
+	for stat_name in effect.stat_modifiers:
+		modifier_ids[stat_name] = stats.add_modifier(stat_name, effect.stat_modifiers[stat_name])
+
+	var multiplier_ids: = {}
+	for stat_name in effect.stat_multipliers:
+		multiplier_ids[stat_name] = stats.add_multiplier(stat_name, effect.stat_multipliers[stat_name])
+
+	_active_status_effects[effect.id] = {
+		"effect": effect,
+		"remaining_rounds": effect.duration_rounds,
+		"modifier_ids": modifier_ids,
+		"multiplier_ids": multiplier_ids,
+	}
+	status_effect_applied.emit(effect)
+
+
+## True if any active status effect prevents this Battler from acting (see
+## [member StatusEffect.prevents_action]). Used by [method Combat.next_round] to auto-skip the
+## Battler's turn instead of letting the player or AI select a real action for it.
+func is_stunned() -> bool:
+	for entry: Dictionary in _active_status_effects.values():
+		if (entry.effect as StatusEffect).prevents_action:
+			return true
+	return false
+
+
+## Applies damage-over-time and counts down every active status effect by one round, removing (and
+## cleaning up the stat changes of) any that expire. Called once per round for every living Battler,
+## from [method Combat.next_round], before actions are selected.
+func tick_status_effects() -> void:
+	if not is_active:
+		return
+
+	for status_id: StringName in _active_status_effects.keys().duplicate():
+		var entry: Dictionary = _active_status_effects[status_id]
+		var effect: StatusEffect = entry.effect
+
+		if effect.damage_per_round != 0:
+			stats.health -= effect.damage_per_round
+			status_effect_ticked.emit(effect, effect.damage_per_round)
+
+		entry.remaining_rounds -= 1
+		if entry.remaining_rounds <= 0:
+			_remove_status_effect(status_id)
+
+
+func _remove_status_effect(status_id: StringName) -> void:
+	var entry: Dictionary = _active_status_effects[status_id]
+	var effect: StatusEffect = entry.effect
+
+	for stat_name: String in entry.modifier_ids:
+		stats.remove_modifier(stat_name, entry.modifier_ids[stat_name])
+	for stat_name: String in entry.multiplier_ids:
+		stats.remove_multiplier(stat_name, entry.multiplier_ids[stat_name])
+
+	_active_status_effects.erase(status_id)
+	status_effect_expired.emit(effect)
+
+
+## Returns a fresh no-op [BattlerAction] used to auto-resolve this Battler's turn while stunned
+## (see [method is_stunned]), wired up the same way [method _ready] wires up [member actions].
+func get_stunned_action() -> BattlerAction:
+	var action: = StunnedBattlerAction.new()
+	action.source = self
+	action.battler_roster = _get_roster()
+	return action
 
 
 # Iteratively search this node's parents for the BattlerRoster. Battler's must be descendants of the
