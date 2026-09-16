@@ -11,6 +11,7 @@ extends CanvasLayer
 @onready var _vsync_check: CheckButton = %VSyncCheck
 @onready var _fullscreen_check: CheckButton = %FullscreenCheck
 @onready var _resume_button: Button = %ResumeButton
+@onready var _main_menu_button: Button = %MainMenuButton
 @onready var _quit_button: Button = %QuitButton
 @onready var _save_button: Button = %SaveButton
 @onready var _load_button: Button = %LoadButton
@@ -59,6 +60,11 @@ func _ready() -> void:
 	)
 
 	_resume_button.pressed.connect(close)
+	_main_menu_button.pressed.connect(
+		func() -> void:
+			get_tree().paused = false
+			get_tree().change_scene_to_file("res://src/main_menu/main_menu.tscn")
+	)
 	_quit_button.pressed.connect(
 		func() -> void:
 			get_tree().quit()

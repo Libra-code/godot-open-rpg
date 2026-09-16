@@ -5,6 +5,7 @@
 extends CanvasLayer
 
 @onready var _retry_button: Button = %RetryButton
+@onready var _main_menu_button: Button = %MainMenuButton
 @onready var _quit_button: Button = %QuitButton
 
 
@@ -17,6 +18,11 @@ func _ready() -> void:
 		soul_strain.game_over.connect(open)
 
 	_retry_button.pressed.connect(_on_retry_pressed)
+	_main_menu_button.pressed.connect(
+		func() -> void:
+			get_tree().paused = false
+			get_tree().change_scene_to_file("res://src/main_menu/main_menu.tscn")
+	)
 	_quit_button.pressed.connect(
 		func() -> void:
 			get_tree().quit()

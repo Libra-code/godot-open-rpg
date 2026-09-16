@@ -31,6 +31,20 @@ var _db_item_cache: Dictionary = {} # item_id (String) -> EquipmentItem
 
 
 func _ready() -> void:
+	reset_to_defaults()
+
+
+## Wipes every loadout back to level 1 / starting gear and re-registers the default skill trees.
+## Used both at boot (see [method _ready]) and when the main menu's "Nuova Partita" starts a fresh
+## run without restarting the process — without this, a second playthrough in the same session
+## would inherit levels/equipment/unlocks from whatever the player did before returning to the
+## main menu. Does NOT touch [Inventory] (a separate, disk-backed Resource, not autoload state);
+## see FUNZIONALITA.md for that known gap.
+func reset_to_defaults() -> void:
+	_loadouts.clear()
+	_skill_trees.clear()
+	_db_item_cache.clear()
+
 	for character_name in _DEFAULT_SKILL_TREES:
 		register_skill_tree(character_name, _DEFAULT_SKILL_TREES[character_name])
 

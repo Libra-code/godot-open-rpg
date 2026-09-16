@@ -35,6 +35,18 @@ func register_quest(quest: QuestDefinition) -> void:
 	_last_progress_text[quest.id] = quest.get_progress_text()
 
 
+## Re-syncs completion/progress tracking for every already-registered quest against the current
+## Dialogic variables. Call after something resets those variables out from under QuestLog (e.g.
+## the main menu's "Nuova Partita" starting a fresh run without restarting the process) — without
+## this, a quest completed in a previous run would stay flagged as already-completed forever, even
+## though the underlying Dialogic variables were just reset to their defaults.
+func reset_progress_tracking() -> void:
+	for quest_id in _quests:
+		var quest: QuestDefinition = _quests[quest_id]
+		_was_complete[quest_id] = quest.is_complete()
+		_last_progress_text[quest_id] = quest.get_progress_text()
+
+
 # Loads quests from ItemDatabase (see database/schema_enemies_quests.sql) whose objectives are
 # all expressible with the existing Dialogic-variable-based QuestObjective (objective type
 # "flag"). Other objective types (e.g. "defeat", "assimilate") don't have a tracked variable

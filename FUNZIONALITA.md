@@ -118,6 +118,15 @@ progetto, non come changelog cronologico (per quello vedi `CHANGELOG.md`).
   Inventario (**I**), Missioni (**Q**), Equipaggiamento (**E**). Esc torna indietro di un livello.
 - I due menu e la schermata di Game Over si escludono a vicenda correttamente (non si sovrappongono
   mai).
+- **Torna al Menu Principale**: sia il Menu Impostazioni sia la schermata di Game Over hanno un
+  pulsante "Torna al Menu Principale" oltre a "Esci dal gioco"/"Riprova". Scegliere "Nuova Partita"
+  dal Menu Principale dopo essere tornati indietro **azzera davvero** lo stato della sessione
+  precedente (`SaveGame.reset_new_game_state()`): livello/equipaggiamento/abilità del party
+  tornano ai valori di partenza, il Soul Strain Core torna Dormiente e senza nome/difetto, le
+  variabili Dialogic (quindi missioni e progressi) tornano ai valori di default — verificato
+  simulando una partita avanzata e controllando che ogni valore torni davvero al default. Non
+  tocca il file di salvataggio su disco né l'Inventario (un `Resource` separato, non stato di
+  autoload): "Continua" dopo un "Nuova Partita" annullato recupera comunque il salvataggio vero.
 - **Stile UI uniformato**: Menu Personaggio e Game Over usano ora lo stesso pannello a sfondo
   solido/alto contrasto del Menu Impostazioni (il vecchio pannello "wood" a centro trasparente non
   è più usato da nessuna schermata). Dimensioni dei font uniformate in tutta l'interfaccia (titoli,
@@ -160,7 +169,7 @@ mappa attuale (interamente disegnata a mano), da validare prima di un'eventuale 
 | 4 | **Consumo dei segnali Landmark** | Nessuna bussola/indicatore/suono reagisce a `landmark_entered_sight`/`exited_sight`. |
 | 5 | **Generazione procedurale non integrata** | Il prototipo in `src/worldgen_prototype/` funziona ma resta isolato dal gioco vero. |
 | 6 | **Bilanciamento generale** | Biomi, ricompense, curve di difficoltà, effetti di stato: tutto quanto costruito è minimale/dimostrativo, pensato per essere corretto, non bilanciato per il gioco finito. |
-| 7 | **Nessun "torna al menu principale"** | Da Pause/Game Over si può solo "Esci dal gioco" (chiude il processo); non c'è un modo di tornare al Menu Principale restando nel gioco. |
+| 7 | **Loot non raccoglibile per consumabili/materiali** | I drop di tipo diverso da "equipment" (dalla nuova tabella di loot) sono solo annunciati a fine battaglia, non raccolti da nessuna parte: `Inventory` capisce solo il suo enum fisso di 6 oggetti. |
 
 ---
 

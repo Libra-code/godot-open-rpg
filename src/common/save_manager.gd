@@ -20,6 +20,21 @@ func has_save() -> bool:
 	return Dialogic.Save.has_slot(SLOT_NAME)
 
 
+## Resets everything a battle/playthrough could have changed back to its defaults, for the main
+## menu's "Nuova Partita". Deliberately does NOT touch the save file on disk, nor [Inventory] (a
+## separate disk-backed Resource, not autoload state — see FUNZIONALITA.md): a player who plays a
+## bit, returns to the main menu, and picks "Continua" must still get their real save back, not
+## whatever "Nuova Partita" reset in memory a moment before.
+func reset_new_game_state() -> void:
+	var soul_strain: Node = get_tree().get_first_node_in_group(&"soul_strain_engine")
+	if soul_strain:
+		soul_strain.setup(SoulStrainState.new())
+
+	Dialogic.VAR.reset()
+	PartyLoadouts.reset_to_defaults()
+	QuestLog.reset_progress_tracking()
+
+
 func save_game() -> void:
 	Inventory.restore().save()
 	Dialogic.Save.save(SLOT_NAME)

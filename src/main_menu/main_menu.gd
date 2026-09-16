@@ -24,6 +24,11 @@ func _ready() -> void:
 
 
 func _on_new_game_pressed() -> void:
+	# Resets in-memory progress before loading, not just at first boot: the player may have
+	# already played a run and come back here via "Torna al Menu Principale" (see PauseMenu /
+	# GameOverScreen), in which case main.tscn's own autoloads still hold that run's levels,
+	# equipment, Soul Strain state, and quest/dialogue progress.
+	SaveGame.reset_new_game_state()
 	get_tree().change_scene_to_file(MAIN_SCENE)
 
 
