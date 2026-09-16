@@ -43,6 +43,19 @@ gdscript/warnings/native_method_override=1
 
 [dialogic]
 
+variables={
+"BlueWandCount": 0,
+"GreenWandCount": 0,
+"HasMonkToken": 0,
+"HasThiefToken": 0,
+"HasWarriorToken": 0,
+"HasWizardToken": 0,
+"Hint": 0,
+"RedWandCount": 0,
+"StrangeTreeExamined": 0,
+"TokenCount": 0,
+"TokenQuestStatus": 0
+}
 directories/dch_directory={
 "enemy_ghost": "res://overworld/maps/town/enemy_ghost.dch",
 "fan_of_four": "res://overworld/maps/town/fan_of_four.dch",

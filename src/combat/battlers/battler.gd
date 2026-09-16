@@ -205,7 +205,7 @@ func _get_roster() -> BattlerRoster:
 	while parent != null:
 		if parent is BattlerRoster:
 			return parent as BattlerRoster
-		parent = get_parent()
+		parent = parent.get_parent()
 	return null
 
 

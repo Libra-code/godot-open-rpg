@@ -10,6 +10,7 @@ signal quest_progressed(quest_id: StringName)
 
 var _quests: Dictionary = {} # StringName -> QuestDefinition
 var _was_complete: Dictionary = {} # StringName -> bool, last known completion state
+var _last_progress_text: Dictionary = {} # StringName -> String, last known "met/total" snapshot
 
 # Default demo content: the game's one existing quest (Fan of Four), re-expressed through this
 # system on top of the same Dialogic variables fan_interaction.gd already reads and writes.
@@ -28,6 +29,7 @@ func _ready() -> void:
 func register_quest(quest: QuestDefinition) -> void:
 	_quests[quest.id] = quest
 	_was_complete[quest.id] = quest.is_complete()
+	_last_progress_text[quest.id] = quest.get_progress_text()
 
 
 func get_quest(quest_id: StringName) -> QuestDefinition:
@@ -67,6 +69,12 @@ func refresh_all() -> void:
 		if complete_now and not _was_complete.get(quest_id, false):
 			_was_complete[quest_id] = true
 			quest_completed.emit(quest_id)
-		elif not complete_now:
-			_was_complete[quest_id] = false
+			continue
+
+		# Not complete: only emit quest_progressed if the met/total objective count actually
+		# moved since last check. Comparing against the boolean above alone can't tell "still not
+		# complete" apart from "just made progress but still not complete" — this can.
+		var progress_now: = quest.get_progress_text()
+		if progress_now != _last_progress_text.get(quest_id, ""):
+			_last_progress_text[quest_id] = progress_now
 			quest_progressed.emit(quest_id)

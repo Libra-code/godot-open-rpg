@@ -34,4 +34,7 @@ func open() -> void:
 
 func _on_retry_pressed() -> void:
 	get_tree().paused = false
+	# SoulStrain is an autoload, so it survives reload_current_scene() unless reset explicitly —
+	# without this, hit_points stays at 0 and the very next hazard/flaw re-triggers game_over.
+	SoulStrain.setup(SoulStrainState.new())
 	get_tree().reload_current_scene()
