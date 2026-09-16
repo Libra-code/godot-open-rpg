@@ -82,6 +82,7 @@
 [ext_resource type="PackedScene" path="res://src/field/ui/character_menu/character_menu.tscn" id="72_cmenu"]
 [ext_resource type="PackedScene" path="res://src/field/ui/game_over/game_over_screen.tscn" id="73_gover"]
 [ext_resource type="Resource" path="res://overworld/maps/town/town_biome.tres" id="74_biome"]
+[ext_resource type="Script" path="res://src/world/landmark.gd" id="75_landmark"]
 
 [sub_resource type="Animation" id="Animation_y8463"]
 length = 0.001
@@ -503,6 +504,11 @@ new_music = ExtResource("34_xbc6u")
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
+[node name="Landmark" type="Node" parent="Field/Map/Town/Gamepieces/Door"]
+script = ExtResource("75_landmark")
+display_name = "La Porta di Casa"
+min_visibility_radius = 160.0
+
 [node name="Interaction" parent="Field/Map/Town/Gamepieces/Door" unique_id=1705585727 instance=ExtResource("19_sa6jd")]
 position = Vector2(0, -8)
 script = ExtResource("34_xtrml")
@@ -544,6 +550,11 @@ position = Vector2(200, 280)
 arrival_coordinates = Vector2(632, 424)
 new_music = ExtResource("41_uxhyb")
 metadata/_edit_lock_ = true
+
+[node name="Landmark" type="Node" parent="Field/Map/Town/Gamepieces/TownToGrove"]
+script = ExtResource("75_landmark")
+display_name = "Il Sentiero per il Bosco"
+min_visibility_radius = 160.0
 
 [node name="House" type="Node2D" parent="Field/Map" unique_id=391021667]
 y_sort_enabled = true

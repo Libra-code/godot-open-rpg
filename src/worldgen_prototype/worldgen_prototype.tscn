@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/worldgen_prototype/worldgen_prototype.gd" id="1_wgp"]
+
+[node name="WorldgenPrototype" type="Node2D"]
+script = ExtResource("1_wgp")
+seed_value = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(384, 256)
+zoom = Vector2(1.5, 1.5)

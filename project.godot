@@ -35,6 +35,7 @@ Settings="*res://src/common/settings_manager.gd"
 SaveGame="*res://src/common/save_manager.gd"
 PartyLoadouts="*res://src/combat/party_loadouts.gd"
 QuestLog="*res://src/quests/quest_log.gd"
+LandmarkRegistry="*res://src/world/landmark_registry.gd"
 
 [debug]
 

@@ -201,6 +201,7 @@ func _on_gamepiece_arrived() -> void:
 		soul_strain.resolve_turn(&"move")
 
 	HazardResolver.resolve_field_hazard(_gamepiece)
+	LandmarkRegistry.refresh_visibility(_gamepiece.position)
 
 	_player_collision.position = Vector2.ZERO
 	_interaction_shape.disabled = false
