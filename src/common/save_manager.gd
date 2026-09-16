@@ -28,6 +28,10 @@ func load_game() -> void:
 	Dialogic.Save.load(SLOT_NAME)
 	_apply_state_dict(Dialogic.Save.load_file(SLOT_NAME, STATE_FILE, {}))
 
+	# Quest completion is derived from the Dialogic variables just restored above; reconcile
+	# QuestLog's cached state immediately instead of waiting for the next timeline to end.
+	QuestLog.refresh_all()
+
 
 func _build_state_dict() -> Dictionary:
 	var data: = {}
@@ -64,6 +68,8 @@ func _build_state_dict() -> Dictionary:
 			"assimilated_essences": assimilated_essences,
 		}
 
+	data["party_loadouts"] = PartyLoadouts.to_save_dict()
+
 	return data
 
 
@@ -93,3 +99,6 @@ func _apply_state_dict(data: Dictionary) -> void:
 			saved.get("assimilated_essences", state.assimilated_essences)
 		)
 		soul_strain.state_changed.emit(state)
+
+	if data.has("party_loadouts"):
+		PartyLoadouts.load_from_dict(data["party_loadouts"], PartyLoadouts.get_item_by_id)

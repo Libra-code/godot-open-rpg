@@ -16,10 +16,24 @@ const _DEFAULT_SKILL_TREES: = {
 	"Baloo": preload("res://combat/battlers/bear/baloo_skill_tree.tres"),
 }
 
+# Every EquipmentItem in the game, keyed by its id. Lets SaveGame resolve an equipped item back
+# from the string id it persists (see load_from_dict), instead of saving whole item resources.
+const _ITEM_REGISTRY: = {
+	"claw_gauntlets": preload("res://combat/battlers/bear/claw_gauntlets.tres"),
+}
+
 
 func _ready() -> void:
 	for character_name in _DEFAULT_SKILL_TREES:
 		register_skill_tree(character_name, _DEFAULT_SKILL_TREES[character_name])
+
+	# Starting gear, so the system is active from the very first battle rather than sitting unused
+	# until a shop/loot UI exists to grant equipment.
+	equip("Baloo", _ITEM_REGISTRY["claw_gauntlets"])
+
+
+func get_item_by_id(item_id: String) -> EquipmentItem:
+	return _ITEM_REGISTRY.get(item_id)
 
 
 func get_loadout(character_name: String) -> CharacterLoadout:
@@ -94,4 +108,15 @@ func load_from_dict(data: Dictionary, item_lookup: Callable) -> void:
 
 	for character_name in data:
 		var saved: Dictionary = data[character_name]
-		var loadout: = get_loadout(character_na
+		var loadout: = get_loadout(character_name)
+
+		for slot in saved.get("equipped_items", {}):
+			var item_id: String = saved["equipped_items"][slot]
+			var item: EquipmentItem = item_lookup.call(item_id)
+			if item:
+				loadout.equipped_items[slot] = item
+
+		var unlocked: Array[StringName] = []
+		for skill_id in saved.get("unlocked_skill_ids", []):
+			unlocked.append(StringName(skill_id))
+		loadout.unlocked_skill_ids = unlocked

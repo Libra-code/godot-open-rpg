@@ -195,3 +195,24 @@ func _is_cell_clear(coord: Vector2i) -> bool:
 	# There is no terrain blocking cell movement. However we only want to allow movement if the cell
 	# actually exists in one of the tilemap layers.
 	return cell_exists
+
+
+## Checks all [GameboardLayer]s for an environmental hazard at [param coord] (see [HazardTypes]).
+## Returns [constant HazardTypes.Type.NONE] if no layer defines one there, including when a
+## TileSet has no "HazardType" custom data layer at all — nothing has opted in yet.
+func get_hazard_type(coord: Vector2i) -> HazardTypes.Type:
+	for tilemap: GameboardLayer in get_tree().get_nodes_in_group(GameboardLayer.GROUP):
+		if not tilemap or not tilemap.tile_set:
+			continue
+		if not tilemap.tile_set.has_custom_data_layer_by_name(HazardTypes.CUSTOM_DATA_LAYER):
+			continue
+
+		var tile_data: = tilemap.get_cell_tile_data(coord)
+		if tile_data:
+			var hazard: = HazardTypes.from_custom_data(
+				tile_data.get_custom_data(HazardTypes.CUSTOM_DATA_LAYER)
+			)
+			if hazard != HazardTypes.Type.NONE:
+				return hazard
+
+	return HazardTypes.Type.NONE

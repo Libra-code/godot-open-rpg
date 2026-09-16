@@ -199,7 +199,9 @@ func _on_gamepiece_arrived() -> void:
 	var soul_strain: Node = get_tree().get_first_node_in_group(&"soul_strain_engine")
 	if soul_strain:
 		soul_strain.resolve_turn(&"move")
-	
+
+	HazardResolver.resolve_field_hazard(_gamepiece)
+
 	_player_collision.position = Vector2.ZERO
 	_interaction_shape.disabled = false
 	

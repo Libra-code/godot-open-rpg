@@ -208,6 +208,13 @@ func _check_game_over() -> void:
 		game_over.emit()
 
 
+## Adds soul rejection from an external source (e.g. an environmental hazard). Public wrapper
+## around the same mechanic flaws use internally, so hazards and flaws stay a single concept.
+func add_rejection(amount: float) -> void:
+	_add_rejection(amount)
+	_emit_state()
+
+
 func _add_rejection(amount: float) -> void:
 	state.soul_rejection = clampf(state.soul_rejection + maxf(0.0, amount), 0.0, 100.0)
 
