@@ -30,6 +30,10 @@ const LEVEL_UP_GROWTH := {
 @export var xp := 0
 ## How much xp defeating this battler grants to the victorious party (only relevant for enemies).
 @export var xp_reward := 10
+## Links this enemy to its row in the "enemies" table of [autoload ItemDatabase] (see
+## database/schema_enemies_quests.sql), for loot-table lookups on defeat. Empty for player
+## characters and for enemies with no database entry yet.
+@export var enemy_id: StringName = &""
 
 @export_category("Elements")
 ## The battler's elemental affinity. Determines which attacks are more or less effective against

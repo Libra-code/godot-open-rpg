@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_dv0tm")
+enemy_id = &"mon_bugcat_01"
 affinity = 0
 base_max_health = 50
 base_max_energy = 6

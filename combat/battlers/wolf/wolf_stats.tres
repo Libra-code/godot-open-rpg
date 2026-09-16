@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_8t274")
+enemy_id = &"mon_wolf_01"
 affinity = 0
 base_max_health = 100
 base_max_energy = 6
