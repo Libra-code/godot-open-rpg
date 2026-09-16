@@ -36,6 +36,10 @@ var _previous_music_track: AudioStream = null
 # _award_victory_xp() and consumed by _get_victory_message_events().
 var _level_ups_this_battle: = {}
 
+# Item rows (from ItemDatabase.get_item()) granted this battle. Populated by _roll_enemy_loot()
+# and consumed by _get_victory_message_events().
+var _loot_this_battle: Array[Dictionary] = []
+
 # A reference to 
 @onready var _battler_roster: BattlerRoster
 @onready var _combat_container: = $CenterContainer as CenterContainer
@@ -265,8 +269,11 @@ func _on_combat_finished(is_player_victory: bool) -> void:
 # Records any level-ups in _level_ups_this_battle so the results dialogue can mention them.
 func _award_victory_xp() -> void:
 	var total_xp: int = 0
+	_loot_this_battle.clear()
+
 	for enemy in _battler_roster.get_enemy_battlers():
 		total_xp += enemy.stats.xp_reward
+		_roll_enemy_loot(enemy.stats.enemy_id)
 
 	_level_ups_this_battle.clear()
 	for battler in _battler_roster.get_player_battlers():
@@ -277,6 +284,38 @@ func _award_victory_xp() -> void:
 		# The Battler (and its BattlerStats duplicate) is freed once combat wraps up; persist the
 		# level/xp it ended up with or the next battle would start back at level 1.
 		PartyLoadouts.get_loadout(battler.name).capture_progress(battler.stats)
+
+
+# Looks up enemy_id in ItemDatabase for its loot_table_id (see database/schema_enemies_quests.sql)
+# and rolls it once. "equipment" drops are auto-equipped onto the party leader immediately — there
+# is no loot-inventory or equip-choice UI yet, and Inventory.ItemTypes can't hold an arbitrary
+# database item id. Other item types are recorded for the results dialogue but not granted
+# anywhere yet (a real gap, not hidden: see FUNZIONALITA.md).
+func _roll_enemy_loot(enemy_id: StringName) -> void:
+	if enemy_id == &"":
+		return
+
+	var enemy_row: = ItemDatabase.get_enemy(enemy_id)
+	# loot_table_id is a nullable TEXT column: an enemy with no loot table at all reads back as
+	# GDScript null here, not an empty string, so that has to be ruled out before the String cast.
+	var raw_loot_table_id: Variant = enemy_row.get("loot_table_id")
+	if raw_loot_table_id == null:
+		return
+
+	var loot_table_id: String = raw_loot_table_id
+	if loot_table_id.is_empty():
+		return
+
+	for drop: Dictionary in ItemDatabase.roll_loot_table(loot_table_id, 1):
+		var item_row: = ItemDatabase.get_item(drop.item_id)
+		if item_row.is_empty():
+			continue
+
+		_loot_this_battle.append(item_row)
+
+		if item_row.get("item_type") == "equipment":
+			var party_leader_name: = _battler_roster.get_player_battlers()[0].name
+			PartyLoadouts.equip(party_leader_name, PartyLoadouts.get_item_by_id(drop.item_id))
 
 
 ## Displays a series of dialogue bubbles using Dialogic with information about the combat's outcome.
@@ -300,10 +339,12 @@ func _get_victory_message_events(leader_name: String) -> Array[String]:
 	var events: Array[String] = [
 		"%s's party won the battle!" % leader_name
 	]
-	events.append("You wanted to find some coins, but animals have no pockets to carry them.")
 
 	for battler_name in _level_ups_this_battle:
 		events.append("%s reached level %d!" % [battler_name, _level_ups_this_battle[battler_name]])
+
+	for item_row in _loot_this_battle:
+		events.append("Found: %s!" % str(item_row.get("display_name", item_row.get("id"))))
 
 	return events
 	

@@ -72,4 +72,15 @@ INSERT INTO quests (quest_id, title, category, prereq_quest_id, min_nucleus_rank
 ('quest_side_01', 'Voci tra le Ceneri', 'Side', 'quest_main_01', 'Risvegliato',
 	'{"description": "Uno Scheletro Custode nella foresta porta con se un frammento della tua stessa essenza. Sconfiggilo e recuperalo.", "objectives": [{"type": "defeat", "target_enemy_id": "mon_skeleton_01", "amount": 1}], "rewards": {"soul_shards": 60, "item_id": "iron_shell"}, "dialogues": []}'),
 ('quest_contract_01', 'Contratto: Assimilazione d''Ombra', 'Contract_Proc', 'quest_main_01', 'Risvegliato',
-	'{"description": "Contratto procedurale: assimila essenze con il tag #ombra per rafforzare la tua affinita.", "objectives": [{"type": "assimilate", "target_tag": "#ombra", "amount": 3}], "rewards": {"soul_shards": 250, "item_id": "eq_shadow_ring"}, "dialogues": []}');
+	'{"description": "Contratto procedurale: assimila essenze con il tag #ombra per rafforzare la tua affinita.", "objectives": [{"type": "assimilate", "target_tag": "#ombra", "amount": 3}], "rewards": {"soul_shards": 250, "item_id": "eq_shadow_ring"}, "dialogues": []}'),
+-- quest_main_01 above intentionally has the SAME title as the hand-authored quest resource
+-- overworld/maps/town/soul_awakening_quest.tres ("Il Nucleo Dormiente") — QuestLog._register_db_quests()
+-- skips any DB quest whose title is already registered, so this one is metadata-only (visible via
+-- ItemDatabase.get_quest() for e.g. a future quest-giver UI) and never double-registers in-game.
+-- quest_side_01/quest_contract_01 use objective types ("defeat"/"assimilate") QuestObjective can't
+-- express yet, so QuestLog also skips them rather than registering an uncompletable quest.
+-- quest_db_demo_01 uses the "flag" type against an existing, already-tracked, monotonic Dialogic
+-- variable (TokenCount only ever increases), so it's the one DB quest that actually shows up live
+-- in the Quest Log UI as proof the wiring works end-to-end.
+('quest_db_demo_01', 'Prima Traccia', 'Side', NULL, 'Dormiente',
+	'{"description": "Ottieni almeno un pegno da uno dei membri della Banda dei Quattro.", "objectives": [{"type": "flag", "target_tag": "TokenCount", "amount": 1}], "rewards": {"soul_shards": 20}, "dialogues": []}');

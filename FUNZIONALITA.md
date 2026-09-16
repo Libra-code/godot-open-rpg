@@ -67,9 +67,23 @@ progetto, non come changelog cronologico (per quello vedi `CHANGELOG.md`).
   presenti solo a database (nessun file `.tres`, nessuna voce hardcoded) — verificato che un
   oggetto come "Corazza di Ferro" (+6 difesa), che esiste solo nelle righe SQL, compare
   correttamente nella UI Equipaggiamento. File: `database/schema.sql`, `database/seed_items.sql`,
-  `database/items.db`, `src/common/item_database.gd`. Include una vera tabella di loot per il
-  nemico Bugcat (prima non esisteva nessun drop di oggetti nel gioco), non ancora collegata alla
-  fine del combattimento — la ricompensa attuale resta solo XP.
+  `database/items.db`, `src/common/item_database.gd`.
+- **Loot dai nemici, collegato davvero al combattimento**: alla vittoria, ogni nemico sconfitto con
+  un `enemy_id` (nuovo campo su `BattlerStats`, impostato per Bugcat e Lupo) fa tirare la sua tabella
+  di loot in `ItemDatabase`; i drop di tipo equipaggiamento vengono equipaggiati automaticamente sul
+  capoparty e annunciati nel dialogo di fine battaglia. Prima non esisteva alcun drop di oggetti nel
+  gioco (solo XP). Limite noto: i drop di tipo consumabile/materiale sono solo annunciati, non
+  ancora raccolti da nessuna parte — `Inventory` capisce solo il suo enum fisso di 6 oggetti, non un
+  id di database arbitrario (vedi mancanze).
+- **Nemici e missioni su database** (`database/schema_enemies_quests.sql`, stesso file
+  `items.db`): tabella `enemies` con Grado del Nucleo/Tag Essenza/parametri shader in
+  `soul_data_json` (stessa terminologia di `SoulStrainState`); tabella `quests` con
+  `min_nucleus_rank`, prerequisiti, obiettivi/ricompense in `quest_data_json`. `QuestLog` carica
+  automaticamente le quest di database il cui unico tipo di obiettivo ("flag") corrisponde a una
+  variabile Dialogic già tracciata, scartando (con avviso) quelle con tipi non ancora supportati
+  ("defeat", "assimilate") invece di registrare una missione impossibile da completare, ed
+  evitando doppioni quando una missione esiste già come `.tres` scritta a mano (es. "Il Nucleo
+  Dormiente").
 - **Scalatura per bioma**: gli incontri di Town scalano le statistiche nemiche in base al livello
   più alto del party, tramite un bioma "Dintorni della Città" (moltiplicatore 1.0→1.5).
 - Alla sconfitta, i nemici del mondo di gioco vengono rimossi davvero dalla scena (era un bug

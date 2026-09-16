@@ -24,6 +24,8 @@ func _ready() -> void:
 	for quest in _DEFAULT_QUESTS:
 		register_quest(quest)
 
+	_register_db_quests()
+
 	Dialogic.timeline_ended.connect(refresh_all)
 
 
@@ -31,6 +33,51 @@ func register_quest(quest: QuestDefinition) -> void:
 	_quests[quest.id] = quest
 	_was_complete[quest.id] = quest.is_complete()
 	_last_progress_text[quest.id] = quest.get_progress_text()
+
+
+# Loads quests from ItemDatabase (see database/schema_enemies_quests.sql) whose objectives are
+# all expressible with the existing Dialogic-variable-based QuestObjective (objective type
+# "flag"). Other objective types (e.g. "defeat", "assimilate") don't have a tracked variable
+# behind them yet — a quest using one is skipped with a warning rather than silently registering
+# something that could never actually complete. Also skips any DB quest whose title matches an
+# already-registered one, since e.g. "Il Nucleo Dormiente" exists both as DB metadata and as the
+# hand-authored soul_awakening_quest.tres with real narrative hooks — the latter wins.
+func _register_db_quests() -> void:
+	var existing_titles: Dictionary = {}
+	for quest_id in _quests:
+		existing_titles[(_quests[quest_id] as QuestDefinition).title] = true
+
+	for row: Dictionary in ItemDatabase.get_quests_by_filter({}):
+		if existing_titles.has(row.title):
+			continue
+
+		var quest: = _quest_from_db_row(row)
+		if quest:
+			register_quest(quest)
+
+
+func _quest_from_db_row(row: Dictionary) -> QuestDefinition:
+	var objectives: Array[QuestObjective] = []
+
+	for raw: Dictionary in row.get("objectives", []):
+		if raw.get("type") != "flag":
+			push_warning(
+				"QuestLog: skipping DB quest '%s' — objective type '%s' has no tracked variable yet." %
+				[row.quest_id, raw.get("type")]
+			)
+			return null
+
+		var objective: = QuestObjective.new()
+		objective.dialogic_variable = raw.get("target_tag", "")
+		objective.description = "%s: %s" % [row.title, objective.dialogic_variable]
+		objective.required_value = raw.get("amount", 1)
+		objectives.append(objective)
+
+	var quest: = QuestDefinition.new()
+	quest.id = StringName(row.quest_id)
+	quest.title = row.title
+	quest.objectives = objectives
+	return quest
 
 
 func get_quest(quest_id: StringName) -> QuestDefinition:
