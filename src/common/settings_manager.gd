@@ -47,6 +47,7 @@ func _ready() -> void:
 	_load()
 	_apply_vsync()
 	_apply_fullscreen()
+	_clamp_window_to_screen()
 	_apply_bus_volume(MASTER_BUS, master_volume)
 	_apply_bus_volume(MUSIC_BUS, music_volume)
 	_apply_bus_volume(SFX_BUS, sfx_volume)
@@ -68,6 +69,30 @@ func _apply_fullscreen() -> void:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	elif DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+
+
+func _clamp_window_to_screen() -> void:
+	# Defensive fallback for the "window bigger than screen" bug: on some Windows/DPI/multi-monitor
+	# setups, project.godot's window/size/mode=2 (Maximized) can silently fail to apply (e.g. the
+	# OS creates the window off the visible work area before maximizing it, so it never actually
+	# snaps to fit), leaving the window Windowed at the fixed 1920x1080 size from project.godot
+	# regardless of the real screen resolution. If that happens, clamp the window to the current
+	# screen's usable area and re-center it so it's fully visible.
+	if DisplayServer.window_get_mode() != DisplayServer.WINDOW_MODE_WINDOWED:
+		return
+
+	var screen: = DisplayServer.window_get_current_screen()
+	var usable_rect: = DisplayServer.screen_get_usable_rect(screen)
+	var window_size: = DisplayServer.window_get_size()
+
+	if window_size.x <= usable_rect.size.x and window_size.y <= usable_rect.size.y:
+		return
+
+	window_size = window_size.min(usable_rect.size)
+	DisplayServer.window_set_size(window_size)
+
+	@warning_ignore("integer_division")
+	DisplayServer.window_set_position(usable_rect.position + (usable_rect.size - window_size) / 2)
 
 
 func _apply_bus_volume(bus_name: StringName, linear_volume: float) -> void:

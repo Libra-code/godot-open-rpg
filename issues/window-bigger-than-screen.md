@@ -1,6 +1,8 @@
 # Bug: la finestra di gioco è più grande dello schermo
 
-**Stato:** aperto — servono dati diagnostici dall'utente per proseguire (vedi "Prossimo passo").
+**Stato:** fix difensivo applicato (punto 5 della cronologia) — in attesa di conferma
+dall'utente sulla macchina reale. Se il problema persiste, servono comunque i dati diagnostici
+elencati in "Prossimo passo".
 
 ## Sintomo (descritto dall'utente, verbatim)
 
@@ -89,6 +91,20 @@ a monte (dimensione/posizione della finestra OS).
    dimensione fissa 1920×1080. **Fix applicato** (vedi snippet sopra: ora `_apply_fullscreen()`
    forza `WINDOW_MODE_WINDOWED` solo se la finestra era effettivamente in fullscreen prima).
    **L'utente riporta che l'errore rimane anche dopo questo fix.**
+5. **Fix difensivo applicato (indipendente dalla causa esatta tra quelle in "Ipotesi non ancora
+   escluse"):** aggiunta `Settings._clamp_window_to_screen()`, chiamata in `_ready()` subito dopo
+   `_apply_fullscreen()`. Se all'avvio la finestra è in modalità Windowed (non Fullscreen, quindi
+   non tocca il caso Massimizzata/Fullscreen già gestito da `_apply_fullscreen()`) ed è più grande
+   dell'area utile (`DisplayServer.screen_get_usable_rect`) dello schermo su cui si trova
+   (`DisplayServer.window_get_current_screen()`), la ridimensiona per rientrare in
+   quell'area e la ricentra. Questo non richiede di sapere *perché* `window/size/mode=2` non
+   produce l'effetto atteso su questa macchina (DPI scaling, monitor "sbagliato" per il calcolo
+   iniziale, Editor Settings > Run > Window Placement, ecc.) — copre il sintomo osservato
+   (finestra 1920×1080 fissa più grande dello schermo reale) qualunque sia la causa a monte tra
+   quelle elencate sotto, purché la finestra finisca comunque in modalità Windowed invece che
+   effettivamente Massimizzata/Fullscreen.
+   **Verificato solo in `--headless` (avvio senza errori di script); non verificabile in questa
+   sessione su un display reale — serve conferma dall'utente.** Vedi `src/common/settings_manager.gd`.
 
 ## Limite della verifica in questa sessione
 
@@ -117,7 +133,9 @@ reale non può essere verificata da qui: serve testare sulla macchina dell'utent
 
 ## Prossimo passo
 
-Servono dall'utente, per proseguire con una diagnosi mirata invece che per tentativi:
+0. **Riprovare con il fix del punto 5**: rilanciare il gioco (build o Play da editor) e verificare
+   se la finestra ora rientra nello schermo. Se sì, chiudibile. Se persiste ancora, servono
+   comunque i dati sotto per proseguire con una diagnosi mirata invece che per tentativi:
 1. Risoluzione reale dello schermo/monitor (Impostazioni schermo di Windows).
 2. Uno screenshot della finestra di gioco così come appare rispetto allo schermo.
 3. Se raggiungibile, esito di "Schermo Intero" nel menu Impostazioni in gioco: risolve il

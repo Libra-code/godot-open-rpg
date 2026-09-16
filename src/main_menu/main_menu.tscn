@@ -1,20 +1,25 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene format=3 uid="uid://br0utft5f6upv"]
 
-[ext_resource type="Script" path="res://src/main_menu/main_menu.gd" id="1_mmenu"]
-[ext_resource type="StyleBoxFlat" path="res://assets/gui/rpg_ui/stylebox_panel_solid.tres" id="2_panel"]
-[ext_resource type="StyleBoxTexture" path="res://assets/gui/rpg_ui/stylebox_button_normal.tres" id="3_btnn"]
-[ext_resource type="StyleBoxTexture" path="res://assets/gui/rpg_ui/stylebox_button_pressed.tres" id="4_btnp"]
+[ext_resource type="Script" uid="uid://bhuvtip55h5pa" path="res://src/main_menu/main_menu.gd" id="1_mmenu"]
+[ext_resource type="StyleBox" path="res://assets/gui/rpg_ui/stylebox_panel_solid.tres" id="2_panel"]
+[ext_resource type="StyleBox" path="res://assets/gui/rpg_ui/stylebox_button_normal.tres" id="3_btnn"]
+[ext_resource type="StyleBox" path="res://assets/gui/rpg_ui/stylebox_button_pressed.tres" id="4_btnp"]
 
-[node name="MainMenu" type="Control"]
+[node name="MainMenu" type="Control" unique_id=2009887847]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -1100.0
+offset_top = -550.0
+offset_right = -1000.0
+offset_bottom = -400.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_mmenu")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="." unique_id=1345678500]
+propagate_maximum_size = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,80 +28,84 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.0941176, 0.0784314, 0.145098, 1)
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1123563700]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 21.0
+offset_top = 21.0
+offset_right = 21.0
+offset_bottom = 21.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer" unique_id=1582278103]
 custom_minimum_size = Vector2(480, 0)
 layout_mode = 2
 theme_override_styles/panel = ExtResource("2_panel")
 
-[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer" unique_id=173298369]
 layout_mode = 2
 theme_override_constants/margin_left = 40
 theme_override_constants/margin_top = 40
 theme_override_constants/margin_right = 40
 theme_override_constants/margin_bottom = 40
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer" unique_id=772792779]
 layout_mode = 2
 theme_override_constants/separation = 28
 
-[node name="TitleLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="TitleLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1453172630]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.949, 0.929, 0.878, 1)
 theme_override_font_sizes/font_size = 56
-horizontal_alignment = 1
 text = "OpenJRPG"
+horizontal_alignment = 1
 
-[node name="ContinueButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="ContinueButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1477629039]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 56)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.0941176, 0.0784314, 0.145098, 1)
-theme_override_colors/font_hover_color = Color(0.0941176, 0.0784314, 0.145098, 1)
-theme_override_colors/font_pressed_color = Color(0.0941176, 0.0784314, 0.145098, 1)
 theme_override_colors/font_focus_color = Color(0.0941176, 0.0784314, 0.145098, 1)
+theme_override_colors/font_pressed_color = Color(0.0941176, 0.0784314, 0.145098, 1)
+theme_override_colors/font_hover_color = Color(0.0941176, 0.0784314, 0.145098, 1)
 theme_override_colors/font_disabled_color = Color(0.4, 0.38, 0.42, 1)
 theme_override_font_sizes/font_size = 26
 theme_override_styles/normal = ExtResource("3_btnn")
-theme_override_styles/hover = ExtResource("3_btnn")
 theme_override_styles/pressed = ExtResource("4_btnp")
-theme_override_styles/focus = ExtResource("4_btnp")
+theme_override_styles/hover = ExtResource("3_btnn")
 theme_override_styles/disabled = ExtResource("3_btnn")
+theme_override_styles/focus = ExtResource("4_btnp")
 text = "Continua"
 
-[node name="NewGameButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="NewGameButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=97714869]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 56)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.0941176, 0.0784314, 0.145098, 1)
-theme_override_colors/font_hover_color = Color(0.0941176, 0.0784314, 0.145098, 1)
-theme_override_colors/font_pressed_color = Color(0.0941176, 0.0784314, 0.145098, 1)
 theme_override_colors/font_focus_color = Color(0.0941176, 0.0784314, 0.145098, 1)
+theme_override_colors/font_pressed_color = Color(0.0941176, 0.0784314, 0.145098, 1)
+theme_override_colors/font_hover_color = Color(0.0941176, 0.0784314, 0.145098, 1)
 theme_override_font_sizes/font_size = 26
 theme_override_styles/normal = ExtResource("3_btnn")
-theme_override_styles/hover = ExtResource("3_btnn")
 theme_override_styles/pressed = ExtResource("4_btnp")
+theme_override_styles/hover = ExtResource("3_btnn")
 theme_override_styles/focus = ExtResource("4_btnp")
 text = "Nuova Partita"
 
-[node name="QuitButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="QuitButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1527774288]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 56)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.0941176, 0.0784314, 0.145098, 1)
-theme_override_colors/font_hover_color = Color(0.0941176, 0.0784314, 0.145098, 1)
-theme_override_colors/font_pressed_color = Color(0.0941176, 0.0784314, 0.145098, 1)
 theme_override_colors/font_focus_color = Color(0.0941176, 0.0784314, 0.145098, 1)
+theme_override_colors/font_pressed_color = Color(0.0941176, 0.0784314, 0.145098, 1)
+theme_override_colors/font_hover_color = Color(0.0941176, 0.0784314, 0.145098, 1)
 theme_override_font_sizes/font_size = 26
 theme_override_styles/normal = ExtResource("3_btnn")
-theme_override_styles/hover = ExtResource("3_btnn")
 theme_override_styles/pressed = ExtResource("4_btnp")
+theme_override_styles/hover = ExtResource("3_btnn")
 theme_override_styles/focus = ExtResource("4_btnp")
 text = "Esci dal gioco"
