@@ -65,6 +65,13 @@ progetto, non come changelog cronologico (per quello vedi `CHANGELOG.md`).
   Inventario (**I**), Missioni (**Q**), Equipaggiamento (**E**). Esc torna indietro di un livello.
 - I due menu e la schermata di Game Over si escludono a vicenda correttamente (non si sovrappongono
   mai).
+- **Stile UI uniformato**: Menu Personaggio e Game Over usano ora lo stesso pannello a sfondo
+  solido/alto contrasto del Menu Impostazioni (il vecchio pannello "wood" a centro trasparente non
+  è più usato da nessuna schermata). Dimensioni dei font uniformate in tutta l'interfaccia (titoli,
+  pulsanti, elenchi di missioni/equipaggiamento generati dinamicamente). Icone dell'inventario
+  portate da 16×16 a 64×64 (prima erano illeggibili rispetto al resto dell'interfaccia). Scelte di
+  dialogo (Dialogic) allineate al font/dimensione del testo di dialogo, prima usavano il font di
+  default di Godot a 16px.
 
 ### Salvataggio
 - Autoload `SaveGame`: delega variabili di dialogo/missione e stato dei timeline al sistema di
@@ -101,9 +108,8 @@ mappa attuale (interamente disegnata a mano), da validare prima di un'eventuale 
 | 5 | **Restrizioni equipaggiamento** | Qualsiasi personaggio gestito può equipaggiare qualsiasi oggetto: non esiste un concetto di "arma solo per l'orso". |
 | 6 | **Consumo dei segnali Landmark** | Nessuna bussola/indicatore/suono reagisce a `landmark_entered_sight`/`exited_sight`. |
 | 7 | **Contenuto oltre Baloo** | Nutsy (secondo personaggio giocante) non ha equipaggiamento né albero abilità propri. |
-| 8 | **Stile UI incompleto** | Il contrasto/sfondo solido è stato corretto solo per il Menu Impostazioni; Menu Personaggio e Game Over usano ancora il pannello con centro trasparente. |
-| 9 | **Generazione procedurale non integrata** | Il prototipo in `src/worldgen_prototype/` funziona ma resta isolato dal gioco vero. |
-| 10 | **Bilanciamento generale** | Biomi, ricompense, curve di difficoltà: tutto quanto costruito è minimale/dimostrativo, pensato per essere corretto, non bilanciato per il gioco finito. |
+| 8 | **Generazione procedurale non integrata** | Il prototipo in `src/worldgen_prototype/` funziona ma resta isolato dal gioco vero. |
+| 9 | **Bilanciamento generale** | Biomi, ricompense, curve di difficoltà: tutto quanto costruito è minimale/dimostrativo, pensato per essere corretto, non bilanciato per il gioco finito. |
 
 ---
 
