@@ -55,11 +55,12 @@
 [ext_resource type="PackedScene" uid="uid://bd624fi8r2avm" path="res://src/field/cutscenes/templates/area_transitions/area_transition.tscn" id="37_6xxks"]
 [ext_resource type="Resource" uid="uid://dmmexun61mw4j" path="res://overworld/maps/town/encounter_on_victory.dtl" id="37_8j2gh"]
 [ext_resource type="Resource" uid="uid://r1aeyknxv1hr" path="res://overworld/maps/forest/ghost.dtl" id="37_uncgg"]
+[ext_resource type="Resource" path="res://overworld/maps/forest/ghost_echo_victory.dtl" id="37_gvict"]
+[ext_resource type="Resource" path="res://overworld/maps/forest/ghost_echo_loss.dtl" id="37_gloss"]
 [ext_resource type="Resource" uid="uid://c4ns5mfdjc11e" path="res://overworld/maps/town/encounter_on_loss.dtl" id="38_f1335"]
 [ext_resource type="PackedScene" uid="uid://ctuol1ff8u5e2" path="res://overworld/maps/house/wand_pedestal_interaction.tscn" id="38_n1c7a"]
 [ext_resource type="AudioStream" uid="uid://ohgp0pb24my4" path="res://assets/sfx/chop.ogg" id="39_02ti3"]
 [ext_resource type="PackedScene" uid="uid://dpopnsfpfdasl" path="res://src/field/cutscenes/Trigger.tscn" id="39_p2lth"]
-[ext_resource type="Script" uid="uid://cstx0ojahlkxk" path="res://overworld/maps/forest/game_end_trigger.gd" id="40_lduow"]
 [ext_resource type="AudioStream" uid="uid://ctnn0hqkx67k7" path="res://assets/music/Apple Cider.mp3" id="41_uxhyb"]
 [ext_resource type="AudioStream" uid="uid://c5w0ripyqfl68" path="res://assets/sfx/drop_002.ogg" id="42_bc1t5"]
 [ext_resource type="AudioStream" uid="uid://dhr63rdgg3dn2" path="res://assets/sfx/error_006.ogg" id="43_qeoai"]
@@ -676,80 +677,24 @@ metadata/_edit_lock_ = true
 [node name="Gamepieces" type="Node2D" parent="Field/Map/Forest" unique_id=1395874171]
 y_sort_enabled = true
 
-[node name="Ghost" parent="Field/Map/Forest/Gamepieces" unique_id=1556381184 instance=ExtResource("11_yntrj")]
+[node name="GhostEncounter" parent="Field/Map/Forest/Gamepieces" unique_id=1556381184 instance=ExtResource("11_yntrj")]
 position = Vector2(840, 488)
+animation_scene = ExtResource("36_7n3c5")
 metadata/_edit_group_ = true
 
-[node name="GhostGFX" parent="Field/Map/Forest/Gamepieces/Ghost" unique_id=59970551 instance=ExtResource("36_7n3c5")]
+[node name="Interaction" parent="Field/Map/Forest/Gamepieces/GhostEncounter" unique_id=1932284818 instance=ExtResource("19_sa6jd")]
+script = ExtResource("35_i66wm")
+pre_combat_timeline = ExtResource("37_uncgg")
+victory_timeline = ExtResource("37_gvict")
+loss_timeline = ExtResource("37_gloss")
+combat_arena = ExtResource("35_x5y1m")
+biome = ExtResource("74_biome")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Field/Map/Forest/Gamepieces/Ghost" unique_id=2041167317]
-libraries/ = SubResource("AnimationLibrary_d6ycm")
-
-[node name="WinScreen" type="CanvasLayer" parent="Field/Map/Forest/Gamepieces/Ghost/AnimationPlayer" unique_id=1108338960]
-
-[node name="ColorRect" type="ColorRect" parent="Field/Map/Forest/Gamepieces/Ghost/AnimationPlayer/WinScreen" unique_id=1951441028]
-visible = false
-modulate = Color(1, 1, 1, 0)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0, 0, 0, 1)
-
-[node name="VBoxContainer" type="CenterContainer" parent="Field/Map/Forest/Gamepieces/Ghost/AnimationPlayer/WinScreen/ColorRect" unique_id=547697722]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Field/Map/Forest/Gamepieces/Ghost/AnimationPlayer/WinScreen/ColorRect/VBoxContainer" unique_id=902816696]
-modulate = Color(1, 1, 1, 0)
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Field/Map/Forest/Gamepieces/Ghost/AnimationPlayer/WinScreen/ColorRect/VBoxContainer/VBoxContainer" unique_id=1193689192]
-layout_mode = 2
-text = "THANK YOU FOR PLAYING!"
-label_settings = SubResource("LabelSettings_dkg5i")
-
-[node name="Label2" type="Label" parent="Field/Map/Forest/Gamepieces/Ghost/AnimationPlayer/WinScreen/ColorRect/VBoxContainer/VBoxContainer" unique_id=1944146391]
-custom_minimum_size = Vector2(800, 0)
-layout_mode = 2
-text = "Find more info or ways to help out at
-github.com/gdquest-demos/godot-open-rpg!"
-horizontal_alignment = 1
-autowrap_mode = 3
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Field/Map/Forest/Gamepieces/Ghost" unique_id=486104808]
-bus = &"SFX"
+[node name="InteractionPopup" parent="Field/Map/Forest/Gamepieces/GhostEncounter/Interaction" unique_id=311175233 instance=ExtResource("34_qs25x")]
 
 [node name="Pickup" parent="Field/Map/Forest/Gamepieces" unique_id=1236172805 instance=ExtResource("29_gxq7u")]
 position = Vector2(776, 424)
 item_type = 5
-
-[node name="GameEndTrigger" parent="Field/Map/Forest/Gamepieces" unique_id=1909788451 node_paths=PackedStringArray("ghost_animation_player") instance=ExtResource("39_p2lth")]
-position = Vector2(888, 472)
-script = ExtResource("40_lduow")
-timeline = ExtResource("37_uncgg")
-ghost_animation_player = NodePath("../Ghost/AnimationPlayer")
-
-[node name="Area2D2" type="Area2D" parent="Field/Map/Forest/Gamepieces/GameEndTrigger" unique_id=1816532642]
-position = Vector2(9.76562e-05, 16)
-collision_layer = 32
-collision_mask = 4
-monitorable = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Field/Map/Forest/Gamepieces/GameEndTrigger/Area2D2" unique_id=942229158]
-position = Vector2(0, 3.5)
-shape = SubResource("RectangleShape2D_giaot")
-debug_color = Color(1, 0.55, 0.8, 0.42)
-
-[node name="Timer" type="Timer" parent="Field/Map/Forest/Gamepieces/GameEndTrigger" unique_id=349457676]
-wait_time = 0.25
-one_shot = true
 
 [node name="GroveToHouse" parent="Field/Map/Forest/Gamepieces" unique_id=1052530756 instance=ExtResource("37_6xxks")]
 position = Vector2(952, 440)
@@ -956,4 +901,3 @@ text = "Choice4"
 script = ExtResource("53_w1dgf")
 choice_index = 4
 
-[connection signal="area_entered" from="Field/Map/Forest/Gamepieces/GameEndTrigger/Area2D2" to="Field/Map/Forest/Gamepieces/GameEndTrigger" method="_on_area_entered"]

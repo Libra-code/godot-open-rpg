@@ -9,8 +9,8 @@
 "style": ""
 },
 &"default_portrait": "Default",
-&"description": "",
-&"display_name": "Very Old Mechanic",
+&"description": "Una presenza eterea legata a chi portava il Nucleo prima di Gobot.",
+&"display_name": "Eco del Nucleo",
 &"mirror": false,
 &"nicknames": [""],
 &"offset": Vector2(0, 0),

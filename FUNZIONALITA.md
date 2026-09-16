@@ -41,6 +41,19 @@ progetto, non come changelog cronologico (per quello vedi `CHANGELOG.md`).
   una conseguenza reale: perdere un combattimento ora danneggia il Soul Strain (12 HP, +12% rigetto
   anima) — prima nessuna delle quattro "flaw" del motore era mai davvero innescata da alcuna azione
   di gioco.
+- **Bug corretto: la storia si bloccava per sempre nella Foresta**. Il fantasma della Foresta era
+  rimasto tale e quale al progetto template originale (`godot-open-rpg`): un `Trigger` automatico
+  che, al contatto, riproduceva un'animazione scriptata e mostrava a schermo intero "THANK YOU FOR
+  PLAYING!" (la schermata di fine del tutorial upstream), per poi bloccare l'input per sempre
+  (`await ready` su un segnale che non si attiva mai — intenzionale nel tutorial, dove quella era
+  davvero l'ultima scena). Con la storia del Nucleo che ora prosegue oltre quel punto, chiunque
+  esplorasse la Foresta rimaneva bloccato lì per sempre, senza combattimento reale né modo di
+  proseguire. Sostituito con un vero scontro (stesso schema `Interaction`/`conversation_encounter.gd`
+  già usato per la Banda dei Quattro in Town, arena `test_combat_arena2.tscn`): il fantasma diventa
+  "Eco del Nucleo", dialoghi coerenti con la storia (varia leggermente se `SoulCoreAwakened` è vero),
+  vittoria/sconfitta reali, e la vittoria indirizza esplicitamente verso l'ingresso della grotta a
+  Town. File: `overworld/maps/forest/ghost.dtl`, `ghost.dch`, `ghost_echo_victory.dtl`,
+  `ghost_echo_loss.dtl` (rimosso `game_end_trigger.gd`, ormai inutilizzato).
 
 ### Combattimento
 - Combattimento a turni con `Battler`, azioni, IA nemica, roster giocatore/nemici.

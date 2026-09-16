@@ -1,3 +1,10 @@
-ghost: I've been waiting for you.
-ghost: For a very, very long time. I should have packed a lunch.
-ghost: Now I'm hungry and grumpy. Time to work out those bugs!
+ghost: ...There you are.
+ghost: I felt something stir the moment you crossed into these trees.
+if {SoulCoreAwakened} == 1:
+	ghost: A Core, freshly woken, still raw at the edges. Yours, now.
+	ghost: I carried one like it, once. Long enough to become what you're looking at.
+	ghost: Before you go any further, prove the Core chose someone who can carry the weight.
+else:
+	ghost: Nothing woken yet, but it's in there. Waiting, the way mine did.
+	ghost: I won't wait politely. Let's see what you're made of now, while it still sleeps.
+[end_timeline]
