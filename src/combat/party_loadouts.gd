@@ -36,6 +36,29 @@ func get_item_by_id(item_id: String) -> EquipmentItem:
 	return _ITEM_REGISTRY.get(item_id)
 
 
+## Every EquipmentItem that exists in the game, for a UI to offer as equip choices.
+func get_all_items() -> Array[EquipmentItem]:
+	var items: Array[EquipmentItem] = []
+	items.assign(_ITEM_REGISTRY.values())
+	return items
+
+
+## Every character with content worth showing an equipment/skills screen for: anyone with a
+## registered [SkillTree] and/or a loadout already on record. This is narrower than "every player
+## Battler that ever existed" on purpose — a character with neither isn't missing data, there's
+## simply nothing yet to manage for them.
+func get_managed_character_names() -> Array[String]:
+	var names: Dictionary = {}
+	for character_name in _skill_trees:
+		names[character_name] = true
+	for character_name in _loadouts:
+		names[character_name] = true
+
+	var result: Array[String] = []
+	result.assign(names.keys())
+	return result
+
+
 ## Every character with a loadout on record. A character only appears here once something has
 ## actually touched their loadout (equipping gear, unlocking a skill, finishing a battle) — anyone
 ## absent from this list is still at the default level 1 / no gear.

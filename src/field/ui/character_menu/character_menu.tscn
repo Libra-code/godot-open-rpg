@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://src/field/ui/character_menu/character_menu.gd" id="1_cmenu"]
 [ext_resource type="PackedScene" uid="uid://dovvbljsj2xv0" path="res://src/soul_strain/soul_strain_hud.tscn" id="2_sstrn"]
 [ext_resource type="Script" uid="uid://xdpci16n7w0j" path="res://src/field/ui/inventory/ui_inventory.gd" id="3_invsc"]
 [ext_resource type="StyleBoxTexture" path="res://assets/gui/rpg_ui/stylebox_panel_wood.tres" id="4_panel"]
 [ext_resource type="Script" path="res://src/quests/quest_log_display.gd" id="5_qlog"]
+[ext_resource type="Script" path="res://src/combat/battlers/equipment_page_display.gd" id="6_equip"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qscroll"]
 
@@ -89,3 +90,26 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 8
 script = ExtResource("5_qlog")
+
+[node name="EquipmentPage" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="EquipmentTitleLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/EquipmentPage"]
+layout_mode = 2
+horizontal_alignment = 1
+text = "Equipaggiamento"
+
+[node name="EquipmentScroll" type="ScrollContainer" parent="CenterContainer/PanelContainer/MarginContainer/EquipmentPage"]
+custom_minimum_size = Vector2(0, 240)
+layout_mode = 2
+horizontal_scroll_mode = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_qscroll")
+
+[node name="EquipmentPageDisplay" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/EquipmentPage/EquipmentScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+script = ExtResource("6_equip")
