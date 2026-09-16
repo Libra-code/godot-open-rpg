@@ -14,3 +14,4 @@ id = &"lucky_tail"
 display_name = "Codino Fortunato"
 slot = &"trinket"
 modifiers = Array[ExtResource("2_mod")]([SubResource("Resource_spd")])
+description = "Un ciondolo portafortuna che rende più agili i movimenti."

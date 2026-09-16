@@ -74,6 +74,36 @@ theme_override_constants/separation = 20
 alignment = 1
 script = ExtResource("3_invsc")
 
+[node name="ItemDetailPanel" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/InventoryPage"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="DetailIcon" type="TextureRect" parent="CenterContainer/PanelContainer/MarginContainer/InventoryPage/ItemDetailPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DetailTextContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/InventoryPage/ItemDetailPanel"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="DetailNameLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/InventoryPage/ItemDetailPanel/DetailTextContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.949, 0.929, 0.878, 1)
+theme_override_font_sizes/font_size = 22
+text = "Nessun oggetto posseduto."
+
+[node name="DetailDescriptionLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/InventoryPage/ItemDetailPanel/DetailTextContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.78, 0.72, 1)
+theme_override_font_sizes/font_size = 18
+autowrap_mode = 2
+
 [node name="QuestsPage" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer"]
 unique_name_in_owner = true
 visible = false
@@ -99,6 +129,24 @@ size_flags_horizontal = 3
 theme_override_constants/separation = 8
 script = ExtResource("5_qlog")
 
+[node name="QuestDetailPanel" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/QuestsPage"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="QuestDetailTitleLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/QuestsPage/QuestDetailPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.949, 0.929, 0.878, 1)
+theme_override_font_sizes/font_size = 22
+
+[node name="QuestDetailBodyLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/QuestsPage/QuestDetailPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.78, 0.72, 1)
+theme_override_font_sizes/font_size = 18
+autowrap_mode = 2
+text = "Nessuna missione da mostrare."
+
 [node name="EquipmentPage" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer"]
 unique_name_in_owner = true
 visible = false
@@ -123,3 +171,10 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 8
 script = ExtResource("6_equip")
+
+[node name="EquipmentDetailLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/EquipmentPage"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.78, 0.72, 1)
+theme_override_font_sizes/font_size = 18
+autowrap_mode = 2

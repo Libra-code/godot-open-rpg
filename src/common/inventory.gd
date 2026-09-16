@@ -18,6 +18,27 @@ const ICONS: = {
 	ItemTypes.GREEN_WAND: preload("res://assets/items/wand_green.atlastex"),
 }
 
+## Display names associated with the [member ItemTypes], shown in the inventory's item detail panel.
+const NAMES: = {
+	ItemTypes.KEY: "Chiave",
+	ItemTypes.COIN: "Moneta",
+	ItemTypes.BOMB: "Bomba",
+	ItemTypes.RED_WAND: "Bacchetta Rossa",
+	ItemTypes.BLUE_WAND: "Bacchetta Blu",
+	ItemTypes.GREEN_WAND: "Bacchetta Verde",
+}
+
+## Short descriptions associated with the [member ItemTypes], shown in the inventory's item detail
+## panel.
+const DESCRIPTIONS: = {
+	ItemTypes.KEY: "Apre una porta o un forziere chiuso a chiave.",
+	ItemTypes.COIN: "Valuta corrente. Può essere scambiata con mercanti.",
+	ItemTypes.BOMB: "Esplosivo utilizzabile per distruggere ostacoli.",
+	ItemTypes.RED_WAND: "Bacchetta intrisa di energia rossa.",
+	ItemTypes.BLUE_WAND: "Bacchetta intrisa di energia blu.",
+	ItemTypes.GREEN_WAND: "Bacchetta intrisa di energia verde.",
+}
+
 const INVENTORY_PATH: = "user://inventory.tres"
 
 ## Emitted when the count of a given item type changes.
@@ -75,6 +96,16 @@ func get_item_count(item_type: ItemTypes) -> int:
 ## Returns the icon associated with a given item type.
 static func get_item_icon(item_type: ItemTypes) -> Texture:
 	return ICONS.get(item_type, null)
+
+
+## Returns the display name associated with a given item type.
+static func get_item_name(item_type: ItemTypes) -> String:
+	return NAMES.get(item_type, "")
+
+
+## Returns the description associated with a given item type.
+static func get_item_description(item_type: ItemTypes) -> String:
+	return DESCRIPTIONS.get(item_type, "")
 
 
 ## Write the inventory contents to the disk.

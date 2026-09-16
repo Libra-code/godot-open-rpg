@@ -83,6 +83,7 @@
 [ext_resource type="PackedScene" path="res://src/field/ui/game_over/game_over_screen.tscn" id="73_gover"]
 [ext_resource type="Resource" path="res://overworld/maps/town/town_biome.tres" id="74_biome"]
 [ext_resource type="Script" uid="uid://cdle174n60jv4" path="res://src/world/landmark.gd" id="75_landmark"]
+[ext_resource type="PackedScene" path="res://src/field/ui/help_modal/help_modal.tscn" id="76_help"]
 
 [sub_resource type="Animation" id="Animation_y8463"]
 length = 0.001
@@ -814,6 +815,8 @@ one_shot = true
 [node name="CharacterMenu" parent="." unique_id=1681850432 instance=ExtResource("72_cmenu")]
 
 [node name="GameOverScreen" parent="." unique_id=587655056 instance=ExtResource("73_gover")]
+
+[node name="HelpModal" parent="." unique_id=1575452008 instance=ExtResource("76_help")]
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1642469067]
 

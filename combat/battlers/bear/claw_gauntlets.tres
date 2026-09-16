@@ -12,3 +12,4 @@ script = ExtResource("1_equip")
 id = &"claw_gauntlets"
 display_name = "Artigli d'Acciaio"
 modifiers = Array[ExtResource("2_mod")]([SubResource("Resource_atk")])
+description = "Guanti rinforzati che aumentano la potenza offensiva."

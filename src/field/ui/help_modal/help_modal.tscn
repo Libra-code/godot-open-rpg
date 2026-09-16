@@ -1,0 +1,236 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://src/field/ui/help_modal/help_modal.gd" id="1_help"]
+[ext_resource type="StyleBoxFlat" path="res://assets/gui/rpg_ui/stylebox_panel_solid.tres" id="2_panel"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_scroll"]
+
+[node name="HelpModal" type="CanvasLayer"]
+visible = false
+script = ExtResource("1_help")
+
+[node name="DimBackground" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(520, 0)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("2_panel")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CenterContainer/PanelContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 600)
+layout_mode = 2
+horizontal_scroll_mode = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_scroll")
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.949, 0.929, 0.878, 1)
+theme_override_font_sizes/font_size = 36
+horizontal_alignment = 1
+text = "Aiuto — Comandi"
+
+[node name="Row1" type="HBoxContainer" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="KeyLabel" type="Label" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/Row1"]
+layout_mode = 2
+custom_minimum_size = Vector2(160, 0)
+theme_override_colors/font_color = Color(1.0, 0.85, 0.4, 1)
+theme_override_font_sizes/font_size = 22
+text = "WASD / Frecce"
+
+[node name="DescriptionLabel" type="Label" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/Row1"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.8, 0.78, 0.72, 1)
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 2
+text = "Muovi il personaggio sulla mappa."
+
+[node name="Row2" type="HBoxContainer" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="KeyLabel" type="Label" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/Row2"]
+layout_mode = 2
+custom_minimum_size = Vector2(160, 0)
+theme_override_colors/font_color = Color(1.0, 0.85, 0.4, 1)
+theme_override_font_sizes/font_size = 22
+text = "Spazio"
+
+[node name="DescriptionLabel" type="Label" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/Row2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.8, 0.78, 0.72, 1)
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 2
+text = "Interagisci con NPC, oggetti e avanza nei dialoghi."
+
+[node name="Row3" type="HBoxContainer" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="KeyLabel" type="Label" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/Row3"]
+layout_mode = 2
+custom_minimum_size = Vector2(160, 0)
+theme_override_colors/font_color = Color(1.0, 0.85, 0.4, 1)
+theme_override_font_sizes/font_size = 22
+text = "Click sinistro"
+
+[node name="DescriptionLabel" type="Label" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/Row3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.8, 0.78, 0.72, 1)
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 2
+text = "Seleziona / avanza nei dialoghi."
+
+[node name="Row4" type="HBoxContainer" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="KeyLabel" type="Label" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/Row4"]
+layout_mode = 2
+custom_minimum_size = Vector2(160, 0)
+theme_override_colors/font_color = Color(1.0, 0.85, 0.4, 1)
+theme_override_font_sizes/font_size = 22
+text = "Esc"
+
+[node name="DescriptionLabel" type="Label" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/Row4"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.8, 0.78, 0.72, 1)
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 2
+text = "Apre/chiude il menu Impostazioni, oppure chiude qualunque menu sia aperto."
+
+[node name="Row5" type="HBoxContainer" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="KeyLabel" type="Label" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/Row5"]
+layout_mode = 2
+custom_minimum_size = Vector2(160, 0)
+theme_override_colors/font_color = Color(1.0, 0.85, 0.4, 1)
+theme_override_font_sizes/font_size = 22
+text = "T"
+
+[node name="DescriptionLabel" type="Label" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/Row5"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.8, 0.78, 0.72, 1)
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 2
+text = "Apri il menu Stato."
+
+[node name="Row6" type="HBoxContainer" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="KeyLabel" type="Label" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/Row6"]
+layout_mode = 2
+custom_minimum_size = Vector2(160, 0)
+theme_override_colors/font_color = Color(1.0, 0.85, 0.4, 1)
+theme_override_font_sizes/font_size = 22
+text = "I"
+
+[node name="DescriptionLabel" type="Label" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/Row6"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.8, 0.78, 0.72, 1)
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 2
+text = "Apri il menu Inventario. Frecce Sinistra/Destra selezionano un oggetto e ne mostrano i dettagli."
+
+[node name="Row7" type="HBoxContainer" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="KeyLabel" type="Label" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/Row7"]
+layout_mode = 2
+custom_minimum_size = Vector2(160, 0)
+theme_override_colors/font_color = Color(1.0, 0.85, 0.4, 1)
+theme_override_font_sizes/font_size = 22
+text = "Q"
+
+[node name="DescriptionLabel" type="Label" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/Row7"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.8, 0.78, 0.72, 1)
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 2
+text = "Apri il menu Missioni. Frecce Su/Giù selezionano una missione e ne mostrano gli obiettivi."
+
+[node name="Row8" type="HBoxContainer" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="KeyLabel" type="Label" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/Row8"]
+layout_mode = 2
+custom_minimum_size = Vector2(160, 0)
+theme_override_colors/font_color = Color(1.0, 0.85, 0.4, 1)
+theme_override_font_sizes/font_size = 22
+text = "E"
+
+[node name="DescriptionLabel" type="Label" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/Row8"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.8, 0.78, 0.72, 1)
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 2
+text = "Apri il menu Equipaggiamento. Frecce Su/Giù selezionano un oggetto o un'abilità e ne mostrano i dettagli."
+
+[node name="Row9" type="HBoxContainer" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="KeyLabel" type="Label" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/Row9"]
+layout_mode = 2
+custom_minimum_size = Vector2(160, 0)
+theme_override_colors/font_color = Color(1.0, 0.85, 0.4, 1)
+theme_override_font_sizes/font_size = 22
+text = "H"
+
+[node name="DescriptionLabel" type="Label" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer/Row9"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.8, 0.78, 0.72, 1)
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 2
+text = "Apre/chiude questa guida ai comandi. Funziona in qualunque momento."
+
+[node name="CloseHintLabel" type="Label" parent="CenterContainer/PanelContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.55, 0.5, 1)
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+text = "Premi H o Esc per chiudere."
