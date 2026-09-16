@@ -145,17 +145,31 @@ progetto, non come changelog cronologico (per quello vedi `CHANGELOG.md`).
 ### Audio
 - Bus Master/Musica/Effetti con volumi regolabili dal Menu Impostazioni, persistenti tra sessioni.
 
+### Mappa generata proceduralmente, collegata al gioco vero
+- **Nuova area "Dungeon"**, raggiungibile davvero da Town (ingresso "L'Ingresso della Grotta" vicino
+  alla zona est, uscita corrispondente dentro la grotta): al primo accesso, `DungeonMap` genera un
+  livello con `BSPDungeonGenerator` (lo stesso motore del prototipo isolato, riusato senza modifiche)
+  e lo dipinge su un `GameboardLayer` vero, quindi `Gameboard`/`Pathfinder` lo trattano esattamente
+  come Town o la Foresta — nessuna infrastruttura nuova, solo contenuto disegnato a runtime invece
+  che a mano. Il punto di ingresso è forzato ad essere sempre raggiungibile (un piccolo corridoio
+  collega il punto fisso di arrivo alla stanza generata più vicina), a prescindere da cosa produce
+  il seed. **Verificato con un test diretto**: 201/201 celle generate risultano raggiungibili
+  dall'ingresso via il vero pathfinder di gioco, e le celle di Town restano inalterate (nessuna
+  regressione). File: `overworld/maps/dungeon/dungeon.tscn`, `dungeon_map.gd`.
+- Limite noto: un solo layout per partita (seed fisso, `region_seed = 1`), nessun nemico/loot dentro
+  — è un'integrazione dell'infrastruttura di generazione nel gioco vero, non un dungeon "finito".
+
 ### Prototipo isolato (NON collegato al gioco vero)
 In `src/worldgen_prototype/`, eseguibile come scena a sé stante:
-- Generazione procedurale di dungeon (stanze + corridoi) con partizionamento binario (BSP),
-  completamente deterministica da seed.
-- Validazione di connettività (flood-fill) con retry limitato e fallback garantito.
+- Validazione di connettività (flood-fill) con retry limitato e fallback garantito (stessa classe
+  `ConnectivityValidator` riusata sopra).
 - Simulazione di streaming a chunk (carico/scarico attorno a un "osservatore" con isteresi).
 - Schema dati per una mappa ibrida (ancore disegnate a mano + regioni generate): `MapNode`,
   `MapGraph`, `MapSocket`.
 
-Non è integrato in `main.tscn` di proposito: è un cambio di architettura importante rispetto alla
-mappa attuale (interamente disegnata a mano), da validare prima di un'eventuale integrazione.
+Il generatore di dungeon (BSP) è stato promosso a "collegato al gioco vero" sopra. Streaming a
+chunk e schema del grafo mondo restano isolati di proposito: un cambio di architettura più grande,
+da validare prima di un'eventuale integrazione.
 
 ---
 
@@ -167,9 +181,10 @@ mappa attuale (interamente disegnata a mano), da validare prima di un'eventuale 
 | 2 | **Costo reale delle abilità** | `SkillTreeNode.cost` esiste ma non viene mai speso: sbloccare un'abilità è gratis, verifica solo i prerequisiti. |
 | 3 | **Restrizioni equipaggiamento** | Qualsiasi personaggio gestito può equipaggiare qualsiasi oggetto: non esiste un concetto di "arma solo per l'orso". |
 | 4 | **Consumo dei segnali Landmark** | Nessuna bussola/indicatore/suono reagisce a `landmark_entered_sight`/`exited_sight`. |
-| 5 | **Generazione procedurale non integrata** | Il prototipo in `src/worldgen_prototype/` funziona ma resta isolato dal gioco vero. |
+| 5 | **Streaming a chunk e grafo mondo non integrati** | Restano isolati in `src/worldgen_prototype/`: un cambio di architettura più grande del generatore BSP (ora collegato al gioco vero). |
 | 6 | **Bilanciamento generale** | Biomi, ricompense, curve di difficoltà, effetti di stato: tutto quanto costruito è minimale/dimostrativo, pensato per essere corretto, non bilanciato per il gioco finito. |
 | 7 | **Loot non raccoglibile per consumabili/materiali** | I drop di tipo diverso da "equipment" (dalla nuova tabella di loot) sono solo annunciati a fine battaglia, non raccolti da nessuna parte: `Inventory` capisce solo il suo enum fisso di 6 oggetti. |
+| 8 | **Dungeon a contenuto minimo** | La nuova area generata proceduralmente non ha nemici, loot, né varietà tra le partite (seed fisso): è l'infrastruttura collegata, non un livello di gioco completo. |
 
 ---
 

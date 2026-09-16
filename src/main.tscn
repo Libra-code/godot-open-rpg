@@ -53,6 +53,7 @@
 [ext_resource type="PackedScene" uid="uid://cgwailb13nkcd" path="res://overworld/characters/ghost_gfx.tscn" id="36_7n3c5"]
 [ext_resource type="Resource" uid="uid://gcpgk7rnyguj" path="res://overworld/maps/town/encounter_before_combat.dtl" id="36_fu3a1"]
 [ext_resource type="PackedScene" uid="uid://bd624fi8r2avm" path="res://src/field/cutscenes/templates/area_transitions/area_transition.tscn" id="37_6xxks"]
+[ext_resource type="PackedScene" path="res://overworld/maps/dungeon/dungeon.tscn" id="dungeon_1"]
 [ext_resource type="Resource" uid="uid://dmmexun61mw4j" path="res://overworld/maps/town/encounter_on_victory.dtl" id="37_8j2gh"]
 [ext_resource type="Resource" uid="uid://r1aeyknxv1hr" path="res://overworld/maps/forest/ghost.dtl" id="37_uncgg"]
 [ext_resource type="Resource" uid="uid://c4ns5mfdjc11e" path="res://overworld/maps/town/encounter_on_loss.dtl" id="38_f1335"]
@@ -557,6 +558,17 @@ script = ExtResource("75_landmark")
 display_name = "Il Sentiero per il Bosco"
 min_visibility_radius = 160.0
 
+[node name="TownToDungeon" parent="Field/Map/Town/Gamepieces" unique_id=2004008002 instance=ExtResource("37_6xxks")]
+position = Vector2(392, 120)
+arrival_coordinates = Vector2(2440, 168)
+new_music = ExtResource("34_xbc6u")
+metadata/_edit_lock_ = true
+
+[node name="Landmark" type="Node" parent="Field/Map/Town/Gamepieces/TownToDungeon" unique_id=2004008003]
+script = ExtResource("75_landmark")
+display_name = "L'Ingresso della Grotta"
+min_visibility_radius = 160.0
+
 [node name="House" type="Node2D" parent="Field/Map" unique_id=391021667]
 y_sort_enabled = true
 metadata/_edit_lock_ = true
@@ -748,6 +760,8 @@ position = Vector2(632, 408)
 arrival_coordinates = Vector2(200, 264)
 new_music = ExtResource("41_uxhyb")
 metadata/_edit_lock_ = true
+
+[node name="Dungeon" parent="Field/Map" unique_id=2004008001 instance=ExtResource("dungeon_1")]
 
 [node name="Overlay" type="Node2D" parent="Field/Map" unique_id=946126041]
 
