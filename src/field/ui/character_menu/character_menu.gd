@@ -1,14 +1,16 @@
-## The in-fiction character menu: Stato (Soul Strain status) and Inventario.
+## The in-fiction character menu: Stato (Soul Strain status), Inventario, and Missioni.
 ##
 ## Opened directly to a page with dedicated keys ([kbd]T[/kbd] for Stato, [kbd]I[/kbd] for
-## Inventario) rather than through a hub, and pressing the other key while open just switches
-## page. This is kept separate from [PauseMenu] (Esc), which holds display/system settings.
+## Inventario, [kbd]Q[/kbd] for Missioni) rather than through a hub, and pressing another of those
+## keys while open just switches page. This is kept separate from [PauseMenu] (Esc), which holds
+## display/system settings.
 extends CanvasLayer
 
-enum Page {STATUS, INVENTORY}
+enum Page {STATUS, INVENTORY, QUESTS}
 
 @onready var _status_page: Control = %StatusPage
 @onready var _inventory_page: Control = %InventoryPage
+@onready var _quests_page: Control = %QuestsPage
 
 # The pause menu and game over screen are sibling scenes. We check their state so this menu can't
 # be opened on top of them.
@@ -31,6 +33,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed(&"open_inventory"):
 		get_viewport().set_input_as_handled()
 		_open_page(Page.INVENTORY)
+	elif event.is_action_pressed(&"open_quests"):
+		get_viewport().set_input_as_handled()
+		_open_page(Page.QUESTS)
 	elif event.is_action_pressed(&"back") and visible:
 		get_viewport().set_input_as_handled()
 		close()
@@ -46,3 +51,4 @@ func _open_page(page: Page) -> void:
 	get_tree().paused = true
 	_status_page.visible = page == Page.STATUS
 	_inventory_page.visible = page == Page.INVENTORY
+	_quests_page.visible = page == Page.QUESTS
