@@ -24,6 +24,11 @@ const _ITEM_REGISTRY: = {
 	"lucky_tail": preload("res://combat/battlers/squirrel/lucky_tail.tres"),
 }
 
+# EquipmentItem resources built on demand from ItemDatabase rows (see _equipment_item_from_db_row),
+# cached by id so repeated lookups (equip UI redraws, save/load) don't rebuild the same Resource
+# and don't lose reference identity for CharacterLoadout.equipped_items comparisons.
+var _db_item_cache: Dictionary = {} # item_id (String) -> EquipmentItem
+
 
 func _ready() -> void:
 	for character_name in _DEFAULT_SKILL_TREES:
@@ -35,15 +40,60 @@ func _ready() -> void:
 	equip("Nutsy", _ITEM_REGISTRY["lucky_tail"])
 
 
+## Resolves an equipment id to its [EquipmentItem]. Checks the hand-authored [constant
+## _ITEM_REGISTRY] first, then falls back to [autoload ItemDatabase] — this is what lets loot
+## tables and future content scale into the thousands without a `.tres` file (and a registry
+## entry) hand-authored for each one.
 func get_item_by_id(item_id: String) -> EquipmentItem:
-	return _ITEM_REGISTRY.get(item_id)
+	if _ITEM_REGISTRY.has(item_id):
+		return _ITEM_REGISTRY[item_id]
+
+	if _db_item_cache.has(item_id):
+		return _db_item_cache[item_id]
+
+	var row: = ItemDatabase.get_item(item_id)
+	if row.is_empty() or row.get("item_type") != "equipment":
+		return null
+
+	var item: = _equipment_item_from_db_row(row)
+	_db_item_cache[item_id] = item
+	return item
 
 
-## Every EquipmentItem that exists in the game, for a UI to offer as equip choices.
+## Every EquipmentItem that exists in the game, for a UI to offer as equip choices: the
+## hand-authored [constant _ITEM_REGISTRY] plus every 'equipment' row in [autoload ItemDatabase].
 func get_all_items() -> Array[EquipmentItem]:
 	var items: Array[EquipmentItem] = []
 	items.assign(_ITEM_REGISTRY.values())
+
+	for row: Dictionary in ItemDatabase.get_items_by_filter({"item_type": "equipment"}):
+		var item_id: String = row.id
+		if _ITEM_REGISTRY.has(item_id):
+			continue # already listed above; the hand-authored resource wins over the DB row.
+		items.append(get_item_by_id(item_id))
+
 	return items
+
+
+# Converts an ItemDatabase row (a plain Dictionary, stats_json already merged in — see
+# ItemDatabase._resolve_row) into a real EquipmentItem/StatModifierEffect Resource pair, since
+# CharacterLoadout.equip() and apply_to_stats() only know how to work with those, not raw rows.
+func _equipment_item_from_db_row(row: Dictionary) -> EquipmentItem:
+	var item: = EquipmentItem.new()
+	item.id = StringName(row.id)
+	item.display_name = row.display_name
+	item.slot = StringName(row.get("slot", "weapon"))
+
+	var modifiers: Array[StatModifierEffect] = []
+	for mod: Dictionary in row.get("modifiers", []):
+		var effect: = StatModifierEffect.new()
+		effect.stat_name = mod.get("stat_name", "attack")
+		effect.is_multiplier = mod.get("is_multiplier", false)
+		effect.amount = float(mod.get("amount", 0.0))
+		modifiers.append(effect)
+	item.modifiers = modifiers
+
+	return item
 
 
 ## Every character with content worth showing an equipment/skills screen for: anyone with a

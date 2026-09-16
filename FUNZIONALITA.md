@@ -57,6 +57,19 @@ progetto, non come changelog cronologico (per quello vedi `CHANGELOG.md`).
 - **UI Equipaggiamento/Abilità** nel Menu Personaggio (tasto **E**): equipaggia/disequipaggia
   oggetti, sblocca abilità (i prerequisiti sono verificati davvero; il "costo" mostrato è solo
   informativo, vedi sezione mancanze).
+- **Database oggetti su SQLite** (`ItemDatabase`, autoload, richiede l'estensione `godot-sqlite`
+  già installata in `addons/`): pensato per scalare a migliaia di oggetti senza un file `.tres`
+  per ciascuno. Colonne di sistema vere (`id, display_name, item_type, slot, rarity, icon_path,
+  model_path, stackable, max_stack`) più una colonna `stats_json` per tutto ciò che non è ancora
+  un concetto di sistema (es. i modificatori di statistica). `roll_loot_table()` calcola l'estrazione
+  pesata **interamente in SQL** (window function, mai l'intera tabella in RAM). `PartyLoadouts`
+  usa davvero questo database: `get_item_by_id()`/`get_all_items()` includono anche gli oggetti
+  presenti solo a database (nessun file `.tres`, nessuna voce hardcoded) — verificato che un
+  oggetto come "Corazza di Ferro" (+6 difesa), che esiste solo nelle righe SQL, compare
+  correttamente nella UI Equipaggiamento. File: `database/schema.sql`, `database/seed_items.sql`,
+  `database/items.db`, `src/common/item_database.gd`. Include una vera tabella di loot per il
+  nemico Bugcat (prima non esisteva nessun drop di oggetti nel gioco), non ancora collegata alla
+  fine del combattimento — la ricompensa attuale resta solo XP.
 - **Scalatura per bioma**: gli incontri di Town scalano le statistiche nemiche in base al livello
   più alto del party, tramite un bioma "Dintorni della Città" (moltiplicatore 1.0→1.5).
 - Alla sconfitta, i nemici del mondo di gioco vengono rimossi davvero dalla scena (era un bug
