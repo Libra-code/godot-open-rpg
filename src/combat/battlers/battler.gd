@@ -153,6 +153,8 @@ func _ready() -> void:
 		# Resources are NOT unique, so treat the currently assigned BattlerStats as a prototype.
 		# That is, copy what it is now and use the copy, so that the original remains unaltered.
 		stats = stats.duplicate()
+		if is_player:
+			PartyLoadouts.apply_to(self)
 		stats.initialize()
 		stats.health_depleted.connect(func on_stats_health_depleted() -> void:
 			is_active = false

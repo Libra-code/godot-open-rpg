@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="SkillTree" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://src/combat/battlers/skill_tree.gd" id="1_tree"]
+[ext_resource type="Script" path="res://src/combat/battlers/skill_tree_node.gd" id="2_node"]
+[ext_resource type="Script" path="res://src/combat/battlers/stat_modifier_effect.gd" id="3_mod"]
+
+[sub_resource type="Resource" id="Resource_hide_mod"]
+script = ExtResource("3_mod")
+stat_name = "defense"
+is_multiplier = false
+amount = 5.0
+
+[sub_resource type="Resource" id="Resource_hide"]
+script = ExtResource("2_node")
+id = &"thick_hide"
+display_name = "Pelle Spessa"
+description = "+5 Difesa"
+cost = 1
+prerequisites = Array[StringName]([])
+effects = Array[ExtResource("3_mod")]([SubResource("Resource_hide_mod")])
+
+[sub_resource type="Resource" id="Resource_grip_mod"]
+script = ExtResource("3_mod")
+stat_name = "attack"
+is_multiplier = true
+amount = 0.2
+
+[sub_resource type="Resource" id="Resource_grip"]
+script = ExtResource("2_node")
+id = &"iron_grip"
+display_name = "Presa d'Acciaio"
+description = "+20% Attacco (richiede Pelle Spessa)"
+cost = 2
+prerequisites = Array[StringName]([&"thick_hide"])
+effects = Array[ExtResource("3_mod")]([SubResource("Resource_grip_mod")])
+
+[resource]
+script = ExtResource("1_tree")
+character_name = "Baloo"
+nodes = Array[ExtResource("2_node")]([SubResource("Resource_hide"), SubResource("Resource_grip")])
