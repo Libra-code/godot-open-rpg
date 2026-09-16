@@ -1,17 +1,14 @@
-[gd_resource type="Resource" script_class="EquipmentItem" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="EquipmentItem" format=3 uid="uid://cinlbtsdny557"]
 
-[ext_resource type="Script" path="res://src/combat/battlers/equipment_item.gd" id="1_equip"]
-[ext_resource type="Script" path="res://src/combat/battlers/stat_modifier_effect.gd" id="2_mod"]
+[ext_resource type="Script" uid="uid://oql8qwca0gk5" path="res://src/combat/battlers/equipment_item.gd" id="1_equip"]
+[ext_resource type="Script" uid="uid://btr2rrwexbonj" path="res://src/combat/battlers/stat_modifier_effect.gd" id="2_mod"]
 
 [sub_resource type="Resource" id="Resource_atk"]
 script = ExtResource("2_mod")
-stat_name = "attack"
-is_multiplier = false
 amount = 3.0
 
 [resource]
 script = ExtResource("1_equip")
 id = &"claw_gauntlets"
 display_name = "Artigli d'Acciaio"
-slot = &"weapon"
 modifiers = Array[ExtResource("2_mod")]([SubResource("Resource_atk")])

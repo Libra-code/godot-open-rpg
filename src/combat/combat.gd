@@ -50,8 +50,9 @@ func _ready() -> void:
 
 ## Begin a combat. Takes a PackedScene as its only parameter, expecting it to be a CombatState
 ## object once instantiated. [param biome], if given, rescales every enemy Battler's stats to the
-## party's current level (see [SpawnDirector]) — the arena's own stats resources are left
-## untouched, since a fresh scaled duplicate is swapped in instead.
+## party's current level (see [SpawnDirector]) in place, after each Battler has already wired up
+## its own signals — never by replacing the stats object itself (see
+## [method SpawnDirector.apply_scaling] for why that would break defeat detection).
 ## This is normally a response to [signal FieldEvents.combat_triggered].
 func setup(arena: PackedScene, biome: BiomeDefinition = null) -> void:
 	await Transition.cover(0.2)
@@ -70,8 +71,7 @@ func setup(arena: PackedScene, biome: BiomeDefinition = null) -> void:
 	if biome:
 		var party_level: = SpawnDirector.get_party_level()
 		for enemy in _battler_roster.get_enemy_battlers():
-			enemy.stats = SpawnDirector.scale_enemy_stats(enemy.stats, biome, party_level)
-			enemy.stats.initialize()
+			SpawnDirector.apply_scaling(enemy.stats, biome, party_level)
 
 	# Wait a frame for the arena and its children (VFX, Battlers, etc.) to be ready.
 	await get_tree().process_frame

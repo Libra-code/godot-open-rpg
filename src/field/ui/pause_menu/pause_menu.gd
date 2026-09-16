@@ -95,8 +95,8 @@ func _unhandled_input(event: InputEvent) -> void:
 # ScrollContainer takes over if content ever exceeds the clamped height.
 func _update_responsive_size() -> void:
 	var viewport_size: = get_viewport().get_visible_rect().size
-	_panel_container.custom_minimum_size.x = clampf(viewport_size.x * 0.22, 320.0, 480.0)
-	_scroll_container.custom_minimum_size.y = clampf(viewport_size.y * 0.6, 260.0, 640.0)
+	_panel_container.custom_minimum_size.x = clampf(viewport_size.x * 0.3, 460.0, 680.0)
+	_scroll_container.custom_minimum_size.y = clampf(viewport_size.y * 0.7, 420.0, 820.0)
 
 
 func open() -> void:

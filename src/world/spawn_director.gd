@@ -14,22 +14,23 @@ static func get_party_level() -> int:
 	return highest_level
 
 
-## Returns a *new* [BattlerStats] (the original is left untouched) with attack/defense/max health
-## scaled by [param biome]'s difficulty curve, sampled at [param player_level]. If [param biome] is
-## null, returns an unscaled duplicate — encounters with no biome assigned behave exactly as
-## before this system existed.
-static func scale_enemy_stats(base_stats: BattlerStats, biome: BiomeDefinition,
-		player_level: int) -> BattlerStats:
-	var scaled: BattlerStats = base_stats.duplicate()
+## Scales attack/defense/max health of [param stats] *in place*, according to [param biome]'s
+## difficulty at [param player_level]. Does nothing if [param biome] is null.
+##
+## This mutates the given [BattlerStats] directly rather than returning a scaled duplicate on
+## purpose: by the time [Combat.setup] calls this, [param stats] is already the private duplicate
+## [method Battler._ready] made for this one battle, with [signal BattlerStats.health_depleted]
+## already connected to it. Swapping in yet another duplicate here would silently leave that
+## connection wired to an orphaned object — the enemy's health would still drop, but it would
+## never register as defeated, since [member Battler.is_active] never flips.
+static func apply_scaling(stats: BattlerStats, biome: BiomeDefinition, player_level: int) -> void:
 	if not biome:
-		return scaled
+		return
 
 	var multiplier: = biome.get_multiplier(player_level)
 
-	scaled.base_attack = roundi(scaled.base_attack * multiplier)
-	scaled.base_defense = roundi(scaled.base_defense * multiplier)
-	scaled.base_max_health = roundi(scaled.base_max_health * multiplier)
-	scaled.max_health = roundi(scaled.max_health * multiplier)
-	scaled.health = scaled.max_health
-
-	return scaled
+	stats.base_attack = roundi(stats.base_attack * multiplier)
+	stats.base_defense = roundi(stats.base_defense * multiplier)
+	stats.base_max_health = roundi(stats.base_max_health * multiplier)
+	stats.max_health = roundi(stats.max_health * multiplier)
+	stats.health = stats.max_health

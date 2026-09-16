@@ -82,7 +82,7 @@
 [ext_resource type="PackedScene" path="res://src/field/ui/character_menu/character_menu.tscn" id="72_cmenu"]
 [ext_resource type="PackedScene" path="res://src/field/ui/game_over/game_over_screen.tscn" id="73_gover"]
 [ext_resource type="Resource" path="res://overworld/maps/town/town_biome.tres" id="74_biome"]
-[ext_resource type="Script" path="res://src/world/landmark.gd" id="75_landmark"]
+[ext_resource type="Script" uid="uid://cdle174n60jv4" path="res://src/world/landmark.gd" id="75_landmark"]
 
 [sub_resource type="Animation" id="Animation_y8463"]
 length = 0.001
@@ -504,7 +504,7 @@ new_music = ExtResource("34_xbc6u")
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
-[node name="Landmark" type="Node" parent="Field/Map/Town/Gamepieces/Door"]
+[node name="Landmark" type="Node" parent="Field/Map/Town/Gamepieces/Door" unique_id=1662409073]
 script = ExtResource("75_landmark")
 display_name = "La Porta di Casa"
 min_visibility_radius = 160.0
@@ -551,7 +551,7 @@ arrival_coordinates = Vector2(632, 424)
 new_music = ExtResource("41_uxhyb")
 metadata/_edit_lock_ = true
 
-[node name="Landmark" type="Node" parent="Field/Map/Town/Gamepieces/TownToGrove"]
+[node name="Landmark" type="Node" parent="Field/Map/Town/Gamepieces/TownToGrove" unique_id=1837557791]
 script = ExtResource("75_landmark")
 display_name = "Il Sentiero per il Bosco"
 min_visibility_radius = 160.0
@@ -808,11 +808,11 @@ metadata/_edit_lock_ = true
 wait_time = 0.5
 one_shot = true
 
-[node name="PauseMenu" parent="." instance=ExtResource("71_pmenu")]
+[node name="PauseMenu" parent="." unique_id=1096272045 instance=ExtResource("71_pmenu")]
 
-[node name="CharacterMenu" parent="." instance=ExtResource("72_cmenu")]
+[node name="CharacterMenu" parent="." unique_id=1681850432 instance=ExtResource("72_cmenu")]
 
-[node name="GameOverScreen" parent="." instance=ExtResource("73_gover")]
+[node name="GameOverScreen" parent="." unique_id=587655056 instance=ExtResource("73_gover")]
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1642469067]
 

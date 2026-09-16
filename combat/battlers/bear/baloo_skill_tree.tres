@@ -1,13 +1,12 @@
-[gd_resource type="Resource" script_class="SkillTree" load_steps=5 format=3]
+[gd_resource type="Resource" script_class="SkillTree" format=3 uid="uid://cb8siu4vjxfw6"]
 
-[ext_resource type="Script" path="res://src/combat/battlers/skill_tree.gd" id="1_tree"]
-[ext_resource type="Script" path="res://src/combat/battlers/skill_tree_node.gd" id="2_node"]
-[ext_resource type="Script" path="res://src/combat/battlers/stat_modifier_effect.gd" id="3_mod"]
+[ext_resource type="Script" uid="uid://c5gxbkbvprbwj" path="res://src/combat/battlers/skill_tree.gd" id="1_tree"]
+[ext_resource type="Script" uid="uid://c5q75cmlcdgqe" path="res://src/combat/battlers/skill_tree_node.gd" id="2_node"]
+[ext_resource type="Script" uid="uid://btr2rrwexbonj" path="res://src/combat/battlers/stat_modifier_effect.gd" id="3_mod"]
 
 [sub_resource type="Resource" id="Resource_hide_mod"]
 script = ExtResource("3_mod")
 stat_name = "defense"
-is_multiplier = false
 amount = 5.0
 
 [sub_resource type="Resource" id="Resource_hide"]
@@ -15,13 +14,10 @@ script = ExtResource("2_node")
 id = &"thick_hide"
 display_name = "Pelle Spessa"
 description = "+5 Difesa"
-cost = 1
-prerequisites = Array[StringName]([])
 effects = Array[ExtResource("3_mod")]([SubResource("Resource_hide_mod")])
 
 [sub_resource type="Resource" id="Resource_grip_mod"]
 script = ExtResource("3_mod")
-stat_name = "attack"
 is_multiplier = true
 amount = 0.2
 

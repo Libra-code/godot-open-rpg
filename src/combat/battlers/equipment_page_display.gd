@@ -35,7 +35,7 @@ func _build_character_section(character_name: String) -> void:
 	var loadout: = PartyLoadouts.get_loadout(character_name)
 
 	for item in PartyLoadouts.get_all_items():
-		var is_equipped: = loadout.equipped_items.get(item.slot) == item
+		var is_equipped: bool = loadout.equipped_items.get(item.slot) == item
 		var button: = _add_row(
 			"%s%s" % [item.display_name, "  (equipaggiato)" if is_equipped else ""],
 			"Disequipaggia" if is_equipped else "Equipaggia",
@@ -51,7 +51,7 @@ func _build_character_section(character_name: String) -> void:
 		return
 
 	for skill in skill_tree.nodes:
-		var is_unlocked: = loadout.unlocked_skill_ids.has(skill.id)
+		var is_unlocked: bool = loadout.unlocked_skill_ids.has(skill.id)
 		var can_unlock: = skill_tree.can_unlock(skill.id, loadout.unlocked_skill_ids)
 
 		var status_text: String
