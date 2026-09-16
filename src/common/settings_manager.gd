@@ -59,9 +59,15 @@ func _apply_vsync() -> void:
 
 
 func _apply_fullscreen() -> void:
-	DisplayServer.window_set_mode(
-		DisplayServer.WINDOW_MODE_FULLSCREEN if fullscreen_enabled else DisplayServer.WINDOW_MODE_WINDOWED
-	)
+	# Only ever forces a mode change in the direction the setting actually asks for. Blindly
+	# forcing WINDOW_MODE_WINDOWED here on every boot (including when fullscreen_enabled has
+	# always been false, i.e. almost every fresh install) used to stomp on whatever window mode
+	# the OS/project.godot had already set up (e.g. starting maximized to fit the screen),
+	# snapping it back to a fixed windowed size that could be larger than the actual screen.
+	if fullscreen_enabled:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	elif DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 
 
 func _apply_bus_volume(bus_name: StringName, linear_volume: float) -> void:
