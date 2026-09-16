@@ -791,6 +791,7 @@ grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
 [node name="Combat" type="CanvasLayer" parent="." unique_id=261146751]
+visible = false
 script = ExtResource("69_meyff")
 
 [node name="CenterContainer" type="CenterContainer" parent="Combat" unique_id=713111916]
@@ -902,24 +903,32 @@ alignment = 2
 
 [node name="Choice1" type="Button" parent="UI/DialogueLayout/BoxMargins/Choices" unique_id=1099276451]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("21_r13nn")
+theme_override_font_sizes/font_size = 48
 text = "Choice1"
 script = ExtResource("53_w1dgf")
 choice_index = 1
 
 [node name="Choice2" type="Button" parent="UI/DialogueLayout/BoxMargins/Choices" unique_id=949814268]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("21_r13nn")
+theme_override_font_sizes/font_size = 48
 text = "Choice2"
 script = ExtResource("53_w1dgf")
 choice_index = 2
 
 [node name="Choice3" type="Button" parent="UI/DialogueLayout/BoxMargins/Choices" unique_id=1419129480]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("21_r13nn")
+theme_override_font_sizes/font_size = 48
 text = "Choice3"
 script = ExtResource("53_w1dgf")
 choice_index = 3
 
 [node name="Choice4" type="Button" parent="UI/DialogueLayout/BoxMargins/Choices" unique_id=304958622]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("21_r13nn")
+theme_override_font_sizes/font_size = 48
 text = "Choice4"
 script = ExtResource("53_w1dgf")
 choice_index = 4

@@ -4,21 +4,27 @@
 [ext_resource type="Script" uid="uid://cr7xwk48aatln" path="res://src/field/ui/inventory/ui_inventory_item.gd" id="2_xqtx2"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2w568"]
-font_size = 48
-outline_size = 16
+font_size = 24
+outline_size = 6
 outline_color = Color(0, 0, 0, 1)
 
 [node name="Icon" type="TextureRect"]
-custom_minimum_size = Vector2(16, 16)
+custom_minimum_size = Vector2(64, 64)
 texture = ExtResource("1_wtayx")
+expand_mode = 1
+stretch_mode = 5
 script = ExtResource("2_xqtx2")
 
 [node name="Count" type="Label" parent="."]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 6.0
-offset_right = 95.0
-offset_bottom = 71.0
-scale = Vector2(0.2, 0.2)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -26.0
+offset_top = -28.0
+grow_horizontal = 0
+grow_vertical = 0
 text = "9"
 label_settings = SubResource("LabelSettings_2w568")

@@ -100,6 +100,7 @@ func _add_label(text: String, color: Color) -> void:
 	var label: = Label.new()
 	label.text = text
 	label.add_theme_color_override("font_color", color)
+	label.add_theme_font_size_override("font_size", 24)
 	add_child(label)
 
 
@@ -110,12 +111,14 @@ func _add_row(text: String, button_text: String, color: Color) -> Button:
 	var label: = Label.new()
 	label.text = text
 	label.add_theme_color_override("font_color", color)
+	label.add_theme_font_size_override("font_size", 22)
 	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD
 	row.add_child(label)
 
 	var button: = Button.new()
 	button.text = button_text
+	button.add_theme_font_size_override("font_size", 22)
 	row.add_child(button)
 
 	return button

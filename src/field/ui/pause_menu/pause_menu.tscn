@@ -8,6 +8,7 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_scroll"]
 
 [node name="PauseMenu" type="CanvasLayer"]
+visible = false
 script = ExtResource("1_pmenu")
 
 [node name="DimBackground" type="ColorRect" parent="."]

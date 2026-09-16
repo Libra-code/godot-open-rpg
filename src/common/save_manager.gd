@@ -28,6 +28,13 @@ func load_game() -> void:
 	Dialogic.Save.load(SLOT_NAME)
 	_apply_state_dict(Dialogic.Save.load_file(SLOT_NAME, STATE_FILE, {}))
 
+	# Dialogic.Save.load() starts DialogicGameHandler.load_full_state() but doesn't await it — that
+	# coroutine restores the Variables subsystem (and re-merges any default variables missing from
+	# an older save) at least one frame later. Refreshing quests before that frame lands would read
+	# a half-restored variable set and misreport quest progress.
+	await get_tree().process_frame
+	await get_tree().process_frame
+
 	# Quest completion is derived from the Dialogic variables just restored above; reconcile
 	# QuestLog's cached state immediately instead of waiting for the next timeline to end.
 	QuestLog.refresh_all()

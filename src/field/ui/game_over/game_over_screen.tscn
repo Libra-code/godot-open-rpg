@@ -6,6 +6,7 @@
 [ext_resource type="StyleBoxTexture" path="res://assets/gui/rpg_ui/stylebox_button_pressed.tres" id="4_btnp"]
 
 [node name="GameOverScreen" type="CanvasLayer"]
+visible = false
 script = ExtResource("1_gover")
 
 [node name="DimBackground" type="ColorRect" parent="."]
