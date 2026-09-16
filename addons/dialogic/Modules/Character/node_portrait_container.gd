@@ -86,7 +86,12 @@ var debug_draw := false
 
 
 func _ready() -> void:
-	debug_draw = DialogicUtil.autoload().PortraitContainers.debug_draw
+	# DialogicUtil.autoload() deliberately returns null in the editor (see its own source) —
+	# this node's script is @tool, so _ready() also runs whenever the editor opens/renders a
+	# scene containing it, well before the is_editor_hint() branch below. Only the actual
+	# runtime debug_draw flag needs the autoload; the editor's own preview path doesn't.
+	if not Engine.is_editor_hint():
+		debug_draw = DialogicUtil.autoload().PortraitContainers.debug_draw
 	match mode:
 		PositionModes.POSITION:
 			add_to_group('dialogic_portrait_con_position')
