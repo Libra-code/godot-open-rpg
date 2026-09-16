@@ -65,6 +65,12 @@ progetto, non come changelog cronologico (per quello vedi `CHANGELOG.md`).
   (Riprova/Esci) invece che non succedere nulla.
 
 ### Interfaccia e menu
+- **Menu Principale** (`src/main_menu/`, ora la vera schermata di avvio impostata in
+  `run/main_scene`): "Nuova Partita" carica `main.tscn` dal suo stato fisso iniziale (con la
+  cutscene di apertura); "Continua" (disabilitato se non esiste un salvataggio) carica lo stesso
+  scena ma salta la cutscene e ripristina subito la partita salvata (`SaveGame.load_game()`);
+  "Esci dal gioco". Prima d'ora l'unico modo di iniziare a giocare era avviare direttamente
+  `main.tscn`, che ripartiva sempre daccapo anche con un salvataggio presente.
 - **Menu Impostazioni** (tasto **Esc**): VSync, Schermo Intero, volumi Generale/Musica/Effetti,
   Salva/Carica partita, Esci dal gioco. Sfondo e testo verificati per contrasto (WCAG, ~18:1 per il
   testo su sfondo scuro, ~12:1 per il testo dei pulsanti su sfondo chiaro), dimensioni responsive
@@ -110,13 +116,13 @@ mappa attuale (interamente disegnata a mano), da validare prima di un'eventuale 
 | # | Cosa manca | Note |
 |---|---|---|
 | 1 | **Negozio/Economia** | La moneta esiste nell'inventario, nessun NPC/UI per comprare o vendere. |
-| 2 | **Menu principale / Nuova Partita** | Il gioco parte sempre nello stesso stato fisso di `main.tscn`; nessuna schermata iniziale, nessun "continua". |
-| 3 | **Costo reale delle abilità** | `SkillTreeNode.cost` esiste ma non viene mai speso: sbloccare un'abilità è gratis, verifica solo i prerequisiti. |
-| 4 | **Restrizioni equipaggiamento** | Qualsiasi personaggio gestito può equipaggiare qualsiasi oggetto: non esiste un concetto di "arma solo per l'orso". |
-| 5 | **Consumo dei segnali Landmark** | Nessuna bussola/indicatore/suono reagisce a `landmark_entered_sight`/`exited_sight`. |
-| 6 | **Contenuto oltre Baloo** | Nutsy (secondo personaggio giocante) ha ora "Furia" ma non un vero equipaggiamento/albero abilità come Baloo. |
-| 7 | **Generazione procedurale non integrata** | Il prototipo in `src/worldgen_prototype/` funziona ma resta isolato dal gioco vero. |
-| 8 | **Bilanciamento generale** | Biomi, ricompense, curve di difficoltà, effetti di stato: tutto quanto costruito è minimale/dimostrativo, pensato per essere corretto, non bilanciato per il gioco finito. |
+| 2 | **Costo reale delle abilità** | `SkillTreeNode.cost` esiste ma non viene mai speso: sbloccare un'abilità è gratis, verifica solo i prerequisiti. |
+| 3 | **Restrizioni equipaggiamento** | Qualsiasi personaggio gestito può equipaggiare qualsiasi oggetto: non esiste un concetto di "arma solo per l'orso". |
+| 4 | **Consumo dei segnali Landmark** | Nessuna bussola/indicatore/suono reagisce a `landmark_entered_sight`/`exited_sight`. |
+| 5 | **Contenuto oltre Baloo** | Nutsy (secondo personaggio giocante) ha ora "Furia" ma non un vero equipaggiamento/albero abilità come Baloo. |
+| 6 | **Generazione procedurale non integrata** | Il prototipo in `src/worldgen_prototype/` funziona ma resta isolato dal gioco vero. |
+| 7 | **Bilanciamento generale** | Biomi, ricompense, curve di difficoltà, effetti di stato: tutto quanto costruito è minimale/dimostrativo, pensato per essere corretto, non bilanciato per il gioco finito. |
+| 8 | **Nessun "torna al menu principale"** | Da Pause/Game Over si può solo "Esci dal gioco" (chiude il processo); non c'è un modo di tornare al Menu Principale restando nel gioco. |
 
 ---
 

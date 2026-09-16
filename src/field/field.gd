@@ -45,6 +45,12 @@ func _ready() -> void:
 	Camera.scale = scale
 	Camera.make_current()
 	Camera.reset_position()
-	
-	if opening_cutscene:
+
+	if SaveGame.pending_load:
+		SaveGame.pending_load = false
+		# The opening cutscene is what normally starts the town's music once it finishes playing;
+		# skipping it for a loaded game means doing that ourselves instead of starting in silence.
+		Music.play(load("res://assets/music/Apple Cider.mp3"))
+		SaveGame.load_game()
+	elif opening_cutscene:
 		opening_cutscene.run.call_deferred()

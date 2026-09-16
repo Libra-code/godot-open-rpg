@@ -10,6 +10,11 @@ extends Node
 const SLOT_NAME: = "game"
 const STATE_FILE: = "game_state"
 
+## Set by the main menu just before loading `main.tscn` in response to "Continua", so [Field] knows
+## to load the saved game state instead of playing the introductory cutscene once it becomes ready.
+## Consumed (reset to false) the moment [Field] reads it.
+var pending_load: = false
+
 
 func has_save() -> bool:
 	return Dialogic.Save.has_slot(SLOT_NAME)
