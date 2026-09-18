@@ -85,9 +85,26 @@ progetto, non come changelog cronologico (per quello vedi `CHANGELOG.md`).
   un `enemy_id` (nuovo campo su `BattlerStats`, impostato per Bugcat e Lupo) fa tirare la sua tabella
   di loot in `ItemDatabase`; i drop di tipo equipaggiamento vengono equipaggiati automaticamente sul
   capoparty e annunciati nel dialogo di fine battaglia. Prima non esisteva alcun drop di oggetti nel
-  gioco (solo XP). Limite noto: i drop di tipo consumabile/materiale sono solo annunciati, non
-  ancora raccolti da nessuna parte — `Inventory` capisce solo il suo enum fisso di 6 oggetti, non un
-  id di database arbitrario (vedi mancanze).
+  gioco (solo XP). **Bug corretto**: i drop non-equipaggiamento (consumabili/materiali) erano solo
+  annunciati a schermo, mai raccolti — `Inventory` ora ha uno storage generico per id di database
+  (`add_item`/`remove_item`/`get_item_amount`, accanto al vecchio enum fisso `ItemTypes` per
+  chiave/monete/bacchette), quindi ogni drop non-equipaggiamento finisce davvero nell'inventario
+  (salvato subito, non solo a fine partita). La quantità del drop (`min_quantity`/`max_quantity`
+  della tabella di loot) è usata per davvero anche nel messaggio di fine battaglia, prima veniva
+  tirata ma scartata.
+- **Negozio/Economia**: il Fabbro in Town apre davvero una bottega (tasto Interagisci), non più
+  solo una battuta di flavor. UI Compra/Vendi (`src/field/ui/shop/shop_menu.tscn`), aperta on-demand
+  da `shop_interaction.gd` (un `Interaction` come qualsiasi altro NPC, riutilizzabile per vendor
+  futuri passando `shop_scene`/`buy_item_ids` diversi) e chiusa/liberata quando il giocatore esce —
+  non un pannello permanente come Menu Personaggio/Pausa. Compra consumabili con le Monete
+  (`Inventory.ItemTypes.COIN`, valuta già esistente ma prima mai spendibile da nessuna parte);
+  vende qualunque oggetto di database posseduto (materiali/consumabili raccolti come loot). I prezzi
+  vivono nella nuova colonna `items.value` di `ItemDatabase` (0 = non in vendita). Limite noto
+  voluto: l'equipaggiamento non è ancora acquistabile, perché non esiste alcun concetto di
+  "possesso" per l'equipaggiamento (`PartyLoadouts.get_all_items()` lo rende comunque tutto
+  equipaggiabile gratis da chiunque — stesso gap di "Restrizioni equipaggiamento" sotto). File:
+  `database/schema.sql` (colonna `value`), `database/seed_items.sql`, `src/common/inventory.gd`,
+  `src/field/ui/shop/shop_menu.gd/.tscn`, `overworld/maps/town/shop_interaction.gd`.
 - **Nemici e missioni su database** (`database/schema_enemies_quests.sql`, stesso file
   `items.db`): tabella `enemies` con Grado del Nucleo/Tag Essenza/parametri shader in
   `soul_data_json` (stessa terminologia di `SoulStrainState`); tabella `quests` con
@@ -218,14 +235,13 @@ da validare prima di un'eventuale integrazione.
 
 | # | Cosa manca | Note |
 |---|---|---|
-| 1 | **Negozio/Economia** | La moneta esiste nell'inventario, nessun NPC/UI per comprare o vendere. |
-| 2 | **Costo reale delle abilità** | `SkillTreeNode.cost` esiste ma non viene mai speso: sbloccare un'abilità è gratis, verifica solo i prerequisiti. |
-| 3 | **Restrizioni equipaggiamento** | Qualsiasi personaggio gestito può equipaggiare qualsiasi oggetto: non esiste un concetto di "arma solo per l'orso". |
-| 4 | **Consumo dei segnali Landmark** | Nessuna bussola/indicatore/suono reagisce a `landmark_entered_sight`/`exited_sight`. |
-| 5 | **Streaming a chunk e grafo mondo non integrati** | Restano isolati in `src/worldgen_prototype/`: un cambio di architettura più grande del generatore BSP (ora collegato al gioco vero). |
-| 6 | **Bilanciamento generale** | Biomi, ricompense, curve di difficoltà, effetti di stato: tutto quanto costruito è minimale/dimostrativo, pensato per essere corretto, non bilanciato per il gioco finito. |
-| 7 | **Loot non raccoglibile per consumabili/materiali** | I drop di tipo diverso da "equipment" (dalla nuova tabella di loot) sono solo annunciati a fine battaglia, non raccolti da nessuna parte: `Inventory` capisce solo il suo enum fisso di 6 oggetti. |
-| 8 | **Dungeon a contenuto minimo** | I tre livelli generati proceduralmente non hanno nemici né loot, e ogni livello ha un seed fisso (stesso layout ad ogni partita): è l'infrastruttura collegata con tre varianti visive/strutturali, non un dungeon di gioco completo. |
+| 1 | **Costo reale delle abilità** | `SkillTreeNode.cost` esiste ma non viene mai speso: sbloccare un'abilità è gratis, verifica solo i prerequisiti. Ora che le Monete sono davvero spendibili (vedi Negozio), collegarle qui è immediato. |
+| 2 | **Restrizioni/possesso equipaggiamento** | Qualsiasi personaggio gestito può equipaggiare qualsiasi oggetto esistente, senza bisogno di possederlo: non esiste un concetto di "arma solo per l'orso" né di "devi prima trovarlo/comprarlo". È anche il motivo per cui il Negozio non vende ancora equipaggiamento. |
+| 3 | **Consumo dei segnali Landmark** | Nessuna bussola/indicatore/suono reagisce a `landmark_entered_sight`/`exited_sight`. |
+| 4 | **Streaming a chunk e grafo mondo non integrati** | Restano isolati in `src/worldgen_prototype/`: un cambio di architettura più grande del generatore BSP (ora collegato al gioco vero). |
+| 5 | **Bilanciamento generale** | Biomi, ricompense, curve di difficoltà, effetti di stato, prezzi del Negozio: tutto quanto costruito è minimale/dimostrativo, pensato per essere corretto, non bilanciato per il gioco finito. |
+| 6 | **Consumabili raccolti ma non usabili** | I consumabili (es. "Bacca Curativa", `heal_amount` in `stats_json`) si possono ora comprare/vendere/raccogliere davvero, ma non esiste ancora un'azione "usa oggetto" né in combattimento né sul campo: restano nell'inventario, il loro effetto non è mai applicato. |
+| 7 | **Dungeon a contenuto minimo** | I tre livelli generati proceduralmente non hanno nemici né loot, e ogni livello ha un seed fisso (stesso layout ad ogni partita): è l'infrastruttura collegata con tre varianti visive/strutturali, non un dungeon di gioco completo. |
 
 ---
 

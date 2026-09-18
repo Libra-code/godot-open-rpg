@@ -32,6 +32,8 @@
 [ext_resource type="Script" uid="uid://d0ptqnbudhkyj" path="res://addons/dialogic/Modules/Character/node_portrait_container.gd" id="21_f53lt"]
 [ext_resource type="FontFile" uid="uid://cfhyd5hmym1s4" path="res://assets/gui/font/Kenney Pixel.ttf" id="21_r13nn"]
 [ext_resource type="Resource" uid="uid://c5gfpb2ghma5w" path="res://overworld/maps/town/smith.dtl" id="22_dko83"]
+[ext_resource type="Script" path="res://overworld/maps/town/shop_interaction.gd" id="22_shopgd"]
+[ext_resource type="PackedScene" path="res://src/field/ui/shop/shop_menu.tscn" id="22_shopscn"]
 [ext_resource type="Resource" uid="uid://b6cc3gmd8nlty" path="res://overworld/maps/town/thief.dtl" id="22_rd6oa"]
 [ext_resource type="Resource" uid="uid://cu4um6ppwmk03" path="res://overworld/maps/town/monk.dtl" id="24_grnqa"]
 [ext_resource type="Script" uid="uid://ht3xm51xvouh" path="res://src/field/gamepieces/controllers/gamepiece_controller.gd" id="26_p8jrd"]
@@ -434,8 +436,10 @@ animation_scene = ExtResource("18_2msel")
 metadata/_edit_group_ = true
 
 [node name="Interaction" parent="Field/Map/Town/Gamepieces/Smith" unique_id=1046613386 instance=ExtResource("19_sa6jd")]
-script = ExtResource("14_b3y71")
-timeline = ExtResource("22_dko83")
+script = ExtResource("22_shopgd")
+shop_scene = ExtResource("22_shopscn")
+buy_item_ids = Array[String](["healing_berry", "greater_healing_draught"])
+greeting_timeline = ExtResource("22_dko83")
 
 [node name="InteractionPopup" parent="Field/Map/Town/Gamepieces/Smith/Interaction" unique_id=1621344756 instance=ExtResource("34_qs25x")]
 

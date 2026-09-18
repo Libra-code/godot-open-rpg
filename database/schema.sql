@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS items (
 	model_path TEXT,               -- res:// path; loaded lazily by the caller via ResourceLoader
 	stackable INTEGER NOT NULL DEFAULT 1,
 	max_stack INTEGER NOT NULL DEFAULT 99,
+	value INTEGER NOT NULL DEFAULT 0, -- shop price in Coins; 0 means "not normally bought or sold"
 	stats_json TEXT NOT NULL DEFAULT '{}'
 );
 

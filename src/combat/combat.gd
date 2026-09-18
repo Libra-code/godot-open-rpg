@@ -287,10 +287,10 @@ func _award_victory_xp() -> void:
 
 
 # Looks up enemy_id in ItemDatabase for its loot_table_id (see database/schema_enemies_quests.sql)
-# and rolls it once. "equipment" drops are auto-equipped onto the party leader immediately — there
-# is no loot-inventory or equip-choice UI yet, and Inventory.ItemTypes can't hold an arbitrary
-# database item id. Other item types are recorded for the results dialogue but not granted
-# anywhere yet (a real gap, not hidden: see FUNZIONALITA.md).
+# and rolls it once. "equipment" drops are auto-equipped onto the party leader immediately (there
+# is no ownership/equip-choice UI for equipment yet — see FUNZIONALITA.md). Every other item type
+# (consumable, material, ...) is granted into Inventory by database id via Inventory.add_item(),
+# the same generic storage the shop uses to sell/buy them.
 func _roll_enemy_loot(enemy_id: StringName) -> void:
 	if enemy_id == &"":
 		return
@@ -306,16 +306,24 @@ func _roll_enemy_loot(enemy_id: StringName) -> void:
 	if loot_table_id.is_empty():
 		return
 
+	var inventory: Inventory = Inventory.restore()
+
 	for drop: Dictionary in ItemDatabase.roll_loot_table(loot_table_id, 1):
 		var item_row: = ItemDatabase.get_item(drop.item_id)
 		if item_row.is_empty():
 			continue
 
-		_loot_this_battle.append(item_row)
+		var quantity: int = drop.get("quantity", 1)
+		_loot_this_battle.append({"item_row": item_row, "quantity": quantity})
 
 		if item_row.get("item_type") == "equipment":
 			var party_leader_name: = _battler_roster.get_player_battlers()[0].name
 			PartyLoadouts.equip(party_leader_name, PartyLoadouts.get_item_by_id(drop.item_id))
+		else:
+			inventory.add_item(drop.item_id, quantity)
+
+	if not _loot_this_battle.is_empty():
+		inventory.save()
 
 
 ## Displays a series of dialogue bubbles using Dialogic with information about the combat's outcome.
@@ -343,8 +351,14 @@ func _get_victory_message_events(leader_name: String) -> Array[String]:
 	for battler_name in _level_ups_this_battle:
 		events.append("%s reached level %d!" % [battler_name, _level_ups_this_battle[battler_name]])
 
-	for item_row in _loot_this_battle:
-		events.append("Found: %s!" % str(item_row.get("display_name", item_row.get("id"))))
+	for loot in _loot_this_battle:
+		var item_row: Dictionary = loot.item_row
+		var display_name: String = item_row.get("display_name", item_row.get("id"))
+		var quantity: int = loot.quantity
+		if quantity > 1:
+			events.append("Found: %s x%d!" % [display_name, quantity])
+		else:
+			events.append("Found: %s!" % display_name)
 
 	return events
 	

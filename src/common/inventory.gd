@@ -44,8 +44,16 @@ const INVENTORY_PATH: = "user://inventory.tres"
 ## Emitted when the count of a given item type changes.
 signal item_changed(type: ItemTypes)
 
+## Emitted when the count of a database-backed item (see [member _item_ids]) changes.
+signal generic_item_changed(item_id: String)
+
 # Keep track of what is in the inventory. Dictionary keys are an ItemType, values are the amount.
 @export var _items: = {}
+
+# Generic storage for items that come from ItemDatabase by string id rather than the fixed
+# [enum ItemTypes] above — consumables/materials bought, sold, or looted by database id, none of
+# which fit the hardcoded enum. Dictionary keys are an item id (String), values are the amount.
+@export var _item_ids: = {}
 
 
 func _init() -> void:
@@ -91,6 +99,36 @@ func remove(item_type: ItemTypes, amount: = 1) -> void:
 ## Returns the number of a certain item type posessed by the player.
 func get_item_count(item_type: ItemTypes) -> int:
 	return _items.get(item_type, 0)
+
+
+## Increment the count of a database-backed item (see [member _item_ids]) by [param amount],
+## adding it to the inventory if it does not exist yet. Mirrors [method add] for [ItemDatabase]
+## items, which don't fit the fixed [enum ItemTypes].
+func add_item(item_id: String, amount: = 1) -> void:
+	var old_amount: = _item_ids.get(item_id, 0) as int
+	_item_ids[item_id] = maxi(old_amount+amount, 0)
+
+	generic_item_changed.emit(item_id)
+
+
+## Decrement the count of a database-backed item by [param amount]. Mirrors [method remove].
+func remove_item(item_id: String, amount: = 1) -> void:
+	add_item(item_id, -amount)
+
+
+## Returns the number of a database-backed item posessed by the player.
+func get_item_amount(item_id: String) -> int:
+	return _item_ids.get(item_id, 0)
+
+
+## Every database-backed item id currently held in nonzero amount, for a UI to enumerate (e.g. the
+## shop's sell list).
+func get_all_item_ids() -> Array[String]:
+	var ids: Array[String] = []
+	for item_id in _item_ids:
+		if _item_ids[item_id] > 0:
+			ids.append(item_id)
+	return ids
 
 
 ## Returns the icon associated with a given item type.

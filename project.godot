@@ -61,6 +61,8 @@ directories/dtl_directory={
 "encounter_on_victory": "res://overworld/maps/town/encounter_on_victory.dtl",
 "fan_of_four": "res://overworld/maps/town/fan_of_four.dtl",
 "ghost": "res://overworld/maps/forest/ghost.dtl",
+"ghost_echo_loss": "res://overworld/maps/forest/ghost_echo_loss.dtl",
+"ghost_echo_victory": "res://overworld/maps/forest/ghost_echo_victory.dtl",
 "monk": "res://overworld/maps/town/monk.dtl",
 "opening_cutscene": "res://overworld/maps/opening_cutscene.dtl",
 "runner": "res://overworld/maps/town/runner.dtl",
